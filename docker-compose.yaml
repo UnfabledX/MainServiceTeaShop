@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  postgres:
+    image: postgres
+    container_name: teashop_db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: leka
+      POSTGRES_PASSWORD: password
+    restart: on-failure
+    ports:
+      - "5440:5432"
