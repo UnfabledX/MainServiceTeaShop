@@ -3,6 +3,7 @@ package com.leka.teashop.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -41,7 +42,7 @@ public class User {
     private LocalDate birthday;
 
     @Column(name = "created_at")
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")

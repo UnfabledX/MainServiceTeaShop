@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
 </head>
 <body>
-    <h1>Hello!</h1>
-    <a href="greeting">Greeting</a>
-    <a href="registration">Registration</a>
+<p data-th-text="#{label.chooseLang}"></p>
+<div>
+        <span>
+            <a href="/index" data-th-text="#{label.lang.en}"></a>&nbsp;&nbsp;&nbsp;
+            <a href="/index?lang=ukr" data-th-text="#{label.lang.ukr}"></a>
+</div>
+<br/><br/>
+
+<a href="/greeting">Greeting</a>
+<a href="/registration">Registration</a>
+<a href="/thyme">Thymeleaf</a>
+<a href="/product" th:text="#{add.product}"></a>
 </body>
 </html>

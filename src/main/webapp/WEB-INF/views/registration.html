@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <style>
+        .error {
+            color: #ff0000;
+        }
+        .errorblock {
+            color: #000;
+            background-color: #ffEEEE;
+            border: 3px solid #ff0000;
+            padding: 8px;
+            margin: 16px;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="#{registration}"/>
+
+<form action="#" th:action="@{/registration}" th:object="${registration}" method="post">
+    <p th:errors="*" th:errorclass="errorblock"></p>
+    <table>
+        <tr>
+            <td><label th:text="#{name}"/></td>
+            <td><input type="text" th:field="*{name}" /></td>
+            <td><p th:errors="*{name}" th:errorclass="error"></p></td>
+        </tr>
+        <tr>
+            <td colspan="3"> <input type="submit" th:value="#{add.registration}"/> </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
