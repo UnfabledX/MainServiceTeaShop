@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+</head>
+<body>
+<div>
+    <p th:text="#{label.chooseLang}">Choose language</p>
+    <a href="/teashop?lang=en" th:text="#{label.lang.en}">English</a>&nbsp;&nbsp;&nbsp;
+    <a href="/teashop?lang=ukr" th:text="#{label.lang.ukr}">Ukrainian</a>
+</div>
+<br/><br/>
+<a href="/teashop/registration">Registration</a> &nbsp;&nbsp;&nbsp;
+<a href="/teashop/product" th:text="#{add.product}">Add Product</a>&nbsp;&nbsp;&nbsp;
+<a href="/teashop/allproducts" th:text="#{see.products}">View All Products</a>
+</body>
+</html>

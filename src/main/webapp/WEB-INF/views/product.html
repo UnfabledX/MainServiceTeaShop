@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Product Processing</title>
+    <style>
+        .description {
+            height: 100px;
+            width: 100%;
+        }
+
+        .error-style {
+            color: #ff0000;
+        }
+
+        table {
+            border: solid 1px black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
-<h1 th:text=""></h1>
+<p data-th-text="#{label.chooseLang}">Choose language</p>
+<div>
+    <a href="/teashop/product?lang=en" th:text="#{label.lang.en}">English</a>&nbsp;&nbsp;&nbsp;
+    <a href="/teashop/product?lang=ukr" th:text="#{label.lang.ukr}">Ukrainian</a>
+</div>
+<br/><br/>
+<h1 th:text="#{add.product}"/>
+<form action="#" th:action="@{/product}" th:object="${request}" method="post">
+    <table>
+        <tr>
+            <td><label th:text="#{label.name}"/></td>
+            <td><label>
+                <input type="text" th:field="*{name}" size="50"/>
+            </label></td>
+            <td><p class="error-style" th:if="${#fields.hasErrors('name')}"
+                   th:errors="*{name}"></p></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.description}"/></td>
+            <td><label  style="vertical-align: top; text-align: left">
+                <textarea class="description" th:field="*{description}"></textarea>
+            </label></td>
+            <td><p class="error-style" th:if="${#fields.hasErrors('description')}"
+                   th:errors="*{description}"></p></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.price}"/></td>
+            <td><label>
+                <input type="text" th:field="*{price}" size="50"/>
+            </label></td>
+            <td><p class="error-style" th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}"></p></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input type="submit" th:value="#{add.product}" size="50"/></td>
+        </tr>
+    </table>
+    <br/>
+    <div>
+        <a href="/teashop/allproducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
+        <a href="/teashop/" th:text="#{back.to.main.page}"></a>
+    </div>
+</form>
 </body>
 </html>

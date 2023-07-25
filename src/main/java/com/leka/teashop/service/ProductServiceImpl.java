@@ -7,6 +7,8 @@ import com.leka.teashop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService{
@@ -18,5 +20,13 @@ public class ProductServiceImpl implements ProductService{
     public void addProduct(ProductDto dto) {
         Product product = productMapper.toEntity(dto);
         productRepository.save(product);
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toDto)
+                .toList();
     }
 }

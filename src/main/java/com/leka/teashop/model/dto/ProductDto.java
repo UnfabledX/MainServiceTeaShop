@@ -3,6 +3,7 @@ package com.leka.teashop.model.dto;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,13 +19,23 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ProductDto {
 
-    @NotEmpty(message = "The name of the product must be not empty")
+    @NotEmpty(message = "{notEmpty.name}")
     private String name;
 
-    @NotEmpty(message = "The description of the product must be not empty")
+    @NotEmpty(message = "{notEmpty.description}")
     private String description;
 
-    @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer = 4, fraction = 2)
+    @NotNull(message = "{notNull.price}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{notNegative.price}")
+    @Digits(integer = 4, fraction = 2, message = "{notADigit.price}")
     private BigDecimal price;
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

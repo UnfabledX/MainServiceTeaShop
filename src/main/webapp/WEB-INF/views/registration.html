@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration</title>
+    <meta charset="UTF-8">
     <style>
         .error {
             color: #ff0000;
@@ -21,8 +22,10 @@
     <p th:errors="*" th:errorclass="errorblock"></p>
     <table>
         <tr>
-            <td><label th:text="#{name}"/></td>
-            <td><input type="text" th:field="*{name}" /></td>
+            <td><label th:text="#{label.name}"/></td>
+            <td><label>
+                <input type="text" th:field="*{name}" />
+            </label></td>
             <td><p th:errors="*{name}" th:errorclass="error"></p></td>
         </tr>
         <tr>

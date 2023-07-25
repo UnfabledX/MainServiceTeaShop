@@ -8,22 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Map;
-
 @Controller
 public class LoginController {
-
-    @GetMapping("greeting")
-    public String greeting(Map<String, Object> model){
-        model.put("message", "Hello Oleksii");
-        return "greeting";
-    }
-
-    @GetMapping("thyme")
-    public String thymeLeaf(Map<String, Object> model){
-        model.put("message", "Hello Thymeleaf");
-        return "thyme";
-    }
 
     @GetMapping("registration")
     public String getRegistration(@ModelAttribute("registration")Registration registration){
