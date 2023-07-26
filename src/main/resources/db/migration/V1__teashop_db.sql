@@ -38,5 +38,6 @@ CREATE TABLE IF NOT EXISTS teashop_db.products
     name              character varying NOT NULL,
     description       character varying NOT NULL,
     price             decimal NOT NULL,
+    UNIQUE(name),
     PRIMARY KEY (id)
 );

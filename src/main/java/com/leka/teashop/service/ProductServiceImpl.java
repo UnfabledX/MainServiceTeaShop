@@ -6,6 +6,7 @@ import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,5 +29,11 @@ public class ProductServiceImpl implements ProductService{
                 .stream()
                 .map(productMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void deleteProduct(String name) {
+        productRepository.deleteByName(name);
     }
 }

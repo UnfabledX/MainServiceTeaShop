@@ -17,8 +17,8 @@
 <body>
 <p data-th-text="#{label.chooseLang}">Choose language</p>
 <div>
-    <a href="/teashop/allproducts?lang=en" th:text="#{label.lang.en}">English</a>&nbsp;&nbsp;&nbsp;
-    <a href="/teashop/allproducts?lang=ukr" th:text="#{label.lang.ukr}">Ukrainian</a>
+    <a href="/teashop/allProducts?lang=en" th:text="#{label.lang.en}">English</a>&nbsp;&nbsp;&nbsp;
+    <a href="/teashop/allProducts?lang=ukr" th:text="#{label.lang.ukr}">Ukrainian</a>
 </div>
 <br/><br/>
 <table>
@@ -26,11 +26,14 @@
         <th th:text="#{label.name}">name</th>
         <th th:text="#{label.description}">description</th>
         <th th:text="#{label.price}">price</th>
+        <th th:text="#{delete.product}">Delete Product</th>
     </tr>
     <tr th:each="product: ${products}">
         <td th:text="${product.name}"/>
         <td th:text="${product.description}"/>
         <td th:text="${product.price}"/>
+        <td><a th:href="@{'/delete/' + ${product.name}}"
+               th:text="#{delete.product}" role="button">Delete</a></td>
     </tr>
 </table>
 <br/><br/>
