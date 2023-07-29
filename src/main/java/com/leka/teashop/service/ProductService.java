@@ -1,5 +1,6 @@
 package com.leka.teashop.service;
 
+import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ProductDto;
 
 import java.util.List;
@@ -10,5 +11,10 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
-    void deleteProduct(String name);
+    void updateProduct(ProductDto request);
+
+    void deleteById(Long id);
+
+    Product findById(Long id);
+
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Processing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <style>
+        table {
+            border: solid 1px black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<p data-th-text="#{chooseLang}">Choose language</p>
+<div>
+    <a th:href="@{'/edit/' + ${productDto.id} + '?lang=en'}"
+       th:text="#{lang.en}">English</a>&nbsp;&nbsp;&nbsp;
+    <a th:href="@{'/edit/' + ${productDto.id} + '?lang=ukr'}"
+       th:text="#{lang.ukr}">Ukrainian</a>
+</div>
+<br/><br/>
+<h1 th:text="#{update.product}"/>
+<form action="#" th:action="@{'/updateProduct/' + ${productDto.id}}" th:object="${productDto}" method="post">
+    <table>
+        <tr>
+            <td><label>
+                <input type="hidden" th:field="*{id}">
+            </label></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.name}"/></td>
+            <td><label>
+                <input type="text" th:field="*{name}" size="50"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.description}"/></td>
+            <td><label style="vertical-align: top; text-align: left">
+                <textarea th:field="*{description}"></textarea>
+            </label></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.price}"/></td>
+            <td><label>
+                <input type="text" th:field="*{price}" size="50"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input type="submit" th:value="#{update.product}" size="50"/></td>
+        </tr>
+    </table>
+    <ul th:if="${#fields.hasErrors('*')}">
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+    </ul>
+</form>
+<br/>
+<div>
+    <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
+    <a href="/teashop/" th:text="#{main.page}"></a>
+</div>
+
+
+
+
+</body>
+</html>

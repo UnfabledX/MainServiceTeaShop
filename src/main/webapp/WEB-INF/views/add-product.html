@@ -2,7 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Product Processing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
     <style>
         .description {
             height: 100px;
@@ -24,11 +31,8 @@
     </style>
 </head>
 <body>
-<p data-th-text="#{label.chooseLang}">Choose language</p>
-<div>
-    <a href="/teashop/product?lang=en" th:text="#{label.lang.en}">English</a>&nbsp;&nbsp;&nbsp;
-    <a href="/teashop/product?lang=ukr" th:text="#{label.lang.ukr}">Ukrainian</a>
-</div>
+<div th:replace="~{utils/header :: header}"></div>
+
 <br/><br/>
 <h1 th:text="#{add.product}"/>
 <form action="#" th:action="@{/product}" th:object="${request}" method="post">
@@ -64,7 +68,7 @@
     <br/>
     <div>
         <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
-        <a href="/teashop/" th:text="#{back.to.main.page}"></a>
+        <a href="/teashop/" th:text="#{main.page}"></a>
     </div>
 </form>
 </body>

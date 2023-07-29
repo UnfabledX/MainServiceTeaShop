@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ProductDto {
 
+    private Long id;
+
     @NotEmpty(message = "{notEmpty.name}")
     private String name;
 

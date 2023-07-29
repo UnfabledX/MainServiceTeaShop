@@ -1,5 +1,6 @@
 package com.leka.teashop.service;
 
+import com.leka.teashop.exceptions.NotFoundException;
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ProductDto;
@@ -33,7 +34,19 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
-    public void deleteProduct(String name) {
-        productRepository.deleteByName(name);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateProduct(ProductDto updatedProduct) {
+        productRepository.save(productMapper.toEntity(updatedProduct));
+    }
+
+    @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product is not found"));
     }
 }
