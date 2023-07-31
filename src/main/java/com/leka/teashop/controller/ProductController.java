@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,20 +30,37 @@ public class ProductController {
         return "add-product";
     }
 
-    @PostMapping("product")
-    public String addProduct(@Valid @ModelAttribute("request") ProductDto request, BindingResult result) {
-        if (result.hasErrors()) {
-            return "add-product";
-        }
-        productService.addProduct(request);
-        return "redirect:/product";
-    }
-
     @GetMapping("allProducts")
     public String getAllProducts(Model model) {
         List<ProductDto> dtoList = productService.getAllProducts();
         model.addAttribute("products", dtoList);
         return "list-of-products";
+    }
+
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id,
+                                 Model model) {
+        Product productFromDB = productService.findById(id);
+        model.addAttribute("productDto", productMapper.toDto(productFromDB));
+        return "update-product";
+    }
+
+    @GetMapping("showAllProductsForSale")
+    public String showAllProductsForSale (Model model){
+        List<ProductDto> dtoList = productService.getAllProducts();
+        model.addAttribute("products", dtoList);
+        return "products-for-sale";
+    }
+
+
+    @PostMapping("product")
+    public String addProduct(@RequestParam("file") MultipartFile file,
+            @Valid @ModelAttribute("request") ProductDto request, BindingResult result) {
+        if (result.hasErrors()) {
+            return "add-product";
+        }
+        productService.addProduct(request, file);
+        return "redirect:/product";
     }
 
     @GetMapping("delete/{id}")
@@ -54,26 +73,12 @@ public class ProductController {
     @PostMapping("updateProduct/{id}")
     public String updateProduct(@PathVariable(name = "id") Long id,
                                 @Valid @ModelAttribute("request") ProductDto request,
-                                BindingResult result, Model model) {
+                                BindingResult result, Model model,
+                                @RequestParam("file") MultipartFile file) {
         if (result.hasErrors()) {
             return showUpdateForm(id, model);
         }
-        productService.updateProduct(request);
+        productService.updateProduct(request, file);
         return "redirect:/allProducts";
-    }
-
-    @GetMapping("edit/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id,
-                                  Model model) {
-        Product productFromDB = productService.findById(id);
-        model.addAttribute("productDto", productMapper.toDto(productFromDB));
-        return "update-product";
-    }
-
-    @GetMapping("showAllProductsForSale")
-    public String showAllProductsForSale (Model model){
-        List<ProductDto> dtoList = productService.getAllProducts();
-        model.addAttribute("products", dtoList);
-        return "products-for-sale";
     }
 }

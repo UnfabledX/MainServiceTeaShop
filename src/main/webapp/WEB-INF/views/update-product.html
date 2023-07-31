@@ -31,7 +31,8 @@
 </div>
 <br/><br/>
 <h1 th:text="#{update.product}"/>
-<form action="#" th:action="@{'/updateProduct/' + ${productDto.id}}" th:object="${productDto}" method="post">
+<form action="#" th:action="@{'/updateProduct/' + ${productDto.id}}" th:object="${productDto}"
+      enctype="multipart/form-data" method="post">
     <table>
         <tr>
             <td><label>
@@ -51,9 +52,26 @@
             </label></td>
         </tr>
         <tr>
-            <td><label th:text="#{label.price}"/></td>
+            <td><label th:text="#{label.priceUA}"/></td>
             <td><label>
-                <input type="text" th:field="*{price}" size="50"/>
+                <input type="text" th:field="*{priceUA}" size="50"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.priceEU}"/></td>
+            <td><label>
+                <input type="text" th:field="*{priceEU}" size="50"/>
+            </label></td>
+        </tr>
+        <tr>
+            <td><label>
+                <input type="hidden" th:field="*{imageId}">
+            </label></td>
+        </tr>
+        <tr>
+            <td><label th:text="#{label.updateImage}"/></td>
+            <td><label for="formFile" class="form-label">
+                <input class="form-control" type="file" id="formFile" name="file"/>
             </label></td>
         </tr>
         <tr>
@@ -69,8 +87,6 @@
     <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
     <a href="/teashop/" th:text="#{main.page}"></a>
 </div>
-
-
 
 
 </body>

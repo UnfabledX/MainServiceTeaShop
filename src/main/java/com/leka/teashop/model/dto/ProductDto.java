@@ -30,14 +30,13 @@ public class ProductDto {
     @NotNull(message = "{notNull.price}")
     @DecimalMin(value = "0.0", inclusive = false, message = "{notNegative.price}")
     @Digits(integer = 4, fraction = 2, message = "{notADigit.price}")
-    private BigDecimal price;
+    private BigDecimal priceUA;
 
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
-    }
+    @NotNull(message = "{notNull.price}")
+    @DecimalMin(value = "0.0", inclusive = false, message = "{notNegative.price}")
+    @Digits(integer = 4, fraction = 2, message = "{notADigit.price}")
+    private BigDecimal priceEU;
+
+    private Long imageId;
+
 }

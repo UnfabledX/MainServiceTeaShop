@@ -30,6 +30,12 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private BigDecimal price;
+    @Column(name = "price_ua", nullable = false)
+    private BigDecimal priceUA;
+
+    @Column(name = "price_eu", nullable = false)
+    private BigDecimal priceEU;
+
+    @Column(name = "image_id")
+    private Long imageId;
 }

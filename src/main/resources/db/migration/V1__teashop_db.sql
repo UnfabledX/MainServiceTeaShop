@@ -37,7 +37,9 @@ CREATE TABLE IF NOT EXISTS teashop_db.products
     id                bigserial         NOT NULL,
     name              character varying NOT NULL,
     description       character varying NOT NULL,
-    price             decimal NOT NULL,
+    price_ua          decimal NOT NULL,
+    price_eu          decimal NOT NULL,
+    image_id          bigint,
     UNIQUE(name),
     PRIMARY KEY (id)
 );
