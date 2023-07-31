@@ -1,0 +1,31 @@
+# TeaShop
+The given project represents an online tea shop. 
+For now Simple CRUD operation for products are implemented. 
+Each product can have an image. Image processing occurs in the backend media-service 
+(https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database. 
+In the future all backend applications are going to communicate through eureka server. 
+In order to run application follow these steps:
+1. Install manualy Tomcat (I was using tomcat-10.1.11, oldest versions might not work because of incompability with new spring boot versions 3.+)
+2. If you use Docker, run docker-compose file in the root folder of the project by command in terminal `docker-compose up -d --build`. This is the simplest way to start a postgres database.
+3. Insert env variable for database connection in Tomcat configuration (In intellij Idea [Run/debug configurations] -> [Edit configurations...] -> Choose Tomcat server -> [Startup/Connections] -> Pass env variables)
+4. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
+5. Insert env variable for database connection in Run/debug configuration for run-class (MediaserverApplication.java)
+6. Run media server
+7. Run Tomcat in the teashop project.
+
+Features that are going to be implemented in the future:
+1. User authentification and athorization.
+2. Orders processing
+3. Views
+4. Probably main entities will be split between microservices (so there will be like user-service, Order service, auth server etc.)
+5. And a lot of different features that will appear during application development.
+
+Technology used in the project: 
+- Java 17
+- Spring Boot
+- Spring MVC
+- Spring Data
+- Hibernate
+- Postgres database
+- Docker
+- Thymeleaf
