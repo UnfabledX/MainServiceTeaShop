@@ -74,7 +74,7 @@ public class ProductController {
     public String updateProduct(@PathVariable(name = "id") Long id,
                                 @Valid @ModelAttribute("request") ProductDto request,
                                 BindingResult result, Model model,
-                                @RequestParam("file") MultipartFile file) {
+                                @RequestParam(name = "file", required = false) MultipartFile file) {
         if (result.hasErrors()) {
             return showUpdateForm(id, model);
         }
