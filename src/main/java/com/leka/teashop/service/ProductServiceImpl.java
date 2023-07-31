@@ -8,13 +8,10 @@ import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -25,21 +22,19 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final WebClient webClient;
+    private final MediaService mediaService;
 
     @Override
     public void addProduct(ProductDto dto, MultipartFile file) {
-        MultipartBodyBuilder builder = createFrom(file);
-        ImageDto image = webClient.post()
-                .uri("/api/v1/images/upload")
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .body(BodyInserters.fromMultipartData(builder.build()))
-                .retrieve()
-                .bodyToMono(ImageDto.class)
-                .blockOptional()
-                .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+        ImageDto image = null;
+        if (file.getSize() != 0) {
+            MultipartBodyBuilder builder = createFrom(file);
+            image = mediaService.uploadImageThrough(builder);
+        }
         Product product = productMapper.toEntity(dto);
-        product.setImageId(image.getId());
+        if (image != null) {
+            product.setImageId(image.getId());
+        }
         productRepository.save(product);
     }
 
@@ -55,13 +50,9 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void deleteById(Long id) {
         Product product = findById(id);
-        Long imageId = null;
+        Long imageId;
         if ((imageId = product.getImageId()) != null) {
-            webClient.delete()
-                    .uri("/api/v1/images/delete/{id}", imageId)
-                    .retrieve()
-                    .bodyToMono(Void.class)
-                    .block();
+            mediaService.deleteImageById(imageId);
         }
         productRepository.deleteById(id);
     }
@@ -69,17 +60,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void updateProduct(ProductDto updatedProduct, MultipartFile file) {
-        MultipartBodyBuilder builder = createFrom(file);
-        webClient.put()
-                .uri("/api/v1/images/update/{id}", updatedProduct.getImageId())
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .body(BodyInserters.fromMultipartData(builder.build()))
-                .retrieve()
-                .bodyToMono(ImageDto.class)
-                .blockOptional()
-                .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+        ImageDto image = null;
+        if (file.getSize() != 0) {
+            MultipartBodyBuilder builder = createFrom(file);
+            Long imageId = updatedProduct.getImageId();
+            image = mediaService.updateImageById(imageId, builder);
+        }
         Product product = productMapper.toEntity(updatedProduct);
         product.setId(updatedProduct.getId());
+        if (image != null) {
+            product.setImageId(image.getId());
+        }
         productRepository.save(product);
     }
 
@@ -93,7 +84,8 @@ public class ProductServiceImpl implements ProductService {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         try {
             if (file != null && file.getOriginalFilename() != null) {
-                builder.part("file", new ByteArrayResource(file.getBytes())).filename(file.getOriginalFilename());
+                builder.part("file",
+                        new ByteArrayResource(file.getBytes())).filename(file.getOriginalFilename());
             } else {
                 throw new NotFoundException("The file is not provided");
             }
