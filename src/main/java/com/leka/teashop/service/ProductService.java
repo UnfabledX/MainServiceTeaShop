@@ -12,7 +12,7 @@ public interface ProductService {
 
     List<ProductDto> getAllProducts();
 
-    void updateProduct(ProductDto request, MultipartFile file);
+    void updateProduct(ProductDto request, MultipartFile file, String deleteImage);
 
     void deleteById(Long id);
 

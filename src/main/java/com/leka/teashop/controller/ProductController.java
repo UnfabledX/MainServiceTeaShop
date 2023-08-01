@@ -4,6 +4,7 @@ import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -74,11 +75,13 @@ public class ProductController {
     public String updateProduct(@PathVariable(name = "id") Long id,
                                 @Valid @ModelAttribute("request") ProductDto request,
                                 BindingResult result, Model model,
-                                @RequestParam(name = "file", required = false) MultipartFile file) {
+                                @RequestParam(name = "file", required = false) MultipartFile file,
+                                HttpServletRequest httpServletRequest) {
         if (result.hasErrors()) {
             return showUpdateForm(id, model);
         }
-        productService.updateProduct(request, file);
+        String deleteImage = httpServletRequest.getParameter("deleteImage");
+        productService.updateProduct(request, file, deleteImage);
         return "redirect:/allProducts";
     }
 }

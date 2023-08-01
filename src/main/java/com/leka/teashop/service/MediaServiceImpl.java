@@ -37,7 +37,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     /**
-     * Updates image by its id. There are cases when product is present
+     * The method updates image by its id. There are cases when product is present
      * but without an image (imageId = null). In such case, method receives
      * "-1" as id, so media service interprets this like just simple image
      * creation.

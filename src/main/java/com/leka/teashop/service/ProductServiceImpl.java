@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void updateProduct(ProductDto updatedProduct, MultipartFile file) {
+    public void updateProduct(ProductDto updatedProduct, MultipartFile file, String deleteImageIsNeeded) {
         ImageDto image = null;
         if (file.getSize() != 0) {
             MultipartBodyBuilder builder = createFrom(file);
@@ -70,6 +70,10 @@ public class ProductServiceImpl implements ProductService {
         product.setId(updatedProduct.getId());
         if (image != null) {
             product.setImageId(image.getId());
+        }
+        if ("on".equals(deleteImageIsNeeded) && updatedProduct.getImageId() != null) {
+            mediaService.deleteImageById(updatedProduct.getImageId());
+            product.setImageId(null);
         }
         productRepository.save(product);
     }
