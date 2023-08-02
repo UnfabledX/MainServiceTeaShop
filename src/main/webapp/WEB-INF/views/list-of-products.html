@@ -22,11 +22,7 @@
     </style>
 </head>
 <body>
-<p data-th-text="#{chooseLang}">Choose language</p>
-<div>
-    <a href="/teashop/allProducts?lang=en" th:text="#{lang.en}">English</a>&nbsp;&nbsp;&nbsp;
-    <a href="/teashop/allProducts?lang=ukr" th:text="#{lang.ukr}">Ukrainian</a>
-</div>
+<div th:replace="~{utils/header :: header-list-of-products}"></div>
 <br/><br/>
 <table>
     <tr>

@@ -11,89 +11,64 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
     <style>
-        table {
-            border: solid 1px black;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 5px;
+        [class*="form-outline"] {
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-<p data-th-text="#{chooseLang}">Choose language</p>
-<div>
-    <a th:href="@{'/edit/' + ${productDto.id} + '?lang=en'}"
-       th:text="#{lang.en}">English</a>&nbsp;&nbsp;&nbsp;
-    <a th:href="@{'/edit/' + ${productDto.id} + '?lang=ukr'}"
-       th:text="#{lang.ukr}">Ukrainian</a>
-</div>
+<div th:replace="~{utils/header :: header-updateProduct}"></div>
+
 <br/><br/>
-<h1 th:text="#{update.product}"/>
-<form action="#" th:action="@{'/updateProduct/' + ${productDto.id}}" th:object="${productDto}"
-      enctype="multipart/form-data" method="post">
-    <table>
-        <tr>
-            <td><label>
-                <input type="hidden" th:field="*{id}">
-            </label></td>
-        </tr>
-        <tr>
-            <td><label th:text="#{label.name}"/></td>
-            <td><label>
-                <input type="text" th:field="*{name}" size="50"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td><label th:text="#{label.description}"/></td>
-            <td><label style="vertical-align: top; text-align: left">
-                <textarea th:field="*{description}"></textarea>
-            </label></td>
-        </tr>
-        <tr>
-            <td><label th:text="#{label.priceUA}"/></td>
-            <td><label>
-                <input type="text" th:field="*{priceUA}" size="50"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td><label th:text="#{label.priceEU}"/></td>
-            <td><label>
-                <input type="text" th:field="*{priceEU}" size="50"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td><label>
-                <input type="hidden" th:field="*{imageId}">
-            </label></td>
-        </tr>
-        <tr>
-            <td><label th:text="#{label.updateImage}"/></td>
-            <td><label for="formFile" class="form-label">
-                <input class="form-control" type="file" id="formFile" name="file"/>
-            </label></td>
-        </tr>
-        <tr>
-            <td><div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="deleteImage" name="deleteImage">
-                    <label class="form-check-label" for="deleteImage">Delete the image</label>
-                </div></td>
-        </tr>
-        <tr>
-            <td colspan="3"><input type="submit" th:value="#{update.product}" size="50"/></td>
-        </tr>
-    </table>
-    <ul th:if="${#fields.hasErrors('*')}">
-        <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-    </ul>
-</form>
+<h1 align="center" th:text="#{update.product}"/>
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+    <form action="#" th:action="@{'/updateProduct/' + ${productDto.id}}" th:object="${productDto}"
+          enctype="multipart/form-data" method="post">
+        <div class="form-outline mb-2">
+            <input class="form-control" type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" for="name" th:text="#{label.name}"/>
+            <input class="form-control" type="text" id="name" th:field="*{name}"/>
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" th:text="#{label.description}" for="description"/>
+            <textarea class="form-control" id="description" th:field="*{description}"></textarea>
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" th:text="#{label.priceUA}" for="priceUA"/>
+            <input class="form-control" type="text" id="priceUA" th:field="*{priceUA}"/>
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" th:text="#{label.priceEU}" for="priceEU"/>
+            <input class="form-control" type="text" id="priceEU" th:field="*{priceEU}"/>
+        </div>
+
+        <input class="form-control" type="hidden" th:field="*{imageId}">
+
+        <div class="form-outline mb-2">
+            <label class="form-label" for="formFile" th:text="#{label.updateImage}"/>
+            <input class="form-control" type="file" id="formFile" name="file"/>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label" for="deleteImage" th:text="#{delete.image}"/>
+            <input type="checkbox" class="form-check-input" id="deleteImage" name="deleteImage">
+        </div>
+        <div class="form-outline mb-4">
+            <button type="submit" class="btn btn-primary btn-block mb-4"
+                    th:text="#{update.product}"/>
+        </div>
+        <ul th:if="${#fields.hasErrors('*')}">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+        </ul>
+    </form>
+</div>
 <br/>
-<div>
+<div class="container-sm">
     <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
     <a href="/teashop/" th:text="#{main.page}"></a>
 </div>
-
+<br/><br/>
 
 </body>
 </html>

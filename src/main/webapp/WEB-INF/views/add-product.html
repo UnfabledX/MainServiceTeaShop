@@ -16,15 +16,14 @@
         }
         [class*="row"] {
             padding: 10px;
-            width: auto;
         }
     </style>
 </head>
 <body>
-<div th:replace="~{utils/header :: header}"></div>
+<div th:replace="~{utils/header :: header-addProduct}"></div>
 
 <h2 th:text="#{add.product}"/>
-<div class="form-container">
+<div class="form-container-sm">
 <form class="row g-3" action="#" th:action="@{/product}" th:object="${request}"
       method="post" enctype="multipart/form-data">
     <div class="mb-3">
