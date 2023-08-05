@@ -8,6 +8,11 @@ import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class ProductServiceImpl implements ProductService {
+
+    public static final String CHECKED = "on";
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -39,11 +46,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .map(productMapper::toDto)
-                .toList();
+    public Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField,
+                                           String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return productRepository.findAll(pageable)
+                        .map(productMapper::toDto);
+
     }
 
     @Override
@@ -71,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
         if (image != null) {
             product.setImageId(image.getId());
         }
-        if ("on".equals(deleteImageIsNeeded) && updatedProduct.getImageId() != null) {
+        if (CHECKED.equals(deleteImageIsNeeded) && updatedProduct.getImageId() != null) {
             mediaService.deleteImageById(updatedProduct.getImageId());
             product.setImageId(null);
         }

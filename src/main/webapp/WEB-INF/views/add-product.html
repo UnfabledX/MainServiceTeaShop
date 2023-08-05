@@ -14,60 +14,56 @@
         .error-style {
             color: #ff0000;
         }
-        [class*="row"] {
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
 <div th:replace="~{utils/header :: header-addProduct}"></div>
 
-<h2 th:text="#{add.product}"/>
-<div class="form-container-sm">
-<form class="row g-3" action="#" th:action="@{/product}" th:object="${request}"
-      method="post" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label" th:text="#{label.name}">Product Name</label>
-        <input type="text" class="form-control" id="exampleFormControlInput1"
-               th:placeholder="#{placeholder.name}" th:field="*{name}">
-        <p class="error-style" th:if="${#fields.hasErrors('name')}"
-           th:errors="*{name}">
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label" th:text="#{label.description}">Product
-            Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                  th:placeholder="#{placeholder.description}" th:field="*{description}"></textarea>
-        <p class="error-style" th:if="${#fields.hasErrors('description')}"
-           th:errors="*{description}"></p>
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label" th:text="#{label.price}">Product Price</label>
-        <div class="input-group">
-            <input type="text" class="form-control" aria-label="Provide only digits" th:field="*{priceUA}">
-            <span class="input-group-text">ua</span>
-            <span class="input-group-text">Example: 140</span>
+<h2 th:text="#{add.product}" style="text-align: center"/>
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+    <form class="row g-3" action="#" th:action="@{/addProduct}" th:object="${request}"
+          method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label" th:text="#{label.name}">Product Name</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1"
+                   th:placeholder="#{placeholder.name}" th:field="*{name}">
+            <p class="error-style" th:if="${#fields.hasErrors('name')}"
+               th:errors="*{name}">Incorrect data</p>
         </div>
-        <p class="error-style" th:if="${#fields.hasErrors('priceUA')}"
-           th:errors="*{priceUA}"></p>
-        <div class="input-group">
-            <input type="text" class="form-control" aria-label="Provide only digits(dot is possible)" th:field="*{priceEU}">
-            <span class="input-group-text">eu</span>
-            <span class="input-group-text">Example: 8.5</span>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label" th:text="#{label.description}">Product
+                Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                      th:placeholder="#{placeholder.description}" th:field="*{description}"></textarea>
+            <p class="error-style" th:if="${#fields.hasErrors('description')}"
+               th:errors="*{description}">Incorrect data</p>
         </div>
-        <p class="error-style" th:if="${#fields.hasErrors('priceEU')}"
-           th:errors="*{priceEU}"></p>
-    </div>
-    <div class="mb-3">
-        <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert an image for the product</label>
-        <label><input class="form-control" type="file" name="file" id="formFile" ></label>
-    </div>
-    <input class="btn btn-primary" type="submit" th:value="#{add.product}">
-</form>
-</div>
-<br>
-<div>
-    <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label" th:text="#{label.price}">Product Price</label>
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="Provide only digits" th:field="*{priceUA}">
+                <span class="input-group-text">ua</span>
+                <span class="input-group-text">Example: 140</span>
+            </div>
+            <p class="error-style" th:if="${#fields.hasErrors('priceUA')}"
+               th:errors="*{priceUA}">Incorrect data</p>
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="Provide only digits(dot is possible)"
+                       th:field="*{priceEU}">
+                <span class="input-group-text">eu</span>
+                <span class="input-group-text">Example: 8.5</span>
+            </div>
+            <p class="error-style" th:if="${#fields.hasErrors('priceEU')}"
+               th:errors="*{priceEU}">Incorrect data</p>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert an image for the product</label>
+            <label><input class="form-control" type="file" name="file" id="formFile"></label>
+        </div>
+        <input class="btn btn-primary" type="submit" th:value="#{add.product}">
+    </form>
+    <br/>
+    <a href="/teashop/allProducts" th:text="#{see.products}"></a>
 </div>
 
 </body>

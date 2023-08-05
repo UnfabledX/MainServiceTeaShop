@@ -25,15 +25,28 @@
 <div th:replace="~{utils/header :: header-list-of-products}"></div>
 <br/><br/>
 <table>
+    <thead>
     <tr>
-        <th th:text="#{label.name}">name</th>
-        <th th:text="#{label.description}">description</th>
-        <th th:text="#{label.priceUA}">price UAH</th>
-        <th th:text="#{label.priceEU}">price EURO</th>
+        <th><a th:text="#{label.name}"
+               th:href="@{'/allProducts?page=' + ${currentPage} + '&sort=name&dir=' + ${reverseSortDir}}">name</a>
+        </th>
+        <th><a th:text="#{label.description}"
+               th:href="@{'/allProducts?page=' + ${currentPage} + '&sort=description&dir=' + ${reverseSortDir}}">description</a>
+        </th>
+        <th><a th:text="#{label.priceUA}"
+               th:href="@{'/allProducts?page=' + ${currentPage} + '&sort=priceUA&dir=' + ${reverseSortDir}}">price
+            UAH</a>
+        </th>
+        <th><a th:text="#{label.priceEU}"
+               th:href="@{'/allProducts?page=' + ${currentPage} + '&sort=priceEU&dir=' + ${reverseSortDir}}">price
+            EURO</a>
+        </th>
         <th th:text="#{label.image}">image id</th>
         <th th:text="#{delete.product}">Delete Product</th>
         <th th:text="#{update.product}">Update Product</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="product: ${products}">
         <td th:text="${product.name}"/>
         <td th:text="${product.description}"/>
@@ -46,7 +59,52 @@
         <td><a th:href="@{'/edit/' + ${product.id}}"
                th:text="#{update.product}" role="button">Update</a></td>
     </tr>
+    </tbody>
 </table>
+<br/>
+<!-- pagination-list-of-product-->
+<div th:if="${totalPages > 1}">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" th:text="#{pagination.total.rows} + ' ' + ${totalItems}"></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage > 1}" th:text="#{pagination.first}"
+                   th:href="@{'/allProducts?page=1&sort=' + ${sortField} + '&dir=' + ${sortDir}}">First</a>
+                <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.first}"
+                      style="color: black">First</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage > 1}"
+                   th:href="@{'/allProducts?page=' + ${currentPage - 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
+                   th:text="#{pagination.previous}">Previous</a>
+                <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.previous}"
+                      style="color: black">Previous</span>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(1, 5)}"
+                th:if="${(currentPage >= 4 - i) && (totalPages >= currentPage + i - 3)}">
+                <a class="page-link" th:if="${i != 3}"
+                   th:href="@{'/allProducts?page=' + ${currentPage + i - 3} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">
+                    [[${currentPage + i - 3}]]</a>
+                <span class="page-link" th:unless="${i != 3}" style="color: black">[[${currentPage + i - 3}]]</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage < totalPages}"
+                   th:href="@{'/allProducts?page=' + ${currentPage + 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
+                th:text="#{pagination.next}">Next</a>
+                <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.next}"
+                      style="color: black">Next</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage < totalPages}" th:text="#{pagination.last}"
+                   th:href="@{'/allProducts?page=' + ${totalPages} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">Last</a>
+                <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.last}"
+                      style="color: black">Last</span>
+            </li>
+        </ul>
+    </nav>
+</div>
 <br/><br/>
 <div>
     <a href="/teashop/product" th:text="#{add.product}"></a>&nbsp;&nbsp;&nbsp;
