@@ -51,7 +51,7 @@ public class ProductController {
             pageNo = 1;
         }
         if (pageSize == null) {
-            pageSize = 3;
+            pageSize = 9;
         }
         Page<ProductDto> dtoList = productService.getAllProducts(pageNo, pageSize, sortField, sortDirection);
         List<ProductDto> productDtoList = dtoList.getContent();

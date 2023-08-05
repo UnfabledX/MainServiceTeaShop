@@ -1,7 +1,7 @@
 To-do-list
 1. Make update page looks better (done)
 2. Implement pagination on products for sale page (in progress)
-3. Implement products cards and insert there information about the product
+3. Implement products cards and insert there information about the product (in progress)
 4. Make footer for all pages
 5. User service
 6. Order service

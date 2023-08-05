@@ -25,6 +25,10 @@ public class TeaShopConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/files/**")
                 .addResourceLocations("/WEB-INF/images/");
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("/WEB-INF/views/js/");
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/WEB-INF/views/css/");
     }
 
     @Override
