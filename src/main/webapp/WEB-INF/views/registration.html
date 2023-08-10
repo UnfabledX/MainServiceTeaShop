@@ -1,29 +1,67 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
 <head>
-    <title>Registration</title>
     <meta charset="UTF-8">
-    <style>
-        .error {
-            color: #ff0000;
-        }
-    </style>
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h1 th:text="#{registration}"/>
+<div th:replace="~{utils/header :: header-registration}"></div>
 
-<form action="#" th:action="@{/registration}" th:object="${registration}" method="post">
-    <table>
-        <tr>
-            <td><label th:text="#{label.name}"/></td>
-            <td><label>
-                <input type="text" th:field="*{name}" />
-            </label></td>
-            <td><p th:errors="*{name}" th:errorclass="error"></p></td>
-        </tr>
-        <tr>
-            <td colspan="3"> <input type="submit" th:value="#{add.registration}"/> </td>
-        </tr>
-    </table>
-</form>
+<div class="container mt-5">
+    <div class="row mt-2">
+        <div th:if="${param.success}" class=" alert alert-info" th:text="#{registration.successful} + ' '">
+            Registration successful,
+            please check your email to complete your registration. <br/>
+        </div>
+    </div>
+
+    <div th:if="${param.errorUserExists}" class="col-sm-8">
+        <p class="alert alert-info alert-dismissible" th:text="#{user.exists}">
+            User name is already in use. Please, choose another name</p>
+    </div>
+
+    <div th:if="${param.errorEmailExists}" class="col-sm-8">
+        <p class="alert alert-info alert-dismissible" th:text="#{email.exists}">
+            User email is already in use. Please, choose another email</p>
+    </div>
+
+    <h2 th:text="#{user.register}">Registration Form:</h2>
+    <form action="#" th:action="@{/register}" method="post" th:object="${user}">
+        <div class="form-group">
+            <label for="username" th:text="#{user.name}"></label>
+            <input type="text" id="username" name="username"
+                   class="form-control mb-4 col-4" th:field="*{userName}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password" th:text="#{user.password}"></label>
+            <input type="password" id="password" name="password"
+                   class="form-control mb-4 col-4" th:field="*{password}" required>
+        </div>
+        <div class="form-group">
+            <label for="retypePass" th:text="#{reenter.password} + ':'"></label>
+            <input type="password" id="retypePass" name="retypePass"
+                   class="form-control mb-4 col-4" required>
+        </div>
+        <p th:if="${passwordError != null}" th:text="${passwordError}" style="color: red"></p>
+        <div class="form-group">
+            <label for="email" th:text="#{user.email}"></label>
+            <input type="email" id="email" name="email"
+                   class="form-control mb-4 col-4" th:field="*{email}" required>
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="#{user.create}">Register</button>
+    </form>
+    <br/>
+    <div class="form-group">Registered already? <a href="#" th:href="@{/login}">
+        Login here.
+    </a></div>
+</div>
 </body>
 </html>

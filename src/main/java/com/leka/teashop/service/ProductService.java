@@ -1,12 +1,10 @@
 package com.leka.teashop.service;
 
 import com.leka.teashop.model.Product;
+import com.leka.teashop.model.dto.ImageDto;
 import com.leka.teashop.model.dto.ProductDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 public interface ProductService {
 
@@ -20,4 +18,5 @@ public interface ProductService {
 
     Product findById(Long id);
 
+    Page<ImageDto> getAllImages();
 }

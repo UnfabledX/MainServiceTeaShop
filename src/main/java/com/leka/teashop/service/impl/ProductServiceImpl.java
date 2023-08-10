@@ -1,11 +1,13 @@
-package com.leka.teashop.service;
+package com.leka.teashop.service.impl;
 
-import com.leka.teashop.exceptions.NotFoundException;
+import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ImageDto;
 import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ProductRepository;
+import com.leka.teashop.service.MediaService;
+import com.leka.teashop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -89,6 +91,11 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product is not found"));
+    }
+
+    @Override
+    public Page<ImageDto> getAllImages() {
+        return mediaService.getAllImages();
     }
 
     private MultipartBodyBuilder createFrom(MultipartFile file) {

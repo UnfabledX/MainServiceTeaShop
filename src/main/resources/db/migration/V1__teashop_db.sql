@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS teashop_db;
 
 CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
 (
-    id                bigserial         NOT NULL,
+    id                bigserial,
     country           character varying NOT NULL,
     region            character varying,
     city              character varying NOT NULL,
@@ -15,16 +15,19 @@ CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
 
 CREATE TABLE IF NOT EXISTS teashop_db.users
 (
-    id         bigserial         NOT NULL,
-    user_name  character varying NOT NULL,
-    password   character varying NOT NULL,
-    email      character varying NOT NULL,
-    phone      character varying,
-    role       character varying NOT NULL,
-    address_id bigserial,
-    birthday   date,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    id                  bigserial,
+    user_name           character varying NOT NULL,
+    password            character varying NOT NULL,
+    verification_token  character varying,
+    token_time          timestamp without time zone,
+    email               character varying NOT NULL,
+    phone               character varying,
+    role                character varying NOT NULL,
+    address_id          bigint,
+    birthday            date,
+    created_at          timestamp without time zone,
+    updated_at          timestamp without time zone,
+    account_status      character varying NOT NULL,
     UNIQUE (user_name, email, phone),
     PRIMARY KEY (id),
     CONSTRAINT fk_address
@@ -34,7 +37,7 @@ CREATE TABLE IF NOT EXISTS teashop_db.users
 
 CREATE TABLE IF NOT EXISTS teashop_db.products
 (
-    id                bigserial         NOT NULL,
+    id                bigserial,
     name              character varying NOT NULL,
     description       character varying NOT NULL,
     price_ua          decimal NOT NULL,

@@ -1,8 +1,12 @@
-package com.leka.teashop.service;
+package com.leka.teashop.service.impl;
 
-import com.leka.teashop.exceptions.NotFoundException;
+import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.model.dto.ImageDto;
+import com.leka.teashop.service.MediaService;
+import com.leka.teashop.utils.WebClientPageImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
@@ -41,6 +45,7 @@ public class MediaServiceImpl implements MediaService {
      * but without an image (imageId = null). In such case, method receives
      * "-1" as id, so media service interprets this like just simple image
      * creation.
+     *
      * @param imageId Id of the updated image
      * @param builder builder with uploaded file itself
      *                representing the file resource with byte array
@@ -57,4 +62,29 @@ public class MediaServiceImpl implements MediaService {
                 .blockOptional()
                 .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
     }
+
+    @Override
+    public Page<ImageDto> getAllImages() {
+        return webClient.get()
+                .uri("/api/v1/images/all")
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<ImageDto>>() {})
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+    }
+
+    @Override
+    public ImageDto getImageByIdWithData(Long id) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/images/{id}")
+                        .queryParam("data", true)
+                        .build(id))
+                .retrieve()
+                .bodyToMono(ImageDto.class)
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+    }
+
+
 }

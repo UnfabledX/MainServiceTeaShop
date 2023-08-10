@@ -12,8 +12,8 @@
 }
 
 .quantity.buttons_added {
-    text-align: left;
-    position: relative;
+    /*text-align: left;*/
+    /*position: relative;*/
     white-space: nowrap;
     vertical-align: top;
 }

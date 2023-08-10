@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +15,7 @@
     <script data-require="jquery@3.1.1" data-semver="3.1.1"
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/product-quantity.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/product-quantity.css}"/>
+    <link rel="stylesheet" th:href="@{/css/product-quantity.css}"/>
     <!-- for product quantity-->
     <style>
         [class*="row"] {
@@ -29,20 +30,33 @@
     <div class="col" th:each="product : ${products}">
         <div class="card h-100">
             <div class="card-header">Featured</div>
-            <img src="..." class="card-img-top" alt="...">
+            <img th:src="@{'/image/' + ${product.imageId}}" class="card-img-top" alt="..." src="#">
             <div class="card-body">
                 <h5 class="card-title" th:text="${product.name}">Card title</h5>
                 <p class="card-text" th:text="${product.description}"></p>
             </div>
+            <form action="#" th:action="@{'/addToOrder/'}" th:object="${product}" method="post">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><p class="card-link" th:text="${product.priceUA + ' uah'}">Price</p></li>
-                <li class="list-group-item"><p class="card-link"
-                                               th:replace="~{utils/product-quantity :: product-quantity}">
-                </p></li>
+                <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
+                    <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
+                    <h5 style="float: right; display: inline-block" th:text="${product.priceUA + ' uah'}"></h5>
+                </li>
+                <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
+                    <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
+                    <h5 style="float: right; display: inline-block" th:text="${product.priceEU + ' euro'}"></h5>
+                </li>
+                <li class="list-group-item">
+                    <h5 style="text-align: left; display: inline-block">[[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
+                    <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
+                </li>
+                <li class="list-group-item">
+                    <input class="btn btn-primary" type="submit" style="float: right" th:value="#{add.toCart}">
+                </li>
             </ul>
-            <div class="card-footer">
-                <small class="text-body-secondary">Last updated 3 mins ago</small>
-            </div>
+            </form>
+<!--            <div class="card-footer">-->
+<!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
+<!--            </div>-->
         </div>
     </div>
 </div>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{utils/header :: header-login}"></div>
+
+<div class="container mt-5">
+
+    <div class="row mt-4">
+        <div th:if="${param.reset_success}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible fade show" role="alert">You have successfully reset your
+                password, please log in here.</p>
+        </div>
+
+        <div th:if="${param.expired}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{email.token.expired} + ' '"
+               style="display: inline-block">
+                Verification link has been expired. Please, renew verification link in order to activate your account.
+            </p> <br/>
+            <a href="#" th:href="@{/renew}" th:text="#{email.renew.link}"></a>
+            <br/>
+        </div>
+
+        <div th:if="${param.verified}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{email.verified.success}">
+                Email verified successfully, please log in here.</p>
+        </div>
+
+        <div th:if="${param.userDisabled}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{user.disabled}">
+               Verify your email first before proceeding to user login</p>
+        </div>
+
+        <div th:if="${param.corrupted}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{email.link.corrupted}">
+                Verification link is corrupted. Please, </p>
+            <br/>
+            <a href="#" th:href="@{/renew}" th:text="#{email.renew.link}"></a>
+            <br/>
+        </div>
+
+        <div th:if="${param.badCredentials}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{bad.credentials}">
+                Bad Credentials. Username or password is invalid.</p>
+        </div>
+
+        <div th:if="${param.logout}" class="col-sm-8">
+            <p class="alert alert-warning">You have been logged out.</p>
+        </div>
+    </div>
+
+    <h2 th:text="#{user.login.headline}">User Login</h2>
+    <form action="#" th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username" th:text="#{user.name}"></label>
+            <input type="text" id="username" name="username" class="form-control mb-4 col-4" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password" th:text="#{user.password}"></label>
+            <input type="password" id="password" name="password" class="form-control mb-4 col-4" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" th:text="#{user.login}">Login</button>
+    </form>
+    <br/>
+    <div class="form-group" th:text="#{Not.registered}">Not registered yet?&nbsp;&nbsp;&nbsp;</div>
+    <a class="form-group" th:href="@{/register}" th:text="#{register}">Register</a>
+</div>
+
+</body>
+</html>

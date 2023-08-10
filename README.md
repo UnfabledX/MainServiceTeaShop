@@ -5,7 +5,7 @@ Each product can have an image. Image processing occurs in the backend media-ser
 (https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database. 
 In the future all backend applications are going to communicate through eureka server. 
 In order to run application follow these steps:
-1. Install manualy Tomcat (I was using tomcat-10.1.11, oldest versions might not work because of incompability with new spring boot versions 3.+)
+1. Install manually Tomcat (I was using tomcat-10.1.11, oldest versions might not work because of incompability with new spring boot versions 3.+)
 2. If you use Docker, run docker-compose file in the root folder of the project by command in terminal `docker-compose up -d --build`. This is the simplest way to start a postgres database.
 3. Insert env variable for database connection in Tomcat configuration (In intellij Idea [Run/debug configurations] -> [Edit configurations...] -> Choose Tomcat server -> [Startup/Connections] -> Pass env variables)
 4. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
@@ -25,8 +25,10 @@ Technology used in the project:
 - Spring Boot
 - Spring MVC
 - Spring Data
+- Spring Security
 - Hibernate
 - Postgres database
 - Docker
+- Flyway
 - Thymeleaf
 - Maven

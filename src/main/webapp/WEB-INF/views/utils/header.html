@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,15 +15,15 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-home">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="#" th:src="@{/files/logo-notka.jpg}"
-                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
+                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: #f0f5fc;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: whitesmoke;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/teashop/"
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
                        th:text="#{main.page}">Home</a>
                 </li>
                 <li class="nav-item">
@@ -32,7 +33,7 @@
                     <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teashop/showAllProductsForSale" th:text="#{products}">Products</a>
+                    <a class="nav-link" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -40,9 +41,9 @@
                         Choose language
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/teashop?lang=en"
+                        <li><a class="dropdown-item" th:href="@{'/?lang=en'}" href="#"
                                th:text="#{lang.en}">English</a></li>
-                        <li><a class="dropdown-item" href="/teashop?lang=ukr"
+                        <li><a class="dropdown-item" th:href="@{'/?lang=ukr'}" href="#"
                                th:text="#{lang.ukr}">Ukrainian</a></li>
                     </ul>
                 </li>
@@ -51,22 +52,45 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <span class="nav-item"> <a class="nav-link me-2" href="#" th:text="#{login}">Login</a></span>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-addProduct">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="#" th:src="@{/files/logo-notka.jpg}"
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar" style="background-color: #f0f5fc;">
+        <div class="collapse navbar-collapse" id="navbar" style="background-color: whitesmoke;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/teashop/"
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
                        th:text="#{main.page}">Home</a>
                 </li>
                 <li class="nav-item">
@@ -76,7 +100,7 @@
                     <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teashop/showAllProductsForSale" th:text="#{products}">Products</a>
+                    <a class="nav-link" href="#" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -84,9 +108,9 @@
                         Choose language
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/teashop/product?lang=en"
+                        <li><a class="dropdown-item" th:href="@{'/product?lang=en'}" href="#"
                                th:text="#{lang.en}">English</a></li>
-                        <li><a class="dropdown-item" href="/teashop/product?lang=ukr"
+                        <li><a class="dropdown-item" th:href="@{'/product?lang=ukr'}" href="#"
                                th:text="#{lang.ukr}">Ukrainian</a></li>
                     </ul>
                 </li>
@@ -95,22 +119,42 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <span class="nav-item"> <a class="nav-link me-2" href="#" th:text="#{login}">Login</a></span>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-updateProduct">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="#" th:src="@{/files/logo-notka.jpg}"
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav1" style="background-color: #f0f5fc;">
+        <div class="collapse navbar-collapse" id="nav1" style="background-color: whitesmoke;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/teashop/"
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
                        th:text="#{main.page}">Home</a>
                 </li>
                 <li class="nav-item">
@@ -120,7 +164,7 @@
                     <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teashop/showAllProductsForSale" th:text="#{products}">Products</a>
+                    <a class="nav-link" href="#" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -139,22 +183,42 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <span class="nav-item"> <a class="nav-link me-2" href="#" th:text="#{login}">Login</a></span>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-list-of-products">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="#" th:src="@{/files/logo-notka.jpg}"
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav2" style="background-color: #f0f5fc;">
+        <div class="collapse navbar-collapse" id="nav2" style="background-color: whitesmoke;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/teashop/"
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
                        th:text="#{main.page}">Home</a>
                 </li>
                 <li class="nav-item">
@@ -164,7 +228,7 @@
                     <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teashop/showAllProductsForSale" th:text="#{products}">Products</a>
+                    <a class="nav-link" href="#" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -183,22 +247,42 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <span class="nav-item"> <a class="nav-link me-2" href="#" th:text="#{login}">Login</a></span>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-product-for-sale">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="#" th:src="@{/files/logo-notka.jpg}"
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav3" style="background-color: #f0f5fc;">
+        <div class="collapse navbar-collapse" id="nav3" style="background-color: whitesmoke;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/teashop/"
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
                        th:text="#{main.page}">Home</a>
                 </li>
                 <li class="nav-item">
@@ -208,7 +292,7 @@
                     <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teashop/showAllProductsForSale" th:text="#{products}">Products</a>
+                    <a class="nav-link" href="#" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -216,9 +300,11 @@
                         Choose language
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=en'}"
+                        <li><a class="dropdown-item"
+                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=en'}"
                                th:text="#{lang.en}">English</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=ukr'}"
+                        <li><a class="dropdown-item"
+                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=ukr'}"
                                th:text="#{lang.ukr}">Ukrainian</a></li>
                     </ul>
                 </li>
@@ -227,7 +313,155 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <span class="nav-item"> <a class="nav-link me-2" href="#" th:text="#{login}">Login</a></span>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-registration">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
+                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            NotkaTea
+        </a>
+        <div class="collapse navbar-collapse" id="navbar3" style="background-color: whitesmoke;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
+                       th:text="#{main.page}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{new}">What's New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{chooseLang}">
+                        Choose language
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{'/register?lang=en'}" href="#"
+                               th:text="#{lang.en}">English</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/register?lang=ukr'}" href="#"
+                               th:text="#{lang.ukr}">Ukrainian</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+                <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
+            </form>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-login">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
+                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            NotkaTea
+        </a>
+        <div class="collapse navbar-collapse" id="navbar4" style="background-color: whitesmoke;">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
+                       th:text="#{main.page}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{new}">What's New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{chooseLang}">
+                        Choose language
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{'/login?lang=en'}" href="#"
+                               th:text="#{lang.en}">English</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/login?lang=ukr'}" href="#"
+                               th:text="#{lang.ukr}">Ukrainian</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+                <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
+            </form>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" th:text="#{user.greeting}"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" sec:authentication="name"></a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/logout}" th:text="#{logout}">Logout</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

@@ -1,7 +1,18 @@
 To-do-list
 1. Make update page looks better (done)
-2. Implement pagination on products for sale page (in progress)
-3. Implement products cards and insert there information about the product (in progress)
-4. Make footer for all pages
-5. User service
-6. Order service
+2. Implement pagination on products for sale page (done)
+3. Implement products cards and insert there information about the product (done)
+    3.1 Insert button "Add to chart" (done)
+    3.2 Make form which accepts quantity of product and adds them to Order.
+        Thus, the logged-in user chooses necessary quantity of the same product and click
+        the button "Add to cart"
+4. Security (in progress)
+5. User service (in progress)
+    5.1 registration of the user (done)
+    5.2 confirmation of user by sending confirmation email (done)
+    5.3 verify user (in progress)
+    5.4 renew verification link if expired (in progress)
+    5.5. Implement logic when user is not verified, so he can not log in even if registered. (in progress)
+    5.6 Check to register with the same email once more. (done)
+6. Make footer for all pages
+7. Order service

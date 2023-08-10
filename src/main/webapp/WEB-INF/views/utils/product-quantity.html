@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Quantity for products</title>
 </head>
-<body th:fragment="product-quantity">
-<div class="quantity buttons_added">
+<body>
+<div class="quantity buttons_added" style="float: right; display: inline-block"
+     th:fragment="product-quantity">
     <input type="button" value="-" class="minus">
     <input type="number" step="1" min="1" max="" name="quantity" value="1"
            title="Qty" class="input-text qty text" size="4" pattern=""

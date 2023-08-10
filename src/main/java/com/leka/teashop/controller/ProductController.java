@@ -3,10 +3,12 @@ package com.leka.teashop.controller;
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ProductDto;
+import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -25,7 +28,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
+    @Value("${web.pageable.default-page-size}")
+    private int defaultPageSize;
     private final ProductService productService;
+    private final MediaService mediaService;
     private final ProductMapper productMapper;
 
     @GetMapping("product")
@@ -51,7 +57,7 @@ public class ProductController {
             pageNo = 1;
         }
         if (pageSize == null) {
-            pageSize = 9;
+            pageSize = defaultPageSize;
         }
         Page<ProductDto> dtoList = productService.getAllProducts(pageNo, pageSize, sortField, sortDirection);
         List<ProductDto> productDtoList = dtoList.getContent();
@@ -100,11 +106,16 @@ public class ProductController {
                                 @RequestParam(name = "file", required = false) MultipartFile file,
                                 HttpServletRequest httpServletRequest) {
         if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors());
             return showUpdateForm(id, model);
         }
         String deleteImage = httpServletRequest.getParameter("deleteImage");
         productService.updateProduct(request, file, deleteImage);
         return "redirect:/allProducts";
+    }
+
+    @ResponseBody
+    @GetMapping("image/{id}")
+    public byte[] getImageById(@PathVariable("id") Long id){
+        return mediaService.getImageByIdWithData(id).getData();
     }
 }
