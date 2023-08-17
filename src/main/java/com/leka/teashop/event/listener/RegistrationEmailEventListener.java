@@ -18,7 +18,6 @@ public class RegistrationEmailEventListener implements ApplicationListener<Regis
         User user = event.getUser();
         String verificationToken = user.getVerificationToken();
         String confirmationUrl = event.getConfirmationUrl() + "/verifyEmail?token=" + verificationToken;
-        String locale = event.getLocale();
-        emailService.sendVerificationEmail(user, confirmationUrl, locale);
+        emailService.sendVerificationEmail(user, confirmationUrl);
     }
 }

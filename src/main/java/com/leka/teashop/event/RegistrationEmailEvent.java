@@ -12,16 +12,10 @@ import java.util.Locale;
 public class RegistrationEmailEvent extends ApplicationEvent {
     private User user;
     private String confirmationUrl;
-    private String locale;
 
-    public RegistrationEmailEvent(User user, String confirmationUrl, String locale) {
+    public RegistrationEmailEvent(User user, String confirmationUrl) {
         super(user);
         this.user = user;
         this.confirmationUrl = confirmationUrl;
-        this.locale = locale;
-    }
-
-    public String getLocale() {
-        return locale;
     }
 }

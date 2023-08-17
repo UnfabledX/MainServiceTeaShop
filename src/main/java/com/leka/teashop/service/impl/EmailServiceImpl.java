@@ -5,6 +5,7 @@ import com.leka.teashop.email.EmailBody_UKR;
 import com.leka.teashop.model.User;
 import com.leka.teashop.service.EmailService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -28,9 +29,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendVerificationEmail(User user, String confirmationUrl, String locale) {
+    public void sendVerificationEmail(User user, String confirmationUrl) {
         StringWriter writer = new StringWriter();
-        boolean isEnglish = "en".equalsIgnoreCase(locale);
+        String language = LocaleContextHolder.getLocale().getLanguage();
+        boolean isEnglish = "en".equalsIgnoreCase(language);
         String emailBody = isEnglish ?
                 EmailBody_EN.getVerificationEmailBody(user, confirmationUrl, timeToLive) :
                 EmailBody_UKR.getVerificationEmailBody(user, confirmationUrl, timeToLive);
@@ -47,14 +49,4 @@ public class EmailServiceImpl implements EmailService {
         mailSender.send(prep);
     }
 
-//    public void sendPasswordResetVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-//        String subject = "Password Reset Request Verification";
-//        String senderName = "Users Verification Service";
-//        String mailContent = "<p> Hi, " + user.getFirstName() + ", </p>" +
-//                "<p><b>You recently requested to reset your password,</b>" + "" +
-//                "Please, follow the link below to complete the action.</p>" +
-//                "<a href=\"" + url + "\">Reset password</a>" +
-//                "<p> Users Registration Portal Service";
-//        emailMessage(subject, senderName, mailContent, mailSender, user);
-//    }
 }

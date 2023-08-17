@@ -16,8 +16,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final ApplicationEventPublisher publisher;
+    private final LocaleChangeInterceptor localeChangeInterceptor;
     @Value("${email.user-registered.time-to-live}")
     private int timeToLive;
 
@@ -58,9 +61,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         String appContextUrl = request.getRequestURL()
                 .toString().replace(request.getServletPath(), "");
-        //todo send email in English or Ukrainian
-        String lang = request.getParameter("lang");
-        publisher.publishEvent(new RegistrationEmailEvent(user, appContextUrl, lang));
+        publisher.publishEvent(new RegistrationEmailEvent(user, appContextUrl));
     }
 
     @Override
@@ -96,7 +97,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             String appContextUrl = request.getRequestURL()
                     .toString().replace(request.getServletPath(), "");
-            publisher.publishEvent(new RegistrationEmailEvent(user, appContextUrl, request.getParameter("lang")));
+            publisher.publishEvent(new RegistrationEmailEvent(user, appContextUrl));
             result = "redirect:/renew?success";
         } else {
             result = "redirect:/renew?invalid";

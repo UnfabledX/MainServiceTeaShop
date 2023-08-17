@@ -59,9 +59,8 @@
         <button type="submit" class="btn btn-primary" th:text="#{user.create}">Register</button>
     </form>
     <br/>
-    <div class="form-group">Registered already? <a href="#" th:href="@{/login}">
-        Login here.
-    </a></div>
+    <div class="form-group" th:text="#{register.already}">Registered already? </div>
+    <a href="#" th:href="@{/login}" th:text="#{login.here}">Login here.</a>
 </div>
 </body>
 </html>
