@@ -22,4 +22,13 @@ public class ControllerExceptionHandler {
         return whereToRedirect;
     }
 
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public ModelAndView handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex){
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("exception", ex.getMessage());
+//        modelAndView.addObject("status", 403);
+//        modelAndView.addObject("url", req.getRequestURL().toString());
+//        modelAndView.setViewName("error");
+//        return modelAndView;
+//    }
 }

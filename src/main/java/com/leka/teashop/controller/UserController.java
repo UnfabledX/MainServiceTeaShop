@@ -1,21 +1,17 @@
 package com.leka.teashop.controller;
 
 
-import com.leka.teashop.event.RegistrationEmailEvent;
-import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.UserDto;
 import com.leka.teashop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -74,5 +70,15 @@ public class UserController {
     @GetMapping("/login")
     public String getLogin() {
         return "login";
+    }
+
+    @GetMapping("/error")
+    public String getError() {
+        return "error";
+    }
+
+    @GetMapping("/adminPanel")
+    public String getAdminPanel() {
+        return "admin-panel";
     }
 }

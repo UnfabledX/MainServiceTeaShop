@@ -75,15 +75,21 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public ImageDto getImageByIdWithData(Long id) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/images/{id}")
-                        .queryParam("data", true)
-                        .build(id))
-                .retrieve()
-                .bodyToMono(ImageDto.class)
-                .blockOptional()
-                .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+        ImageDto dto;
+        if (id != null) {
+            dto = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/api/v1/images/{id}")
+                            .queryParam("data", true)
+                            .build(id))
+                    .retrieve()
+                    .bodyToMono(ImageDto.class)
+                    .blockOptional()
+                    .orElseThrow(() -> new NotFoundException("Media service is unavailable"));
+        } else {
+            dto = ImageDto.builder().build();
+        }
+        return dto;
     }
 
 

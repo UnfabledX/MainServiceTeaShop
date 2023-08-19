@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{utils/header :: header-admin-panel}"></div>
+
+<div class="container mt-5">
+
+    <h2 th:text="#{admin.panel}">Admin Panel:</h2>
+
+    <div class="list-group">
+        <a href="#" th:href="@{/allProducts}" class="list-group-item list-group-item-action list-group-item-primary"
+        th:text="#{see.products}">List of products</a>
+        <a href="#" th:href="@{/product}" class="list-group-item list-group-item-action list-group-item-secondary"
+           th:text="#{add.product}">Add Product</a>
+        <a href="#" th:href="@{/users}" class="list-group-item list-group-item-action list-group-item-success"
+           th:text="#{see.users}">List of users</a>
+        <a href="#" th:href="@{/orders}" class="list-group-item list-group-item-action list-group-item-warning"
+           th:text="#{see.orders}">List of orders</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Reserved..</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-light">Reserved..</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-dark">Reserved..</a>
+    </div>
+
+</div>
+</body>
+</html>

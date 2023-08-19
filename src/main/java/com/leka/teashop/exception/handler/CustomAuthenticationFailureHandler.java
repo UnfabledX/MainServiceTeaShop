@@ -1,6 +1,5 @@
-package com.leka.teashop.security;
+package com.leka.teashop.exception.handler;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AccountStatusException;
@@ -15,7 +14,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        String contextPath = request.getContextPath();
+        String contextPath = request.getContextPath(); // in our case /teashop
         if (exception instanceof AccountStatusException) {
             response.sendRedirect(contextPath + "/login?userDisabled");
         } else {

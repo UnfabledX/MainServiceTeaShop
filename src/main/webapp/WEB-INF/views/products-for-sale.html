@@ -35,7 +35,7 @@
                 <h5 class="card-title" th:text="${product.name}">Card title</h5>
                 <p class="card-text" th:text="${product.description}"></p>
             </div>
-            <form action="#" th:action="@{'/addToOrder/'}" th:object="${product}" method="post">
+            <form action="#" th:action="@{/addToOrder}" th:object="${product}" method="post">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
                     <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>

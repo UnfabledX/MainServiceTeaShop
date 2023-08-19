@@ -5,7 +5,7 @@ To-do-list
     3.1 Insert button "Add to chart" (done)
     3.2 Make form which accepts quantity of product and adds them to Order.
         Thus, the logged-in user chooses necessary quantity of the same product and click
-        the button "Add to cart"
+        the button "Add to cart" (not started)
 4. Security (in progress)
 5. User service (in progress)
     5.1 registration of the user (done)
@@ -17,6 +17,14 @@ To-do-list
     5.7 Implement sending email with current language (if it is English -> send letter in English,
         if it is Ukrainian -> send letter in Ukrainian) (done)
     5.8 Modify time language in the email letter according to the corresponding language. (done)
-    5.9
+    ****************************
+    5.9 add-product page and edit-panel for all products - must be available for ADMIN only. (done)
+    5.10 do admin-panel page. (in progress)
+    5.11 error page (done)
+    5.12 Error "Redirecting to http://localhost:8080/teashop/image/null?continue" (done)
+         to get mistake: 1. go to page /showAllProductsForSale 2. Login the user. 3. Mistake appears.
+    5.13 user settings (in progress)
 6. Make footer for all pages
 7. Order service
+8. Cary out search feature
+9.

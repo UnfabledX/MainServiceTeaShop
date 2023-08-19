@@ -52,7 +52,6 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return productRepository.findAll(pageable)
                         .map(productMapper::toDto);
-
     }
 
     @Override
