@@ -1,5 +1,6 @@
 package com.leka.teashop.security;
 
+import com.leka.teashop.exception.handler.CustomAccessDeniedHandler;
 import com.leka.teashop.exception.handler.CustomAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -18,13 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final CustomAuthenticationFailureHandler loginFailureHandler;
-    private final AccessDeniedHandler accessDeniedHandler;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    /**
-     * 1. Instead of providing defaultSuccessUrl we instruct spring security to return
-     * to the previous visited page after successful user login.
-     * 2.
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

@@ -13,14 +13,20 @@
 <body>
 <body>
 <div class="d-flex align-items-center justify-content-center vh-100">
-  <div class="text-center">
-    <h1 class="display-1 fw-bold" th:text="${status}">404</h1>
-    <p class="fs-3"> <span class="text-danger">Opps!</span> Page not found.</p>
-    <p class="lead">
-      The page you’re looking for doesn’t exist.
-    </p>
-    <a href="#" th:href="@{/}" class="btn btn-primary">Go To The Home Page</a>
+  <div class="text-center" th:if="${exception != null}">
+    <h1 class="display-1 fw-bold" th:text="${httpStatus}">404</h1>
+    <p class="fs-3"> <span class="text-danger">[[#{oops}]]&nbsp;</span>[[#{page.forbidden}]]</p>
+    <p class="lead" th:text="${exception}"></p>
+    <a href="#" th:href="@{/}" class="btn btn-primary" th:text="#{go.home}">Go To The Home Page</a>
   </div>
+
+  <div class="text-center" th:if="${exception == null}">
+    <h1 class="display-1 fw-bold" >404</h1>
+    <p class="fs-3"> <span class="text-danger">[[#{oops}]]&nbsp;</span>[[#{page.not.found}]]</p>
+    <p class="lead" th:text="#{page.not.exists}">The page you’re looking for doesn’t exist.</p>
+    <a href="#" th:href="@{/}" class="btn btn-primary" th:text="#{go.home}">Go To The Home Page</a>
+  </div>
+
 </div>
 </body>
 </body>
