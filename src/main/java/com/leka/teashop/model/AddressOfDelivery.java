@@ -6,11 +6,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "address_deliveries")
 public class AddressOfDelivery {
@@ -33,4 +39,6 @@ public class AddressOfDelivery {
     @Column(name = "zip_code")
     private Integer zipCode;
 
+    @Column(name = "delivery_details")
+    private String deliveryDetails;
 }

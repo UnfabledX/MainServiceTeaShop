@@ -44,6 +44,9 @@ public class SecurityConfig {
                                 "/updateProduct/*",
                                 "/adminPanel"
                         ).hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(
+                                "/settings"
+                        ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
                         .authenticated())
                 .formLogin((form) -> form

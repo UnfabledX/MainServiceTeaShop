@@ -3,9 +3,12 @@ package com.leka.teashop.service.impl;
 
 import com.leka.teashop.event.RegistrationEmailEvent;
 import com.leka.teashop.exception.UserAlreadyExistsException;
+import com.leka.teashop.mapper.UserMapperImpl;
 import com.leka.teashop.model.AccountStatus;
 import com.leka.teashop.model.Role;
 import com.leka.teashop.model.User;
+import com.leka.teashop.model.dto.AddressOfDeliveryDto;
+import com.leka.teashop.model.dto.UserDetailsDto;
 import com.leka.teashop.model.dto.UserDto;
 import com.leka.teashop.repository.UserRepository;
 import com.leka.teashop.service.UserService;
@@ -16,10 +19,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final UserMapperImpl userDetailsMapper;
     private final ApplicationEventPublisher publisher;
-    private final LocaleChangeInterceptor localeChangeInterceptor;
     @Value("${email.user-registered.time-to-live}")
     private int timeToLive;
 
@@ -103,6 +104,12 @@ public class UserServiceImpl implements UserService {
             result = "redirect:/renew?invalid";
         }
         return result;
+    }
+
+    @Override
+    public void saveUserAndDeliveryDetails(UserDetailsDto userDetailsDto, AddressOfDeliveryDto deliveryDto, User user) {
+        userDetailsMapper.updateUserDetails(user, userDetailsDto, deliveryDto);
+        userRepository.save(user);
     }
 
 }

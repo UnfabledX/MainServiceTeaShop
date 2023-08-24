@@ -22,7 +22,7 @@ public class ControllerExceptionHandler {
         return whereToRedirect;
     }
 
-//    @ExceptionHandler(AccessDeniedException.class)
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    public ModelAndView handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex){
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.addObject("exception", ex.getMessage());

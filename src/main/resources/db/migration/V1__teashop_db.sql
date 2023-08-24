@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
     region            character varying,
     city              character varying NOT NULL,
     operator_name     character varying NOT NULL,
-    number_department integer           NOT NULL,
-    zip_code          integer           NOT NULL,
+    number_department integer,
+    zip_code          integer,
     PRIMARY KEY (id)
 
 );
