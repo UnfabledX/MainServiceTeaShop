@@ -20,9 +20,12 @@ To-do-list
     ****************************
     5.9 add-product page and edit-panel for all products - must be available for ADMIN only. (done)
     5.10 do admin-panel page. (in progress)
-        5.10.1 edit users (in progress)
-        5.10.2 see all users (in progress)
-        5.10.3 ban users (in progress)
+        5.10.1 edit users (done)
+        5.10.2 see all users (done)
+        5.10.3 ban users (done)
+        5.10.4 to do edit-user.html (done)
+        5.10.5 problem with options in edit-user.html (done)
+
     ****************************
     5.11 error page (done)
     5.12 Error "Redirecting to http://localhost:8080/teashop/image/null?continue" (solved)

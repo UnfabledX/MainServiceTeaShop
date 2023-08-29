@@ -1,9 +1,9 @@
 package com.leka.teashop.model.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Past;
+import com.leka.teashop.model.AccountStatus;
+import com.leka.teashop.model.Role;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,29 +11,30 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDetailsDto {
+public class UserDetailsDtoForAdmin {
 
+    private Long id;
     private String userName;
+    @Email(message = "{wrong.email}")
     private String email;
-
-    @NotEmpty(message = "{notEmpty.firstname}")
-    @Size(min = 2, max = 24, message = "{wrong.firstname}")
     private String firstName;
-
-    @NotEmpty(message = "{notEmpty.lastname}")
-    @Size(min = 3, max = 30, message = "{wrong.lastname}")
     private String lastName;
-
     @Pattern(regexp = "(^$)|(\\+[0-9]{3}\\s?[0-9]{2}\\s?[0-9]{3}\\s?[0-9]{4})",
             message = "{wrong.format}")
     private String phone;
-
-    @Past(message = "{wrong.date}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+    private AddressOfDeliveryDto addressOfDelivery;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
+    private Role role;
+    private AccountStatus accountStatus;
 }

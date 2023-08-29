@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Of Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <style>
+        [class*="row"] {
+            padding: 10px;
+        }
+
+        .error-style {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+    <form th:if="${userId == null}" class="row g-3" action="#" th:action="@{/editAddress}"
+          th:object="${address}" method="post">
+        <h3 th:text="#{address.delivery}">Address of delivery</h3>
+        <div class="col-0">
+            <input class="form-control" type="hidden" th:field="*{id}"/>
+        </div>
+        <div class="col-12">
+            <label for="inputCountry" class="form-label" th:text="#{country}">Country</label>
+            <input type="text" class="form-control" id="inputCountry" th:field="*{country}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('country')}"
+               th:errors="*{country}">Incorrect data</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCity" class="form-label" th:text="#{city}">City</label>
+            <input type="text" class="form-control" id="inputCity" th:field="*{city}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('city')}"
+               th:errors="*{city}">Incorrect data</p>
+        </div>
+        <div class="col-md-4">
+            <label for="inputRegion" class="form-label" th:text="#{region}">Region</label>
+            <select id="inputRegion" class="form-select" th:field="*{region}">
+                <option th:if="*{region == null}" selected="" th:text="#{choose.region}"
+                        th:value="'null'">Choose Region
+                </option>
+                <option th:if="*{region != null}" selected="" th:text="*{region}"
+                        th:value="*{region}"></option>
+                <option th:text="#{another.variant.1}" th:value="#{another.variant.2}">
+                    Another variant(describe in delivery-details section)
+                </option>
+                <option th:text="#{crymea}" th:value="#{crymea}">AR Crimea</option>
+                <option th:text="#{vinnytsky}" th:value="#{vinnytsky}">Vinnytsky</option>
+                <option th:text="#{volynsky}" th:value="#{volynsky}">Volynsky</option>
+                <option th:text="#{dnipropetrovsky}" th:value="#{dnipropetrovsky}">Dnipropetrovsky</option>
+                <option th:text="#{donetsky}" th:value="#{donetsky}">Donetsky</option>
+                <option th:text="#{zhytomyrsky}" th:value="#{zhytomyrsky}">Zhytomyrsky</option>
+                <option th:text="#{zakarpatsky}" th:value="#{zakarpatsky}">Zakarpatsky</option>
+                <option th:text="#{zaporizhsky}" th:value="#{zaporizhsky}">Zaporizhsky</option>
+                <option th:text="#{ivano-frank}" th:value="#{ivano-frank}">Ivano-Frankivsky</option>
+                <option th:text="#{kyivsky}" th:value="#{kyivsky}">Kyivsky</option>
+                <option th:text="#{kirovogradsky}" th:value="#{kirovogradsky}">Kirovogradsky</option>
+                <option th:text="#{lugansky}" th:value="#{lugansky}">Lugansky</option>
+                <option th:text="#{lvivsky}" th:value="#{lvivsky}">Lvivsky</option>
+                <option th:text="#{mykolaivsky}" th:value="#{mykolaivsky}">Mykolaivsky</option>
+                <option th:text="#{odesky}" th:value="#{odesky}">Odesky</option>
+                <option th:text="#{poltavsky}" th:value="#{poltavsky}">Poltavsky</option>
+                <option th:text="#{rivnensky}" th:value="#{rivnensky}">Rivnensky</option>
+                <option th:text="#{sumsky}" th:value="#{sumsky}">Sumsky</option>
+                <option th:text="#{ternopilsky}" th:value="#{ternopilsky}">Ternopilsky</option>
+                <option th:text="#{kharkivsky}" th:value="#{kharkivsky}">Kharkivsky</option>
+                <option th:text="#{khersonsky}" th:value="#{khersonsky}">Khersonsky</option>
+                <option th:text="#{khmelnytsky}" th:value="#{khmelnytsky}">Khmelnytsky</option>
+                <option th:text="#{cherkasky}" th:value="#{cherkasky}">Cherkasky</option>
+                <option th:text="#{chernivetsky}" th:value="#{chernivetsky}">Chernivetsky</option>
+                <option th:text="#{chernigivsky}" th:value="#{chernigivsky}">Chernigivsky</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="inputZip" th:field="*{zipCode}"/>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPostOperator" class="form-label" th:text="#{post}">Post Operator</label>
+            <input type="text" class="form-control" id="inputPostOperator" th:field="*{operatorName}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('operatorName')}"
+               th:errors="*{operatorName}">Incorrect data</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputNumber" class="form-label" th:text="#{post.depart.number}">Number of department</label>
+            <input type="text" class="form-control" id="inputNumber" th:field="*{numberOfDepartment}"/>
+        </div>
+        <div class="col-12">
+            <label for="inputDetails" class="form-label" th:text="#{delivery.details}">Delivery details
+                (optional)</label>
+            <textarea class="form-control" id="inputDetails" rows="3"
+                      th:field="*{deliveryDetails}"></textarea>
+            <p class="error-style" th:if="${#fields.hasErrors('deliveryDetails')}"
+               th:errors="*{deliveryDetails}">Incorrect data</p>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" th:text="#{save.settings}">Save settings</button>
+        </div>
+    </form>
+    <form th:if="${userId != null}" class="row g-3" action="#" th:action="@{'/createAddress/' + ${userId}}"
+          th:object="${address}" method="post">
+        <h3 th:text="#{address.delivery}">Address of delivery</h3>
+        <div class="col-0">
+            <input class="form-control" type="hidden" th:field="*{id}"/>
+        </div>
+        <div class="col-12">
+            <label for="inputCountry1" class="form-label" th:text="#{country}">Country</label>
+            <input type="text" class="form-control" id="inputCountry1" th:field="*{country}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('country')}"
+               th:errors="*{country}">Incorrect data</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCity1" class="form-label" th:text="#{city}">City</label>
+            <input type="text" class="form-control" id="inputCity1" th:field="*{city}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('city')}"
+               th:errors="*{city}">Incorrect data</p>
+        </div>
+        <div class="col-md-4">
+            <label for="inputRegion1" class="form-label" th:text="#{region}">Region</label>
+            <select id="inputRegion1" class="form-select" th:field="*{region}">
+                <option th:if="*{region == null}" selected="" th:text="#{choose.region}"
+                        th:value="'null'">Choose Region
+                </option>
+                <option th:if="*{region != null}" selected="" th:text="*{region}"
+                        th:value="*{region}"></option>
+                <option th:text="#{another.variant.1}" th:value="#{another.variant.2}">
+                    Another variant(describe in delivery-details section)
+                </option>
+                <option th:text="#{crymea}" th:value="#{crymea}">AR Crimea</option>
+                <option th:text="#{vinnytsky}" th:value="#{vinnytsky}">Vinnytsky</option>
+                <option th:text="#{volynsky}" th:value="#{volynsky}">Volynsky</option>
+                <option th:text="#{dnipropetrovsky}" th:value="#{dnipropetrovsky}">Dnipropetrovsky</option>
+                <option th:text="#{donetsky}" th:value="#{donetsky}">Donetsky</option>
+                <option th:text="#{zhytomyrsky}" th:value="#{zhytomyrsky}">Zhytomyrsky</option>
+                <option th:text="#{zakarpatsky}" th:value="#{zakarpatsky}">Zakarpatsky</option>
+                <option th:text="#{zaporizhsky}" th:value="#{zaporizhsky}">Zaporizhsky</option>
+                <option th:text="#{ivano-frank}" th:value="#{ivano-frank}">Ivano-Frankivsky</option>
+                <option th:text="#{kyivsky}" th:value="#{kyivsky}">Kyivsky</option>
+                <option th:text="#{kirovogradsky}" th:value="#{kirovogradsky}">Kirovogradsky</option>
+                <option th:text="#{lugansky}" th:value="#{lugansky}">Lugansky</option>
+                <option th:text="#{lvivsky}" th:value="#{lvivsky}">Lvivsky</option>
+                <option th:text="#{mykolaivsky}" th:value="#{mykolaivsky}">Mykolaivsky</option>
+                <option th:text="#{odesky}" th:value="#{odesky}">Odesky</option>
+                <option th:text="#{poltavsky}" th:value="#{poltavsky}">Poltavsky</option>
+                <option th:text="#{rivnensky}" th:value="#{rivnensky}">Rivnensky</option>
+                <option th:text="#{sumsky}" th:value="#{sumsky}">Sumsky</option>
+                <option th:text="#{ternopilsky}" th:value="#{ternopilsky}">Ternopilsky</option>
+                <option th:text="#{kharkivsky}" th:value="#{kharkivsky}">Kharkivsky</option>
+                <option th:text="#{khersonsky}" th:value="#{khersonsky}">Khersonsky</option>
+                <option th:text="#{khmelnytsky}" th:value="#{khmelnytsky}">Khmelnytsky</option>
+                <option th:text="#{cherkasky}" th:value="#{cherkasky}">Cherkasky</option>
+                <option th:text="#{chernivetsky}" th:value="#{chernivetsky}">Chernivetsky</option>
+                <option th:text="#{chernigivsky}" th:value="#{chernigivsky}">Chernigivsky</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="inputZip1" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="inputZip1" th:field="*{zipCode}"/>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPostOperator1" class="form-label" th:text="#{post}">Post Operator</label>
+            <input type="text" class="form-control" id="inputPostOperator1" th:field="*{operatorName}"/>
+            <p class="error-style" th:if="${#fields.hasErrors('operatorName')}"
+               th:errors="*{operatorName}">Incorrect data</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputNumber1" class="form-label" th:text="#{post.depart.number}">Number of department</label>
+            <input type="text" class="form-control" id="inputNumber1" th:field="*{numberOfDepartment}"/>
+        </div>
+        <div class="col-12">
+            <label for="inputDetails1" class="form-label" th:text="#{delivery.details}">Delivery details
+                (optional)</label>
+            <textarea class="form-control" id="inputDetails1" rows="3"
+                      th:field="*{deliveryDetails}"></textarea>
+            <p class="error-style" th:if="${#fields.hasErrors('deliveryDetails')}"
+               th:errors="*{deliveryDetails}">Incorrect data</p>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" th:text="#{save.settings}">Save settings</button>
+        </div>
+    </form>
+    <div>
+        <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}" role="button"
+           th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-outline-secondary" href="#" th:href="@{/allUsers}" role="button"
+           th:text="#{return.all.users}">Return to the users list</a>
+    </div>
+</div>
+</body>
+</html>

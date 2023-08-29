@@ -108,8 +108,9 @@
 </div>
 <!-- pagination-list-of-product-->
 <div>
-    <a href="#" th:href="@{/product}" th:text="#{add.product}"></a>&nbsp;&nbsp;&nbsp;
-    <a href="#" th:href="@{/}" th:text="#{main.page}"></a>
+    <a class="btn btn-outline-secondary" role="button" href="#" th:href="@{/product}" th:text="#{add.product}"></a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-outline-secondary" role="button" href="#" th:href="@{/adminPanel}" th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-outline-secondary" role="button" href="#" th:href="@{/}" th:text="#{main.page}"></a>
 </div>
 </body>
 </html>
