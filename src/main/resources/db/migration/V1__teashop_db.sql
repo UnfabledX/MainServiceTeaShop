@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS teashop_db.users
     created_at          timestamp without time zone,
     updated_at          timestamp without time zone,
     account_status      character varying NOT NULL,
-    UNIQUE (user_name, email, phone),
+    UNIQUE (user_name), UNIQUE (email), UNIQUE (phone),
     PRIMARY KEY (id),
     CONSTRAINT fk_address
         FOREIGN KEY (address_id)

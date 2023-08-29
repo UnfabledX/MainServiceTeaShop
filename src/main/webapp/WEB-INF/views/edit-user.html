@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <style>
+        [class*="row"] {
+            padding: 10px;
+        }
+
+        .error-style {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+    <form class="row g-3" action="#" th:action="@{/editUser}" method="post" th:object="${user}">
+        <h3 th:text="#{user.settings.page}">User settings</h3>
+        <input type="hidden" th:field="*{id}" class="form-control">
+        <div class="col-md-6">
+            <label for="inputUsername" class="form-label" th:text="#{username}">Username</label>
+            <input type="text" th:field="*{userName}" class="form-control" id="inputUsername">
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail" class="form-label" th:text="#{email}">Email</label>
+            <input type="text" th:field="*{email}" class="form-control" id="inputEmail">
+        </div>
+        <div class="col-md-6">
+            <label for="inputFirstName" class="form-label" th:text="#{first.name}">First Name</label>
+            <input type="text" class="form-control" id="inputFirstName" th:field="*{firstName}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputSecondName" class="form-label" th:text="#{last.name}">Second Name</label>
+            <input type="text" class="form-control" id="inputSecondName" th:field="*{lastName}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputPhoneNumber" class="form-label" th:text="#{phone.number}">Phone Number</label>
+            <input type="text" class="form-control" id="inputPhoneNumber" th:field="*{phone}">
+            <div id="phoneHelp" class="form-text" th:text="#{personal.data}">
+                We'll never share your personal data with anyone else.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="inputBirthday" class="form-label" th:text="#{birthday}">Birthday</label>
+            <input type="date" class="form-control" id="inputBirthday" th:field="*{birthday}">
+        </div>
+        <div class="col-md-6">
+            <label for="inputCreatedAt" class="form-label" th:text="#{user.created.at}">Created at</label>
+            <input type="datetime-local" class="form-control" id="inputCreatedAt" th:field="*{createdAt}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputUpdatedAt" class="form-label" th:text="#{user.updated.at}">Updated at</label>
+            <input type="datetime-local" class="form-control" id="inputUpdatedAt" th:field="*{updatedAt}" disabled>
+        </div>
+
+        <div class="col-md-3">
+            <label for="userRole" class="form-label" th:text="#{address.delivery}">
+                Address of delivery:
+            </label>
+            <div th:if="${user.addressOfDelivery != null}">
+                <a class="btn btn-outline-secondary" href="#"
+                   th:href="@{'/editAddress/' + ${user.addressOfDelivery.id}}"
+                   th:text="#{edit.address}" role="button">Edit address of delivery</a>
+            </div>
+            <div th:if="${user.addressOfDelivery == null}">
+                <a class="btn btn-outline-secondary" href="#" th:href="@{'/createAddress/' + ${user.id}}"
+                   th:text="#{create.address}" role="button">Create address of delivery</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <label for="userRole" class="form-label" th:text="#{choose.user.role}">
+                Choose user role:
+            </label>
+            <select class="form-select" aria-label="Default select example" id="userRole"
+                    th:field="*{role}">
+                <option selected th:text="*{role}" th:value="*{role}"></option>
+                <option th:if="${user.role != 'USER'}" th:value="'USER'" th:text="'USER'"></option>
+                <option th:if="${user.role != 'ADMIN'}" th:value="'ADMIN'" th:text="'ADMIN'"></option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="userStatus" class="form-label" th:text="#{choose.user.status}">
+                Choose user status:
+            </label>
+            <select class="form-select" aria-label="Default select example" id="userStatus"
+                    th:field="*{accountStatus}">
+                <option selected th:value="*{accountStatus}" th:text="*{accountStatus}"></option>
+                <option th:if="${user.accountStatus != 'ACTIVE'}" th:value="'ACTIVE'" th:text="'ACTIVE'"></option>
+                <option th:if="${user.accountStatus != 'BANNED'}" th:value="'BANNED'" th:text="'BANNED'"></option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" th:text="#{save.settings}">Save settings</button>
+        </div>
+    </form>
+    <div>
+        <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}" role="button"
+           th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-outline-secondary" href="#" th:href="@{/allUsers}" role="button"
+           th:text="#{return.all.users}">Return to the users list</a>
+    </div>
+</div>
+</body>
+</html>

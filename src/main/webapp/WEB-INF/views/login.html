@@ -36,9 +36,14 @@
                 Email verified successfully, please log in here.</p>
         </div>
 
-        <div th:if="${param.userDisabled}" class="col-sm-8">
+        <div th:if="${param.userInactive}" class="col-sm-8">
             <p class="alert alert-info alert-dismissible" th:text="#{user.disabled}">
                Verify your email first before proceeding to user login</p>
+        </div>
+
+        <div th:if="${param.userBanned}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible" th:text="#{user.banned}">
+                You are banned. For more information leave a comment in "Contacts" section below</p>
         </div>
 
         <div th:if="${param.corrupted}" class="col-sm-8">

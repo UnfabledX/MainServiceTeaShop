@@ -61,10 +61,15 @@
             <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert an image for the product</label>
             <label><input class="form-control" type="file" name="file" id="formFile"></label>
         </div>
-        <input class="btn btn-primary" type="submit" th:value="#{add.product}">
+        <input class="btn btn-success" type="submit" th:value="#{add.product}">
     </form>
     <br/>
-    <a href="/teashop/allProducts" th:text="#{see.products}"></a>
+    <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}"
+            th:text="#{return.admin.panel}" role="button">Return to admin panel</a>
+
+    <a class="btn btn-outline-secondary" href="#" th:href="@{/allProducts}"
+        th:text="#{see.products}" role="button">List of Products</a>
+    <br/>
 </div>
 
 </body>

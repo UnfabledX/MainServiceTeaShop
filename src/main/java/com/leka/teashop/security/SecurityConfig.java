@@ -42,7 +42,13 @@ public class SecurityConfig {
                                 "/delete/*",
                                 "/edit/*",
                                 "/updateProduct/*",
-                                "/adminPanel"
+                                "/adminPanel",
+                                "/allUsers",
+                                "/editAddress/*",
+                                "/editAddress",
+                                "/createAddress/*",
+                                "/createDeliveryAddress",
+                                "/editUser/*"
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/settings"

@@ -2,6 +2,7 @@ package com.leka.teashop.service.impl;
 
 
 import com.leka.teashop.event.RegistrationEmailEvent;
+import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.exception.UserAlreadyExistsException;
 import com.leka.teashop.mapper.UserMapperImpl;
 import com.leka.teashop.model.AccountStatus;
@@ -9,6 +10,7 @@ import com.leka.teashop.model.Role;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.AddressOfDeliveryDto;
 import com.leka.teashop.model.dto.UserDetailsDto;
+import com.leka.teashop.model.dto.UserDetailsDtoForAdmin;
 import com.leka.teashop.model.dto.UserDto;
 import com.leka.teashop.repository.UserRepository;
 import com.leka.teashop.service.UserService;
@@ -16,6 +18,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,6 +116,30 @@ public class UserServiceImpl implements UserService {
     public void saveUserAndDeliveryDetails(UserDetailsDto userDetailsDto, AddressOfDeliveryDto deliveryDto, User user) {
         userDetailsMapper.updateUserDetails(user, userDetailsDto, deliveryDto);
         userRepository.save(user);
+    }
+
+    @Override
+    public Page<UserDetailsDtoForAdmin> getAllUsers(Integer pageNo, Integer pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return userRepository.findAll(pageable)
+                .map(userDetailsMapper::toUsersDetailsDtoForAdmin);
+    }
+
+    @Override
+    public UserDetailsDtoForAdmin findById(Long userId) {
+        return userRepository.findById(userId)
+                .map(userDetailsMapper::toUsersDetailsDtoForAdmin)
+                .orElseThrow(() -> new NotFoundException("The user is not found!"));
+    }
+
+    @Override
+    public void updateUserDetails(UserDetailsDtoForAdmin userDto) {
+        User currentUser = userRepository.findUserByEmail(userDto.getEmail())
+                .orElseThrow(() -> new NotFoundException("The user is not found!"));
+        userDetailsMapper.updateUserDetails(currentUser, userDto);
+        userRepository.save(currentUser);
     }
 
 }

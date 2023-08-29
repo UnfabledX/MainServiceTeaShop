@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -53,6 +54,7 @@ public class ResolverConfig {
         engine.setTemplateResolver(templateResolver());
         engine.setEnableSpringELCompiler(true);
         engine.addDialect(new SpringSecurityDialect());
+        engine.addDialect(new Java8TimeDialect());
         return engine;
     }
 }

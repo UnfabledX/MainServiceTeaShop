@@ -4,10 +4,15 @@ import com.leka.teashop.model.AddressOfDelivery;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.AddressOfDeliveryDto;
 import com.leka.teashop.model.dto.UserDetailsDto;
+import com.leka.teashop.model.dto.UserDetailsDtoForAdmin;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapperImpl {
+
+    private final AddressOfDeliveryMapper addressOfDeliveryMapper;
 
     public void updateUserDetails(User user, UserDetailsDto userDetailsDto, AddressOfDeliveryDto deliveryDto) {
         user.setFirstName(userDetailsDto.getFirstName());
@@ -29,6 +34,18 @@ public class UserMapperImpl {
         user.setAddressOfDelivery(addressOfDelivery);
     }
 
+    public void updateUserDetails(User user, UserDetailsDtoForAdmin userDetailsDto) {
+        user.setUserName(userDetailsDto.getUserName());
+        user.setEmail(userDetailsDto.getEmail());
+        user.setFirstName(userDetailsDto.getFirstName());
+        user.setLastName(userDetailsDto.getLastName());
+        user.setPhone(userDetailsDto.getPhone());
+        if (userDetailsDto.getBirthday() != null) {
+            user.setBirthday(userDetailsDto.getBirthday());
+        }
+        user.setRole(userDetailsDto.getRole());
+        user.setAccountStatus(userDetailsDto.getAccountStatus());
+    }
 
     public UserDetailsDto toDto(User user) {
         UserDetailsDto userDetailsDto = UserDetailsDto.builder()
@@ -45,6 +62,34 @@ public class UserMapperImpl {
         }
         if (user.getBirthday() != null) {
             userDetailsDto.setBirthday(user.getBirthday());
+        }
+        return userDetailsDto;
+    }
+
+    public UserDetailsDtoForAdmin toUsersDetailsDtoForAdmin(User user) {
+        AddressOfDeliveryDto addressDto = addressOfDeliveryMapper.toDto(user.getAddressOfDelivery());
+        UserDetailsDtoForAdmin userDetailsDto = UserDetailsDtoForAdmin.builder()
+                .id(user.getId())
+                .userName(user.getUsername())
+                .email(user.getEmail())
+                .addressOfDelivery(addressDto)
+                .role(user.getRole())
+                .accountStatus(user.getAccountStatus())
+                .createdAt(user.getCreatedAt()).build();
+        if (user.getFirstName() != null) {
+            userDetailsDto.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            userDetailsDto.setLastName(user.getLastName());
+        }
+        if (user.getPhone() != null){
+            userDetailsDto.setPhone(user.getPhone());
+        }
+        if (user.getBirthday() != null) {
+            userDetailsDto.setBirthday(user.getBirthday());
+        }
+        if (user.getUpdatedAt()!= null){
+            userDetailsDto.setUpdatedAt(user.getUpdatedAt());
         }
         return userDetailsDto;
     }

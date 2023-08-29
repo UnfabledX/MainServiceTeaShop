@@ -32,11 +32,11 @@
         <h3 th:text="#{user.settings.page}">User settings</h3>
         <div class="col-md-6">
             <label for="inputUsername" class="form-label" th:text="#{username}">Username</label>
-            <input type="text" th:placeholder="${user.userName}" class="form-control" id="inputUsername" disabled>
+            <input type="text" th:placeholder="*{userName}" class="form-control" id="inputUsername" disabled>
         </div>
         <div class="col-md-6">
             <label for="inputEmail" class="form-label" th:text="#{email}">Email</label>
-            <input type="text" th:placeholder="${user.email}" class="form-control" id="inputEmail" disabled>
+            <input type="text" th:placeholder="*{email}" class="form-control" id="inputEmail" disabled>
         </div>
         <div class="col-md-6">
             <label for="inputFirstName" class="form-label" th:text="#{first.name}">First Name</label>
@@ -45,7 +45,7 @@
                th:errors="*{firstName}">Incorrect data</p>
         </div>
         <div class="col-md-6">
-            <label for="inputSecondName" class="form-label" th:text="#{second.name}">Second Name</label>
+            <label for="inputSecondName" class="form-label" th:text="#{last.name}">Second Name</label>
             <input type="text" class="form-control" id="inputSecondName" th:field="*{lastName}">
             <p class="error-style" th:if="${#fields.hasErrors('lastName')}"
                th:errors="*{lastName}">Incorrect data</p>
@@ -64,25 +64,22 @@
             <input type="date" class="form-control" id="inputBirthday" th:field="*{birthday}">
             <p class="error-style" th:if="${#fields.hasErrors('birthday')}"
                th:errors="*{birthday}">Incorrect data</p>
-<!--            <div id="birthdayHelp" class="form-text" th:text="#{birthday.info}">-->
-<!--                Birthday must be in the format 15-03-2007, where 15-days, 03-month, 2007-year-->
-<!--            </div>-->
         </div>
         <br/><br/><br/>
         <div class="row g-3" th:object="${address}">
             <h3 th:text="#{address.delivery}">Address of delivery</h3>
             <div class="col-0">
-                <input class="form-control" type="hidden" th:field="*{id}">
+                <input class="form-control" type="hidden" th:field="*{id}"/>
             </div>
             <div class="col-12">
                 <label for="inputCountry" class="form-label" th:text="#{country}">Country</label>
-                <input type="text" class="form-control" id="inputCountry" th:field="*{country}">
+                <input type="text" class="form-control" id="inputCountry" th:field="*{country}"/>
                 <p class="error-style" th:if="${#fields.hasErrors('country')}"
                    th:errors="*{country}">Incorrect data</p>
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label" th:text="#{city}">City</label>
-                <input type="text" class="form-control" id="inputCity" th:field="*{city}">
+                <input type="text" class="form-control" id="inputCity" th:field="*{city}"/>
                 <p class="error-style" th:if="${#fields.hasErrors('city')}"
                    th:errors="*{city}">Incorrect data</p>
             </div>
@@ -124,17 +121,17 @@
             </div>
             <div class="col-md-2">
                 <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip" th:field="*{zipCode}">
+                <input type="text" class="form-control" id="inputZip" th:field="*{zipCode}"/>
             </div>
             <div class="col-md-6">
                 <label for="inputPostOperator" class="form-label" th:text="#{post}">Post Operator</label>
-                <input type="text" class="form-control" id="inputPostOperator" th:field="*{operatorName}">
+                <input type="text" class="form-control" id="inputPostOperator" th:field="*{operatorName}"/>
                 <p class="error-style" th:if="${#fields.hasErrors('operatorName')}"
                    th:errors="*{operatorName}">Incorrect data</p>
             </div>
             <div class="col-md-6">
                 <label for="inputNumber" class="form-label" th:text="#{post.depart.number}">Number of department</label>
-                <input type="text" class="form-control" id="inputNumber" th:field="*{numberOfDepartment}">
+                <input type="text" class="form-control" id="inputNumber" th:field="*{numberOfDepartment}"/>
             </div>
             <div class="col-12">
                 <label for="inputDetails" class="form-label" th:text="#{delivery.details}">Delivery details
