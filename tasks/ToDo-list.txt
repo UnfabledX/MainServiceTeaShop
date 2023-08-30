@@ -19,7 +19,7 @@ To-do-list
     5.8 Modify time language in the email letter according to the corresponding language. (done)
     ****************************
     5.9 add-product page and edit-panel for all products - must be available for ADMIN only. (done)
-    5.10 do admin-panel page. (in progress)
+    5.10 do admin-panel page. (done)
         5.10.1 edit users (done)
         5.10.2 see all users (done)
         5.10.3 ban users (done)
@@ -39,7 +39,11 @@ To-do-list
            Change birthday date format when loading setting page
     5.17 PROBLEMS with saving regions (solved)
 
-6. Make footer for all pages (not started)
-7. Order service (not started)
+
+6. Order service (in progress)
+
+7. Welcome page - do background image (not solved)
+
+7. Make footer for all pages (not started)
 8. Cary out search feature (not started)
 9.

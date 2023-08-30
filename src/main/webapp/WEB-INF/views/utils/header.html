@@ -13,14 +13,19 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-home">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-home">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -52,7 +57,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -80,14 +85,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-addProduct">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-addProduct">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -119,7 +129,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -147,14 +157,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-updateProduct">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-updateProduct">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav1" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav1" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav1">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -186,7 +201,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -214,14 +229,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-list-of-products">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-list-of-products">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav2" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav2" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav2">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -253,7 +273,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -281,14 +301,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-product-for-sale">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-product-for-sale">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav3" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav3" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav3" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -322,7 +347,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -350,14 +375,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-registration">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-registration">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar3" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar3" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar3" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -389,7 +419,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -417,14 +447,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-login">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-login">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar4" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar4" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar4" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -456,7 +491,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -484,14 +519,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-admin-panel">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-admin-panel">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar5" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar5" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar5" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -523,7 +563,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -551,14 +591,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-user-settings">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-user-settings">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="navbar6" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbar6" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar6">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -590,7 +635,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
@@ -618,14 +663,19 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" th:fragment="header-list-of-users">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-list-of-users">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
             <img th:src="@{images/logo-notka.jpg}"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
-        <div class="collapse navbar-collapse" id="nav7" style="background-color: whitesmoke;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav7" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav7">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -657,7 +707,7 @@
                 <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false" th:text="#{login.register}">
