@@ -17,11 +17,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class MediaServiceImpl implements MediaService {
 
-    private final WebClient webClient;
+    private final WebClient mediaWebClient;
 
     @Override
     public ImageDto uploadImageThrough(MultipartBodyBuilder builder) {
-        return webClient.post()
+        return mediaWebClient.post()
                 .uri("/api/v1/images/upload")
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(builder.build()))
@@ -33,7 +33,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public void deleteImageById(Long imageId) {
-        webClient.delete()
+        mediaWebClient.delete()
                 .uri("/api/v1/images/delete/{id}", imageId)
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -53,7 +53,7 @@ public class MediaServiceImpl implements MediaService {
      */
     @Override
     public ImageDto updateImageById(Long imageId, MultipartBodyBuilder builder) {
-        return webClient.put()
+        return mediaWebClient.put()
                 .uri("/api/v1/images/update/{id}", imageId != null ? imageId : "-1")
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(builder.build()))
@@ -65,7 +65,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Page<ImageDto> getAllImages() {
-        return webClient.get()
+        return mediaWebClient.get()
                 .uri("/api/v1/images/all")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<ImageDto>>() {})
@@ -77,7 +77,7 @@ public class MediaServiceImpl implements MediaService {
     public ImageDto getImageByIdWithData(Long id) {
         ImageDto dto;
         if (id != null) {
-            dto = webClient.get()
+            dto = mediaWebClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/api/v1/images/{id}")
                             .queryParam("data", true)

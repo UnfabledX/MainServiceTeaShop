@@ -19,7 +19,6 @@
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <maven-compiler-plugin-lombok.version>1.18.24</maven-compiler-plugin-lombok.version>
         <maven-compiler-plugin-lombok-mapstruct.version>0.2.0</maven-compiler-plugin-lombok-mapstruct.version>
-        <jjwt.version>0.11.5</jjwt.version>
         <thymeleaf-springsecurity6.version>3.1.2.RELEASE</thymeleaf-springsecurity6.version>
 
     </properties>

@@ -15,27 +15,40 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${base.url.for.webclient}")
-    private String BASE_URL;
+    @Value("${media.webclient.base-url}")
+    private String MEDIA_BASE_URL;
+    @Value("${order.webclient.base-url}")
+    private String ORDER_BASE_URL;
     public final int TIMEOUT = 1000;
 
-    @Bean(name = "webClient")
-    public WebClient webClientWithTimeout() {
+    @Bean(name = "mediaWebClient")
+    public WebClient mediaWebClientWithTimeout() {
         final int memorySize = 20 * 1024 * 1024; //20MB
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(clientCodecConfigurer ->
                         clientCodecConfigurer.defaultCodecs().maxInMemorySize(memorySize))
                 .build();
-        HttpClient httpClient = HttpClient.create()
+        return WebClient.builder()
+                .baseUrl(MEDIA_BASE_URL)
+                .clientConnector(new ReactorClientHttpConnector(getHttpClient()))
+                .exchangeStrategies(strategies)
+                .build();
+    }
+
+    @Bean(name = "orderWebClient")
+    public WebClient orderWebClientWithTimeout() {
+        return WebClient.builder()
+                .baseUrl(ORDER_BASE_URL)
+                .clientConnector(new ReactorClientHttpConnector(getHttpClient()))
+                .build();
+    }
+
+    private HttpClient getHttpClient() {
+        return HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, TIMEOUT)
                 .doOnConnected(conn -> {
                     conn.addHandlerLast(new ReadTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS));
                     conn.addHandlerLast(new WriteTimeoutHandler(TIMEOUT, TimeUnit.MILLISECONDS));
                 });
-        return WebClient.builder()
-                .baseUrl(BASE_URL)
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .exchangeStrategies(strategies)
-                .build();
     }
 }

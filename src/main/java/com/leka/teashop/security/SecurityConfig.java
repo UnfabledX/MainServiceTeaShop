@@ -51,7 +51,8 @@ public class SecurityConfig {
                                 "/editUser/*"
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
-                                "/settings"
+                                "/settings",
+                                "/addToOrder"
                         ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
                         .authenticated())

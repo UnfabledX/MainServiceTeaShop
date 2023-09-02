@@ -18,9 +18,16 @@
         .error-style{
             color: red;
         }
+        #user_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
     </style>
 </head>
-<body>
+<body id="user_body" th:style="'background-image:url(' + @{/images/background-user-settings.jpeg} + ');'"
+      data-bs-theme="dark">
+
 <div th:replace="~{utils/header :: header-user-settings}"></div>
 <div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
     <div class="row mt-2">

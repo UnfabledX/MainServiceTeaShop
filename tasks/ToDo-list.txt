@@ -25,7 +25,6 @@ To-do-list
         5.10.3 ban users (done)
         5.10.4 to do edit-user.html (done)
         5.10.5 problem with options in edit-user.html (done)
-
     ****************************
     5.11 error page (done)
     5.12 Error "Redirecting to http://localhost:8080/teashop/image/null?continue" (solved)
@@ -39,11 +38,28 @@ To-do-list
            Change birthday date format when loading setting page
     5.17 PROBLEMS with saving regions (solved)
 
-
 6. Order service (in progress)
+    6.1. create order microservice (done)
+    6.2  when user doesn't login, bring the message "login before adding item to cart" (done)
+    6.3
 
-7. Welcome page - do background image (not solved)
+
+7. Welcome page - do background image (in progress)
 
 7. Make footer for all pages (not started)
 8. Cary out search feature (not started)
-9.
+
+
+
+9. PROBLEMS:
+    9.1 when updating product from the second page so after updating list-of-products goes to first page
+    instead of staying on the second one. (fixed)
+    9.2 avoid redirection on product-for-sale page when adding the product to the cart.
+    Check js piece of code on this page. (in progress)
+    9.3 Problem when redirecting from the product-for-sale page to welcome page when the user wants to authorize.
+    Replicate mistake: go to the product-for-sale page -> click login -> authorize -> when redirecting to "/"
+    receive mistake 404 (spring adds (http://localhost:8080/teashop/...?continue) three dots - why?)
+    (solved by adding viewResolver in registry)
+    9.4 set ua-locale when starting application (in progress)
+    9.5 set opacity for background image. (not started)
+    9.6

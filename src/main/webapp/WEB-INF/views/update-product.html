@@ -18,15 +18,22 @@
         .error-style {
             color: #ff0000;
         }
+        #update_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
     </style>
+
 </head>
-<body>
+<body id="update_body" th:style="'background-image:url(' + @{/images/background-update-product.jpeg} + ');'"
+      data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-updateProduct}"></div>
 
 <br/><br/>
 <h1 th:text="#{update.product}" style="text-align: center"/>
 <div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
-    <form action="#" th:action="@{'/updateProduct/' + ${request.id}}" th:object="${request}"
+    <form action="#" th:action="@{'/updateProduct/' + ${request.id} + '?page=' + ${page}}" th:object="${request}"
           enctype="multipart/form-data" method="post">
         <div class="form-outline mb-2">
             <input class="form-control" type="hidden" th:field="*{id}">

@@ -1,5 +1,6 @@
 package com.leka.teashop.model;
 
+import com.leka.teashop.model.dto.OrderDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,6 +80,9 @@ public class User implements UserDetails {
     @Column(name = "account_status")
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
+
+    @Transient
+    private OrderDto currentOrderDto;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

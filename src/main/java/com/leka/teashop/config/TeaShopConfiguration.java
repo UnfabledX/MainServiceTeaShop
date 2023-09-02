@@ -33,10 +33,16 @@ public class TeaShopConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/css/**")
                 .addResourceLocations("/WEB-INF/views/css/");
     }
-
+    /**
+     * The Method adds view to default link "/".
+     * Link "/..." is also resolved, because registering view controller
+     * prevents error 404 which appears when after user login the redirection to
+     * welcome page occurs by path "../teashop/...?continue"
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("welcome-page");
+        registry.addViewController("/...").setViewName("welcome-page");
     }
 
     @Override

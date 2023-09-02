@@ -77,6 +77,11 @@
                         <li><a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
                     </ul>
                 </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/cart}">
+                        <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                    </a>
+                </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
                 </li>
@@ -148,6 +153,11 @@
                         <li><a class="dropdown-item" th:href="@{/orders}" th:text="#{user.orders}">Orders</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
                     </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/cart}">
+                        <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
                     <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
@@ -366,6 +376,11 @@
                         <li><a class="dropdown-item" th:href="@{/orders}" th:text="#{user.orders}">Orders</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
                     </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/cart}">
+                        <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
                     <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
@@ -654,6 +669,11 @@
                         <li><a class="dropdown-item" th:href="@{/orders}" th:text="#{user.orders}">Orders</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
                     </ul>
+                </li>
+                <li class="nav-item" sec:authorize="!isAnonymous()">
+                    <a class="nav-link" href="#" th:href="@{/cart}">
+                        <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                    </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>

@@ -76,9 +76,11 @@ public class ProductController {
 
     @GetMapping("edit/{id}")
     public String showUpdateForm(@PathVariable("id") Long id,
+                                 @RequestParam(name = "page", required = false) Integer page,
                                  Model model) {
         Product productFromDB = productService.findById(id);
         model.addAttribute("request", productMapper.toDto(productFromDB));
+        model.addAttribute("page", page);
         return "update-product";
     }
 
@@ -104,13 +106,14 @@ public class ProductController {
                                 BindingResult result, Model model,
                                 @PathVariable(name = "id") Long id,
                                 @RequestParam(name = "file", required = false) MultipartFile file,
-                                HttpServletRequest httpServletRequest) {
+                                @RequestParam(name = "page", required = false) Integer page,
+                                HttpServletRequest servletRequest) {
         if (result.hasErrors()) {
-            return showUpdateForm(id, model);
+            return showUpdateForm(id, page, model);
         }
-        String deleteImage = httpServletRequest.getParameter("deleteImage");
+        String deleteImage = servletRequest.getParameter("deleteImage");
         productService.updateProduct(request, file, deleteImage);
-        return "redirect:/allProducts";
+        return "redirect:/allProducts?page=" + page;
     }
 
     @ResponseBody

@@ -10,8 +10,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
+    <style>
+        #login_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body id="login_body" th:style="'background-image:url(' + @{/images/background-login.jpeg} + ');'"
+      data-bs-theme="dark">
+
 <div th:replace="~{utils/header :: header-login}"></div>
 
 <div class="container mt-5">

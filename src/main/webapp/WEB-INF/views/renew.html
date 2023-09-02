@@ -10,8 +10,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
+    <style>
+        #renew_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body id="renew_body" th:style="'background-image:url(' + @{/images/background-renew.jpeg} + ');'"
+      data-bs-theme="dark">
 <div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
     <h2 th:text="#{renew.link.form}">Renew Link Form:</h2>
     <div class="row mt-2">

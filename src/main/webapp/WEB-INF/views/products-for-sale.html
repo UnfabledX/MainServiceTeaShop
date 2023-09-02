@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,9 @@
                 <h5 class="card-title" th:text="${product.name}">Card title</h5>
                 <p class="card-text" th:text="${product.description}"></p>
             </div>
-            <form action="#" th:action="@{/addToOrder}" th:object="${product}" method="post">
+            <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
+                  th:object="${product}" method="post" name="productForm" id="productForm">
+                <input type="hidden" th:value="${product.id}" th:name="id">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
                     <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
@@ -50,7 +52,8 @@
                     <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
                 </li>
                 <li class="list-group-item">
-                    <input class="btn btn-primary" type="submit" style="float: right" th:value="#{add.toCart}">
+                    <input class="btn btn-primary" type="submit" id="liveToastButton"
+                           style="float: right" th:value="#{add.toCart}">
                 </li>
             </ul>
             </form>
@@ -60,6 +63,35 @@
         </div>
     </div>
 </div>
+<!-- message when product added to cart-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div th:id="liveToast" class="toast" role="status" aria-live="polite"
+         data-bs-delay="5000" aria-atomic="true" sec:authorize="!isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="#{product.added.toCart}" style="font-size: medium; color: forestgreen">
+            You've added the item to the cart.
+        </div>
+    </div>
+    <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
+         data-bs-delay="5000" aria-atomic="true" sec:authorize="isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" th:text="#{login.first.beforeCart}" style="font-size: medium; color: #ef5757">
+            Login first before adding the item to the cart.
+        </div>
+    </div>
+</div>
+<!-- message when product added to cart-->
+
 <!-- pagination-list-of-product-->
 <div th:if="${totalPages > 1}">
     <nav aria-label="Page navigation">
@@ -104,5 +136,23 @@
     </nav>
 </div>
 <!-- pagination-list-of-product-->
+
+<script type="text/javascript">
+    $(document).on('submit', '#productForm', function(){
+        const toastLivePopUpWindow = document.getElementById('liveToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLivePopUpWindow);
+        $.ajax({
+            type: $(this).attr('method'),
+            url: this.action,
+            data: $(this).serialize(),
+            context: this,
+            success: function() {
+                toastBootstrap.show();
+            }
+        });
+        return false;
+    });
+
+</script>
 </body>
 </html>

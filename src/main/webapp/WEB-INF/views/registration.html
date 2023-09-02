@@ -10,8 +10,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
+    <style>
+        #register_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body id="register_body" th:style="'background-image:url(' + @{/images/background-register.jpeg} + ');'"
+      data-bs-theme="dark">
+
 <div th:replace="~{utils/header :: header-registration}"></div>
 
 <div class="container mt-5">
@@ -54,10 +63,12 @@
         <div class="form-group">
             <label for="email" th:text="#{user.email}"></label>
             <input type="email" id="email" name="email"
-                   class="form-control mb-4 col-4" th:field="*{email}" required>
+                   class="form-control mb-1 col-4" th:field="*{email}" required>
             <div id="emailHelp" class="form-text" th:text="#{email.help}">
                 We'll never share your email with anyone else.</div>
         </div>
+        <br/>
+        <br/>
         <button type="submit" class="btn btn-primary" th:text="#{user.create}">Register</button>
     </form>
     <br/>
