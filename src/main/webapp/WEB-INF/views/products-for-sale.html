@@ -150,6 +150,8 @@
                 toastBootstrap.show();
             }
         });
+        //update counter in the header
+        $('#items-counter').load(location.href + ' #items-counter');
         return false;
     });
 

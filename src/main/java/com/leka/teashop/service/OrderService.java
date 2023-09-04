@@ -5,6 +5,5 @@ import com.leka.teashop.model.dto.ProductDto;
 
 public interface OrderService {
 
-
     void addToOrder(User currentUser, String quantity, ProductDto productDto);
 }

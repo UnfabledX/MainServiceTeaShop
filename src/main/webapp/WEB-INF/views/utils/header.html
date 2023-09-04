@@ -69,7 +69,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -80,6 +81,9 @@
                 <li class="nav-item" sec:authorize="!isAnonymous()">
                     <a class="nav-link" href="#" th:href="@{/cart}">
                         <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                        <span th:id="items-counter"
+                              th:text="${#authentication.principal.getCurrentOrderDto() == null ? '0' :
+                                #authentication.getPrincipal().getCurrentOrderDto().getProductIdAndCount().size()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -146,7 +150,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -223,7 +228,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -295,7 +301,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -323,7 +330,7 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="nav3" >
+        <div class="collapse navbar-collapse" id="nav3">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -369,7 +376,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -380,6 +388,9 @@
                 <li class="nav-item" sec:authorize="!isAnonymous()">
                     <a class="nav-link" href="#" th:href="@{/cart}">
                         <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                        <span th:id="items-counter"
+                                th:text="${#authentication.principal.getCurrentOrderDto() == null ? '0' :
+                                #authentication.getPrincipal().getCurrentOrderDto().getProductIdAndCount().size()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -402,7 +413,7 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar3" >
+        <div class="collapse navbar-collapse" id="navbar3">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -446,7 +457,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -474,7 +486,7 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar4" >
+        <div class="collapse navbar-collapse" id="navbar4">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -518,7 +530,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -546,7 +559,7 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar5" >
+        <div class="collapse navbar-collapse" id="navbar5">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
@@ -590,7 +603,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -662,7 +676,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
@@ -673,6 +688,9 @@
                 <li class="nav-item" sec:authorize="!isAnonymous()">
                     <a class="nav-link" href="#" th:href="@{/cart}">
                         <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                        <span th:id="items-counter"
+                              th:text="${#authentication.principal.getCurrentOrderDto() == null ? '0' :
+                                #authentication.getPrincipal().getCurrentOrderDto().getProductIdAndCount().size()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -739,7 +757,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
-                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
                         [[#{user.greeting}]]<span sec:authentication="name"></span></span>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>

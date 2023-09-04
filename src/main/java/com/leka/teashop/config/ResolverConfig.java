@@ -42,7 +42,7 @@ public class ResolverConfig {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US);
+        slr.setDefaultLocale(new Locale("ukr", "UA"));
         slr.setLocaleAttributeName("current.locale");
         slr.setTimeZoneAttributeName("current.timezone");
         return slr;
