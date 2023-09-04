@@ -14,12 +14,10 @@
 <div th:replace="~{utils/header :: header-admin-panel}"></div>
 
 <div class="container mt-5">
-
     <h2 th:text="#{admin.panel}">Admin Panel:</h2>
-
     <div class="list-group">
         <a href="#" th:href="@{/allProducts}" class="list-group-item list-group-item-action list-group-item-primary"
-        th:text="#{see.products}">List of products</a>
+           th:text="#{see.products}">List of products</a>
         <a href="#" th:href="@{/product}" class="list-group-item list-group-item-action list-group-item-secondary"
            th:text="#{add.product}">Add Product</a>
         <a href="#" th:href="@{/allUsers}" class="list-group-item list-group-item-action list-group-item-success"
@@ -30,7 +28,9 @@
         <a href="#" class="list-group-item list-group-item-action list-group-item-light">Reserved..</a>
         <a href="#" class="list-group-item list-group-item-action list-group-item-dark">Reserved..</a>
     </div>
-
 </div>
+<!-- Modal for header when logout-->
+<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<!-- Modal for header when logout-->
 </body>
 </html>

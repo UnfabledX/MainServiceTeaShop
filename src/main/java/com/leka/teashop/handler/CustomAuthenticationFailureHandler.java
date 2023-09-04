@@ -1,4 +1,4 @@
-package com.leka.teashop.exception.handler;
+package com.leka.teashop.handler;
 
 import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.model.AccountStatus;

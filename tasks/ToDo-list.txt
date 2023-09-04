@@ -43,7 +43,7 @@ To-do-list
     6.2  when user doesn't login, bring the message "login before adding item to cart" (done)
     6.3  add counter for items in the cart. When a user adds product in the cart, the counter must increase (done)
     6.4  implement cart page (in progress)
-
+    6.5  implement warning message when user has a started order and wants to logout.(in progress)
 
 7. Welcome page - do background image (done)
 

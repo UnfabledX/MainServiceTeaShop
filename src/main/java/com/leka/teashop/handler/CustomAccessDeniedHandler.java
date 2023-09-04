@@ -1,4 +1,4 @@
-package com.leka.teashop.exception.handler;
+package com.leka.teashop.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

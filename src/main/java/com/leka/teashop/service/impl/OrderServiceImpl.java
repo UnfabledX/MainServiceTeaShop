@@ -17,6 +17,7 @@ import java.util.Map;
 public class OrderServiceImpl implements OrderService {
 
     private final WebClient orderWebClient;
+    private final String started = "STARTED";
 
     @Override
     public void addToOrder(User currentUser, String quantity, ProductDto productDto) {
@@ -25,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
             currentOrder = OrderDto.builder()
                     .userId(currentUser.getId())
                     .productIdAndCount(new HashMap<>())
-                    .orderStatus("STARTED").build();
+                    .orderStatus(started).build();
         } else {
             currentOrder = currentUser.getCurrentOrderDto();
         }
@@ -46,4 +47,19 @@ public class OrderServiceImpl implements OrderService {
                 .block();
         currentUser.setCurrentOrderDto(savedCurrentOrderWithId);
     }
+
+    @Override
+    public void deleteStartedOrdersWhenLogout(User currentUser) {
+        orderWebClient.delete()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/orders/delete")
+                        .queryParam("id", currentUser.getId())
+                        .queryParam("status", started)
+                        .build())
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+
 }

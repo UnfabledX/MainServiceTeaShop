@@ -78,7 +78,7 @@
         </div>
     </div>
     <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
-         data-bs-delay="5000" aria-atomic="true" sec:authorize="isAnonymous()">
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="isAnonymous()">
         <div class="toast-header">
             <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
             <strong class="me-auto">Notka Tea</strong>
@@ -137,6 +137,10 @@
 </div>
 <!-- pagination-list-of-product-->
 
+<!-- Modal for header when logout-->
+<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<!-- Modal for header when logout-->
+
 <script type="text/javascript">
     $(document).on('submit', '#productForm', function(){
         const toastLivePopUpWindow = document.getElementById('liveToast');
@@ -148,13 +152,14 @@
             context: this,
             success: function() {
                 toastBootstrap.show();
+                //update item counter
+                $('#items-counter').load(location.href + ' #items-counter');
+                //update logout processing when modal for logout needed
+                $('#dropdown-menu-with-logout').load(location.href + ' #dropdown-menu-with-logout');
             }
         });
-        //update counter in the header
-        $('#items-counter').load(location.href + ' #items-counter');
         return false;
     });
-
 </script>
 </body>
 </html>

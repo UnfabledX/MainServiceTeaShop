@@ -12,7 +12,7 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
     <style>
-        #main_body{
+        #main_body {
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -21,8 +21,14 @@
 </head>
 <body id="main_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
       data-bs-theme="dark">
-
+<!-- Header -->
 <div th:replace="~{utils/header :: header-home}"></div>
+<!-- Header -->
 
+
+
+<!-- Modal for header when logout-->
+<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<!-- Modal for header when logout-->
 </body>
 </html>

@@ -1,7 +1,8 @@
 package com.leka.teashop.security;
 
-import com.leka.teashop.exception.handler.CustomAccessDeniedHandler;
-import com.leka.teashop.exception.handler.CustomAuthenticationFailureHandler;
+import com.leka.teashop.handler.CustomAccessDeniedHandler;
+import com.leka.teashop.handler.CustomAuthenticationFailureHandler;
+import com.leka.teashop.handler.CustomLogoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ public class SecurityConfig {
 
     private final CustomAuthenticationFailureHandler loginFailureHandler;
     private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomLogoutHandler customLogoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,7 +54,8 @@ public class SecurityConfig {
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/settings",
-                                "/addToOrder"
+                                "/addToOrder",
+                                "/logout"
                         ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
                         .authenticated())
@@ -67,8 +70,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
-                        .permitAll())
+                        .logoutSuccessHandler(customLogoutHandler))
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling.accessDeniedHandler(accessDeniedHandler));
         return http.build();
