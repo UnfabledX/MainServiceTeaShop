@@ -10,12 +10,15 @@ In order to run application follow these steps:
 3. Insert env variable for database connection in Tomcat configuration (In intellij Idea [Run/debug configurations] -> [Edit configurations...] -> Choose Tomcat server -> [Startup/Connections] -> Pass env variables)
 4. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
 5. In the media server insert env variable for database connection in Run/debug configuration for run-class (MediaserverApplication.java)
-6. Run media server
-7. Run Tomcat in the teashop project.
+6. Run media server.
+7. Clone order server from https://github.com/UnfabledX/OrderService
+8. In the order server insert env variable for database connection in Run/debug configuration for run-class (OrderServiceApplication.java)
+9. Run order server.
+10. Run Tomcat in the teashop project.
 
 Features that are going to be implemented in the future:
 1. User authentication and authorization. (done)
-2. Orders processing
+2. Orders processing (in progress)
 3. Views
 4. Probably main entities will be split between microservices (so there will be like user-service, Order service, auth server etc.)
 5. And a lot of different features that will appear during application development.
@@ -30,5 +33,6 @@ Technology used in the project:
 - Postgres database
 - Docker
 - Flyway
-- Thymeleaf
+- Thymeleaf (html, css a bit)
+- Bootstrap 5
 - Maven
