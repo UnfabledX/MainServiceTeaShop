@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Of Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <!-- for product quantity-->
+    <script data-require="jquery@3.1.1" data-semver="3.1.1"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/product-quantity-cart.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/product-quantity.css}"/>
+    <!-- for product quantity-->
+    <style>
+        #cart_body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        th, td {
+            vertical-align: middle
+        }
+    </style>
+</head>
+<body data-bs-theme="dark" id="cart_body" th:style="'background-image:url(' + @{/images/background-cart.jpeg} + ');'">
+<div th:replace="~{utils/header :: header-items-cart}"></div>
+<br/><br/>
+<table class="table table-dark table-striped" th:if="${order != null}">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" th:text="#{products}">Products</th>
+        <th scope="col" th:text="#{label.quantity}">Quantity</th>
+        <th colspan="2" scope="col" th:text="#{total.price}" th:if="${#locale.getLanguage() == 'en'}">Total price,
+            EURO
+        </th>
+        <th colspan="2" scope="col" th:text="#{total.price}" th:if="${#locale.getLanguage() == 'ukr'}">Total price,
+            UAH
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product, iterCount: ${products}">
+        <th scope="row" th:text="${iterCount.count}"></th>
+        <!--        Product name-->
+        <td>
+            <img th:src="@{'/image/' + ${product.imageId}}" height="60" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
+            <span th:text="${product.name}"></span>
+        </td>
+        <!--        Product name-->
+        <!--        Quantity-->
+        <td>
+            <div class="quantity buttons_added" style="display: inline-block">
+                <a th:href="@{'/decreaseCounter/' + ${product.id}}">
+                    <input type="button" value="-" class="minus" style="color: black"></a>
+                <input type="number" step="1" min="1" max="" name="quantity"
+                       th:value="${productIdAndCount.get(product.id)}"
+                       title="Qty" class="input-text qty text" size="4" pattern=""
+                       inputmode="" style="color: wheat">
+                <a th:href="@{'/increaseCounter/' + ${product.id}}">
+                    <input type="button" value="+" class="plus" style="color: black"></a>
+            </div>
+        </td>
+        <!--        Quantity-->
+        <!--        Total price-->
+        <td>
+            <span th:if="${#locale.getLanguage() == 'ukr'}"
+                  th:text="${@priceCalculator.multiply(product.getPriceUA(), productIdAndCount.get(product.id))} + ' ' + #{currency}"/>
+            <span th:if="${#locale.getLanguage() == 'en'}"
+                  th:text="${@priceCalculator.multiply(product.getPriceEU(), productIdAndCount.get(product.id))}  + ' ' + #{currency}"/>
+        </td>
+        <!--        Total price-->
+        <td>
+            <a th:href="@{'/deleteFromCart/' + ${product.id}}" class="btn btn-outline-danger"
+               th:text="#{delete.item.from.cart}" role="button">Delete item from the cart</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" th:text="#{total.all}" style="text-align: right">Total:</td>
+        <td colspan="2" th:text="${@priceCalculator.summarizeAll(productIdAndCount)}  + ' '  + #{currency}"></td>
+    </tr>
+    <tr>
+        <td colspan="5">
+            <a class="btn btn-outline-success" role="button" th:text="#{proceed.to.address.delivery}"
+               th:href="@{/deliveryOptions}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container d-flex align-items-center justify-content-center" th:if="${order} == null">
+    <img th:if="${#locale.getLanguage() == 'en'}" th:src="@{/images/empty-cart-en.jpg}" alt="Empty cart?">
+    <img th:if="${#locale.getLanguage() == 'ukr'}" th:src="@{/images/empty-cart-ukr.jpg}" alt="Empty cart?">
+</div>
+<br/>
+
+<!-- Modal for header when logout-->
+<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<!-- Modal for header when logout-->
+
+</body>
+</html>

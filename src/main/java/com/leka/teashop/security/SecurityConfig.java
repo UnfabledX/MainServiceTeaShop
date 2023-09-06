@@ -55,7 +55,13 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/settings",
                                 "/addToOrder",
-                                "/logout"
+                                "/logout",
+                                "/cart",
+                                "/decreaseCounter/*",
+                                "/increaseCounter/*",
+                                "/deleteFromCart/*",
+                                "/deliveryOptions"
+                                //some more
                         ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
                         .authenticated())

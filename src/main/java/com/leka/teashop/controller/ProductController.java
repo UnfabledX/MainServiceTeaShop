@@ -34,12 +34,12 @@ public class ProductController {
     private final MediaService mediaService;
     private final ProductMapper productMapper;
 
-    @GetMapping("product")
+    @GetMapping("/product")
     public String getProduct(@ModelAttribute("request") ProductDto dto) {
         return "add-product";
     }
 
-    @GetMapping({"allProducts", "showAllProductsForSale"})
+    @GetMapping({"/allProducts", "/showAllProductsForSale"})
     public String getAllProducts(@RequestParam(name = "page", required = false) Integer pageNo,
                                  @RequestParam(name = "size", required = false) Integer pageSize,
                                  @RequestParam(name = "sort", required = false) String sortField,
@@ -74,7 +74,7 @@ public class ProductController {
         return urlPath.equals("allProducts") ? "list-of-products" : "products-for-sale";
     }
 
-    @GetMapping("edit/{id}")
+    @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Long id,
                                  @RequestParam(name = "page", required = false) Integer page,
                                  Model model) {
@@ -84,7 +84,7 @@ public class ProductController {
         return "update-product";
     }
 
-    @PostMapping("addProduct")
+    @PostMapping("/addProduct")
     public String addProduct(@RequestParam("file") MultipartFile file,
                              @Valid @ModelAttribute("request") ProductDto request, BindingResult result) {
         if (result.hasErrors()) {
@@ -94,14 +94,14 @@ public class ProductController {
         return "redirect:/product";
     }
 
-    @GetMapping("delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         productService.deleteById(id);
         return "redirect:/allProducts";
     }
 
     //BindingResult should be immediate to @Valid object.
-    @PostMapping("updateProduct/{id}")
+    @PostMapping("/updateProduct/{id}")
     public String updateProduct(@Valid @ModelAttribute("request") ProductDto request,
                                 BindingResult result, Model model,
                                 @PathVariable(name = "id") Long id,
@@ -117,7 +117,7 @@ public class ProductController {
     }
 
     @ResponseBody
-    @GetMapping("image/{id}")
+    @GetMapping("/image/{id}")
     public byte[] getImageById(@PathVariable("id") Long id){
         return mediaService.getImageByIdWithData(id).getData();
     }

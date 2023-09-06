@@ -61,5 +61,32 @@ public class OrderServiceImpl implements OrderService {
                 .block();
     }
 
+    @Override
+    public void decreaseCounter(Long productId, OrderDto order) {
+        Map<Long, Integer> productIdAndCount = order.getProductIdAndCount();
+        int decreasedCount = productIdAndCount.get(productId) - 1;
+        if (decreasedCount == 0) {
+            productIdAndCount.remove(productId);
+        } else {
+            productIdAndCount.put(productId, decreasedCount);
+        }
+        order.setProductIdAndCount(productIdAndCount);
+    }
+
+    @Override
+    public void increaseCounter(Long productId, OrderDto order) {
+        Map<Long, Integer> productIdAndCount = order.getProductIdAndCount();
+        Integer increasedCount = productIdAndCount.get(productId) + 1;
+        productIdAndCount.put(productId, increasedCount);
+        order.setProductIdAndCount(productIdAndCount);
+    }
+
+    @Override
+    public void deleteProductFromCart(Long productId, OrderDto order) {
+        Map<Long, Integer> productIdAndCount = order.getProductIdAndCount();
+        productIdAndCount.remove(productId);
+        order.setProductIdAndCount(productIdAndCount);
+    }
+
 
 }
