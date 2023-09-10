@@ -15,4 +15,6 @@ public interface OrderService {
     void increaseCounter(Long productId, OrderDto order);
 
     void deleteProductFromCart(Long productId, OrderDto order);
+
+    void saveOrderFinalVersion(OrderDto currentOrderDto);
 }

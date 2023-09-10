@@ -11,6 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
     <style>
         #main_body {
             background-repeat: no-repeat;
@@ -28,7 +30,16 @@
 
 
 <!-- Modal for header when logout-->
-<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
+
+<!-- Modal for complete order-->
+<div th:replace="~{utils/modals :: modal-order-complete}"></div>
+<!-- Modal for complete order-->
+
+<script th:inline="javascript" th:if="${param.successOrderCompletion}">
+    let myModal = new bootstrap.Modal(document.getElementById('modalOrder'), {});
+    myModal.show();
+</script>
 </body>
 </html>

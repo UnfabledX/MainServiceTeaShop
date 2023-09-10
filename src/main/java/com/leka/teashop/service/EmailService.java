@@ -6,4 +6,6 @@ import com.leka.teashop.model.User;
 public interface EmailService {
 
     void sendVerificationEmail(User user, String confirmationUrl);
+
+    void sendOrderDetailsEmail(User currentUser);
 }

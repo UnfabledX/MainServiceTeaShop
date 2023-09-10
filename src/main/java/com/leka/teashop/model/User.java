@@ -81,6 +81,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
+    /**
+     * A developer must be very careful changing the name
+     * of this field or the name of the getter method, because
+     * this can lead to some changes in html pages (headers...)
+     */
     @Transient
     private OrderDto currentOrderDto;
 

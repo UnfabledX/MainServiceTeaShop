@@ -4,8 +4,7 @@ import com.leka.teashop.model.User;
 
 import static com.leka.teashop.email.utils.TimeConverter.convert;
 
-public class EmailBody_UKR {
-    public static final String SUBJECT_VERIFICATION_EMAIL_UKR = "Ваша Реєстрація в онлайн магазині NotkaTea!";
+public class VerificationEmailBody_UKR {
     public static final String VERIFICATION_EMAIL_UKR = """
             <html lang="en">
             <head>

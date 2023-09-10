@@ -88,5 +88,16 @@ public class OrderServiceImpl implements OrderService {
         order.setProductIdAndCount(productIdAndCount);
     }
 
+    @Override
+    public void saveOrderFinalVersion(OrderDto currentOrder) {
+        currentOrder.setOrderStatus("IN_PROGRESS");
+        orderWebClient.post()
+                .uri("/api/v1/orders/save")
+                .body(Mono.just(currentOrder), OrderDto.class)
+                .retrieve()
+                .bodyToMono(OrderDto.class)
+                .block();
+    }
+
 
 }

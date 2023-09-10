@@ -17,11 +17,8 @@ public class UserMapperImpl {
     public void updateUserDetails(User user, UserDetailsDto userDetailsDto, AddressOfDeliveryDto deliveryDto) {
         user.setFirstName(userDetailsDto.getFirstName());
         user.setLastName(userDetailsDto.getLastName());
+        user.setPhone(userDetailsDto.getPhone());
 
-        String dtoPhone = userDetailsDto.getPhone();
-        if (!dtoPhone.isBlank()) {
-            user.setPhone(dtoPhone);
-        }
         if (userDetailsDto.getBirthday() != null) {
             user.setBirthday(userDetailsDto.getBirthday());
         }
@@ -59,10 +56,7 @@ public class UserMapperImpl {
             user.setLastName(dtoLastName);
         }
 
-        String dtoPhone = userDetailsDto.getPhone();
-        if (!dtoPhone.isBlank()) {
-            user.setPhone(dtoPhone);
-        }
+        user.setPhone(userDetailsDto.getPhone());
 
         if (userDetailsDto.getBirthday() != null) {
             user.setBirthday(userDetailsDto.getBirthday());

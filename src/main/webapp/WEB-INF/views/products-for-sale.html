@@ -38,43 +38,45 @@
             <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
                   th:object="${product}" method="post" name="productForm" id="productForm">
                 <input type="hidden" th:value="${product.id}" th:name="id">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
-                    <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
-                    <h5 style="float: right; display: inline-block" th:text="${product.priceUA + ' uah'}"></h5>
-                </li>
-                <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
-                    <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
-                    <h5 style="float: right; display: inline-block" th:text="${product.priceEU + ' euro'}"></h5>
-                </li>
-                <li class="list-group-item">
-                    <h5 style="text-align: left; display: inline-block">[[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
-                    <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
-                </li>
-                <li class="list-group-item">
-                    <input class="btn btn-primary" type="submit" id="liveToastButton"
-                           style="float: right" th:value="#{add.toCart}">
-                </li>
-            </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
+                        <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
+                        <h5 style="float: right; display: inline-block" th:text="${product.priceUA + ' uah'}"></h5>
+                    </li>
+                    <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
+                        <h5 style="text-align: left; display: inline-block" th:text="#{label.price} + ': '"></h5>
+                        <h5 style="float: right; display: inline-block" th:text="${product.priceEU + ' euro'}"></h5>
+                    </li>
+                    <li class="list-group-item">
+                        <h5 style="text-align: left; display: inline-block">
+                            [[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
+                        <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
+                    </li>
+                    <li class="list-group-item">
+                        <input class="btn btn-primary" type="submit" id="liveToastButton"
+                               style="float: right" th:value="#{add.toCart}">
+                    </li>
+                </ul>
             </form>
-<!--            <div class="card-footer">-->
-<!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
-<!--            </div>-->
+            <!--            <div class="card-footer">-->
+            <!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
+            <!--            </div>-->
         </div>
     </div>
 </div>
 <!-- message when product added to cart-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <div th:id="liveToast" class="toast" role="status" aria-live="polite"
-         data-bs-delay="5000" aria-atomic="true" sec:authorize="!isAnonymous()">
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="!isAnonymous()">
         <div class="toast-header">
             <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
             <strong class="me-auto">Notka Tea</strong>
             <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body" th:text="#{product.added.toCart}" style="font-size: medium; color: forestgreen">
-            You've added the item to the cart.
+        <div class="toast-body" style="font-size: medium; color: forestgreen">
+            <span th:text="#{product.added.toCart}"></span> <br/>
+            <a th:href="@{/cart}" th:text="#{go.toCart}"></a>
         </div>
     </div>
     <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
@@ -85,8 +87,11 @@
             <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body" th:text="#{login.first.beforeCart}" style="font-size: medium; color: #ef5757">
-            Login first before adding the item to the cart.
+        <div class="toast-body" style="font-size: medium; color: #ef5757">
+            <span th:text="#{login.first.beforeCart}"></span> <br/>
+            <span><a th:href="@{/login}" th:text="#{login}"></a>&nbsp;&nbsp;
+                <span th:text="#{choice}"></span>&nbsp;&nbsp;
+            <a th:href="@{/register}" th:text="#{register}"></a></span>
         </div>
     </div>
 </div>
@@ -138,11 +143,11 @@
 <!-- pagination-list-of-product-->
 
 <!-- Modal for header when logout-->
-<div th:replace="~{utils/modal-for-logout :: modal-logout}"></div>
+<div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
 
 <script type="text/javascript">
-    $(document).on('submit', '#productForm', function(){
+    $(document).on('submit', '#productForm', function () {
         const toastLivePopUpWindow = document.getElementById('liveToast');
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLivePopUpWindow);
         $.ajax({
@@ -150,11 +155,11 @@
             url: this.action,
             data: $(this).serialize(),
             context: this,
-            success: function() {
+            success: function () {
                 toastBootstrap.show();
                 //update item counter
                 $('#items-counter').load(location.href + ' #items-counter');
-                //update logout processing when modal for logout needed
+                //update logout processing when modal for logout is needed
                 $('#dropdown-menu-with-logout').load(location.href + ' #dropdown-menu-with-logout');
             }
         });

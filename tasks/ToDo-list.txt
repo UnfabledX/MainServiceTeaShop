@@ -17,6 +17,8 @@ To-do-list
     5.7 Implement sending email with current language (if it is English -> send letter in English,
         if it is Ukrainian -> send letter in Ukrainian) (done)
     5.8 Modify time language in the email letter according to the corresponding language. (done)
+
+    5.8.1 Reset the password (not started)
     ****************************
     5.9 add-product page and edit-panel for all products - must be available for ADMIN only. (done)
     5.10 do admin-panel page. (done)
@@ -45,6 +47,12 @@ To-do-list
     6.4  implement cart page (in progress)
         6.4.1 do empty cart (done)
         6.4.2 create next step -  delivery options for user.  do not forget to save updated cart to db (in progress)
+        6.4.3 send email with completed order (in progress)
+        6.4.4 implement pop-up modal message about completed order (done)
+
+
+
+
     6.5  implement warning message when user has a started order and wants to logout.(done)
 
 7. Welcome page - do background image (done)

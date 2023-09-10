@@ -1,18 +1,25 @@
 package com.leka.teashop.controller;
 
+import com.leka.teashop.event.OrderEmailEvent;
 import com.leka.teashop.mapper.AddressOfDeliveryMapper;
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.AddressOfDelivery;
 import com.leka.teashop.model.User;
+import com.leka.teashop.model.dto.AddressOfDeliveryDto;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
+import com.leka.teashop.model.dto.UserDetailsDto;
 import com.leka.teashop.service.OrderService;
 import com.leka.teashop.service.ProductService;
+import com.leka.teashop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +38,8 @@ public class OrderController {
     private final ProductService productService;
     private final ProductMapper productMapper;
     private final AddressOfDeliveryMapper deliveryMapper;
+    private final UserService userService;
+    private final ApplicationEventPublisher publisher;
 
     @PostMapping("/addToOrder")
     public String addToOrder(@ModelAttribute("product") ProductDto productDto,
@@ -44,6 +53,13 @@ public class OrderController {
         return productController.getAllProducts(page, null, null, null, model, request);
     }
 
+    /**
+     * The main idea with the order of a user is that a user can manipulate
+     * with products as many times as he wishes (delete items, change item quantity,
+     * add items). All these operations occur in memory without actual interaction
+     * with the database. After proceeding to the next page a final version of the
+     * user order stores in database through the order service. See method @{link #getDeliveryOptionsPage()}
+     */
     @GetMapping("/cart")
     public String getCartPage(Model model, UsernamePasswordAuthenticationToken token) {
         User currentUser = (User) token.getPrincipal();
@@ -101,6 +117,29 @@ public class OrderController {
         User currentUser = (User) token.getPrincipal();
         AddressOfDelivery addressOfDelivery = currentUser.getAddressOfDelivery();
         model.addAttribute("address", deliveryMapper.toDto(addressOfDelivery));
-        return "";
+        model.addAttribute("user", currentUser);
+        return "delivery-address";
+    }
+
+    @PostMapping("/applyDeliveryOptions")
+    public String applyDeliveryOptions(@Valid @ModelAttribute("user") UserDetailsDto userDetailsDto, BindingResult resultUser,
+                                       @Valid @ModelAttribute("address") AddressOfDeliveryDto deliveryDto, BindingResult resultDelivery,
+                                       Model model, UsernamePasswordAuthenticationToken token) {
+        if (resultDelivery.hasErrors() || resultUser.hasErrors()) {
+            model.addAttribute("user", userDetailsDto);
+            model.addAttribute("address", deliveryDto);
+            return "delivery-address";
+        }
+        User currentUser = (User) token.getPrincipal();
+        //saving to database and making order status IN_PROGRESS
+        orderService.saveOrderFinalVersion(currentUser.getCurrentOrderDto());
+        //send the previous order to email
+        publisher.publishEvent(new OrderEmailEvent(currentUser));
+        //save changes in user and delivery details to database if made any
+        userService.saveUserAndDeliveryDetails(userDetailsDto, deliveryDto, currentUser);
+        //setting current order to null, because previous order is in progress and new one is not started yet.
+        currentUser.setCurrentOrderDto(null);
+        //redirecting to home page with successful message about order completion
+        return "redirect:/?successOrderCompletion";
     }
 }
