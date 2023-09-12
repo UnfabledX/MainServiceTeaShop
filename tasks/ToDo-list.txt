@@ -44,13 +44,12 @@ To-do-list
     6.1. create order microservice (done)
     6.2  when user doesn't login, bring the message "login before adding item to cart" (done)
     6.3  add counter for items in the cart. When a user adds product in the cart, the counter must increase (done)
-    6.4  implement cart page (in progress)
+    6.4  implement cart page (done)
         6.4.1 do empty cart (done)
-        6.4.2 create next step -  delivery options for user.  do not forget to save updated cart to db (in progress)
-        6.4.3 send email with completed order (in progress)
+        6.4.2 create next step -  delivery options for user.  do not forget to save updated cart to db (done)
+        6.4.3 send email with completed order (done)
         6.4.4 implement pop-up modal message about completed order (done)
-
-
+        6.4.5 redo order email format (in progress)
 
 
     6.5  implement warning message when user has a started order and wants to logout.(done)

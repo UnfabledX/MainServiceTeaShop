@@ -15,10 +15,11 @@ public class TimeConverter {
     public static String convert(LocalDateTime localDateTime) {
         Locale locale = LocaleContextHolder.getLocale();
         DateTimeFormatter dateTimeFormatter;
-        if (locale.getLanguage().equals("ukr")) {
-            dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern_UKR, locale);
-        } else {
-            dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern_EN, locale);
+        switch (locale.getLanguage()) {
+            case "ukr" -> dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern_UKR, locale);
+            case "en" -> dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern_EN, locale);
+            //other cases are possible
+            default -> dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern_EN, locale);
         }
         return dateTimeFormatter.format(localDateTime);
     }
