@@ -132,7 +132,7 @@ public class OrderController {
         }
         User currentUser = (User) token.getPrincipal();
         //saving to database and making order status IN_PROGRESS
-        orderService.saveOrderFinalVersion(currentUser.getCurrentOrderDto());
+        orderService.saveOrderFinalVersionWhenCompleted(currentUser.getCurrentOrderDto());
         //send the previous order to email
         publisher.publishEvent(new OrderEmailEvent(currentUser));
         //save changes in user and delivery details to database if made any

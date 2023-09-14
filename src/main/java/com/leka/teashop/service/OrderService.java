@@ -3,6 +3,7 @@ package com.leka.teashop.service;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
+import org.springframework.data.domain.Page;
 
 public interface OrderService {
 
@@ -16,5 +17,10 @@ public interface OrderService {
 
     void deleteProductFromCart(Long productId, OrderDto order);
 
-    void saveOrderFinalVersion(OrderDto currentOrderDto);
+    void saveOrderFinalVersionWhenCompleted(OrderDto currentOrderDto);
+
+    void updateStartedOrderToActualState(OrderDto currentOrderDto);
+
+    Page<OrderDto> getAllOrdersByUserId(Long userId, Integer pageNo, Integer pageSize,
+                                        String sortField, String sortDirection);
 }

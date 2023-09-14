@@ -14,7 +14,7 @@
             <div class="modal-header">
                 <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
                 <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold; color: #ef5757"
-                th:text="#{alert}">Alert</h1>
+                    th:text="#{alert}">Alert</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" th:text="#{logout.warning}">
@@ -24,7 +24,8 @@
             </div>
             <div class="modal-footer">
                 <a type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{cancel}">Cancel</a>
-                <a type="button" class="btn btn-primary" th:href="@{/logout}" th:text="#{logout.anyway}">Logout any way</a>
+                <a type="button" class="btn btn-primary" th:href="@{/logout}" th:text="#{logout.anyway}">Logout any
+                    way</a>
             </div>
         </div>
     </div>
@@ -38,15 +39,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: bold; color: #ef5757">NotkaTea</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: bold; color: #ef5757">
+                    NotkaTea</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <span th:text="#{order.complete.info.1}"></span> <br />
-                <span th:text="#{order.complete.info.2}"></span> <br />
-                <span th:text="#{order.complete.info.3}"></span> <br />
-                <span th:text="#{order.complete.info.4}"></span> <br />
-                <span th:text="#{order.complete.info.5}"></span> <br />
+                <span th:text="#{order.complete.info.1}"></span> <br/>
+                <span th:text="#{order.complete.info.2}"></span> <br/>
+                <span th:text="#{order.complete.info.3}"></span> <br/>
+                <span th:text="#{order.complete.info.4}"></span> <br/>
+                <span th:text="#{order.complete.info.5}"></span> <br/>
                 <span th:text="#{order.complete.info.6}"></span>
             </div>
             <div class="modal-footer">
@@ -57,5 +59,33 @@
     </div>
 </div>
 <!-- Modal for complete order-->
+
+<!-- Modal when user has no any orders-->
+<div class="modal fade" id="noOrdersModal" tabindex="-1" aria-labelledby="noOrderModalLabel"
+     aria-hidden="true" th:fragment="modal-no-orders">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+                <h1 class="modal-title fs-5" id="noOrderModalLabel" style="font-weight: bold; color: #ef5757"
+                    th:text="#{info}">Info</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" disabled></button>
+            </div>
+            <div class="modal-body" th:text="#{modal.no-orders}">
+                You have no orders at this moment. Why wouldn't you start the first one? :)
+            </div>
+            <div class="modal-footer">
+               <span>
+                   <a type="button" class="btn btn-primary" th:href="@{/}"
+                      th:text="#{go.home}">Go To The Home Page</a>&nbsp;
+                   <a type="button" class="btn btn-success" th:href="@{/showAllProductsForSale}"
+                      th:text="#{go.toProducts}">Look at some products</a>
+               </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal when user has no any orders-->
+
 </body>
 </html>

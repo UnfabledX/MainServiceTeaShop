@@ -1,10 +1,14 @@
 package com.leka.teashop.service.impl;
 
+import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.service.OrderService;
+import com.leka.teashop.utils.WebClientPageImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -66,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         Map<Long, Integer> productIdAndCount = order.getProductIdAndCount();
         int decreasedCount = productIdAndCount.get(productId) - 1;
         if (decreasedCount == 0) {
-            productIdAndCount.remove(productId);
+            deleteProductFromCart(productId, order);
         } else {
             productIdAndCount.put(productId, decreasedCount);
         }
@@ -85,11 +89,20 @@ public class OrderServiceImpl implements OrderService {
     public void deleteProductFromCart(Long productId, OrderDto order) {
         Map<Long, Integer> productIdAndCount = order.getProductIdAndCount();
         productIdAndCount.remove(productId);
-        order.setProductIdAndCount(productIdAndCount);
+        if (productIdAndCount.isEmpty()) {
+            orderWebClient.delete()
+                    .uri("/api/v1/orders/delete/{id}", order.getId())
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .block();
+        } else {
+            order.setProductIdAndCount(productIdAndCount);
+        }
+
     }
 
     @Override
-    public void saveOrderFinalVersion(OrderDto currentOrder) {
+    public void saveOrderFinalVersionWhenCompleted(OrderDto currentOrder) {
         currentOrder.setOrderStatus("IN_PROGRESS");
         orderWebClient.post()
                 .uri("/api/v1/orders/save")
@@ -97,6 +110,34 @@ public class OrderServiceImpl implements OrderService {
                 .retrieve()
                 .bodyToMono(OrderDto.class)
                 .block();
+    }
+
+    @Override
+    public void updateStartedOrderToActualState(OrderDto currentOrder) {
+        orderWebClient.post()
+                .uri("/api/v1/orders/save")
+                .body(Mono.just(currentOrder), OrderDto.class)
+                .retrieve()
+                .bodyToMono(OrderDto.class)
+                .block();
+    }
+
+    @Override
+    public Page<OrderDto> getAllOrdersByUserId(Long userId, Integer pageNo, Integer pageSize,
+                                               String sortField, String sortDirection) {
+        return orderWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/orders/{userId}")
+                        .queryParam("page", pageNo)
+                        .queryParam("size", pageSize)
+                        .queryParam("sort", sortField)
+                        .queryParam("dir", sortDirection)
+                        .build(userId))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<OrderDto>>() {
+                })
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Order service is unavailable"));
     }
 
 

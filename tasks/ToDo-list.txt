@@ -49,10 +49,9 @@ To-do-list
         6.4.2 create next step -  delivery options for user.  do not forget to save updated cart to db (done)
         6.4.3 send email with completed order (done)
         6.4.4 implement pop-up modal message about completed order (done)
-        6.4.5 redo order email format (in progress)
-
-
+        6.4.5 redo order email format (done)
     6.5  implement warning message when user has a started order and wants to logout.(done)
+    6.6  do user Orders (in progress)
 
 7. Welcome page - do background image (done)
 
@@ -72,4 +71,6 @@ To-do-list
     (solved by adding viewResolver in registry)
     9.4 set ua-locale when starting application (done) (needed to set locale by new Locale("ukr", "UA"))
     9.5 set opacity for background image. (not started)
-    9.6
+
+    9.6 when user starts an order, when removes  all items in the cart, but in orders-settings this order reflects
+    in old condition. (in progress)

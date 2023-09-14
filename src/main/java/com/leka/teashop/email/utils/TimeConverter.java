@@ -1,12 +1,13 @@
 package com.leka.teashop.email.utils;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-
+@Component(value = "timeConverter")
 public class TimeConverter {
 
     private static final String timePattern_EN = "EEEE, MMM dd, yyyy HH:mm:ss";

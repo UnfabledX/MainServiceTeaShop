@@ -49,9 +49,10 @@ public class EmailServiceImpl implements EmailService {
     public void sendOrderDetailsEmail(User currentUser) {
         Locale locale = LocaleContextHolder.getLocale();
         String emailBody = orderCompletionEmail.getEmailBody(locale, currentUser);
+        String emailSubject =  orderCompletionEmail.getSubject(locale);
 
         MimeMessagePreparator prep = getMimeMessagePreparator(currentUser, emailBody,
-                orderCompletionEmail.getSubject(locale));
+                emailSubject);
 
         mailSender.send(prep);
     }

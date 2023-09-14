@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 "/delete/*",
                                 "/edit/*",
                                 "/updateProduct/*",
-                                "/adminPanel",
+                                "/adminPanel", //+
                                 "/allUsers",
                                 "/editAddress/*",
                                 "/editAddress",
@@ -60,7 +60,8 @@ public class SecurityConfig {
                                 "/decreaseCounter/*",
                                 "/increaseCounter/*",
                                 "/deleteFromCart/*",
-                                "/deliveryOptions"
+                                "/deliveryOptions",
+                                "/userOrders"
                                 //some more
                         ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
