@@ -9,24 +9,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
+    <style>
+        #login_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body id="login_body" th:style="'background-image:url(' + @{/images/background-admin.jpeg} + ');'"
+      data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-admin-panel}"></div>
 
 <div class="container mt-5">
-    <h2 th:text="#{admin.panel}">Admin Panel:</h2>
+    <h2 th:text="#{admin.panel}" style="color: rgba(7,19,34,0.87)">Admin Panel:</h2>
     <div class="list-group">
-        <a href="#" th:href="@{/allProducts}" class="list-group-item list-group-item-action list-group-item-primary"
+        <a href="#" th:href="@{/allProducts}" class="list-group-item list-group-item-action list-group-item-light"
            th:text="#{see.products}">List of products</a>
         <a href="#" th:href="@{/product}" class="list-group-item list-group-item-action list-group-item-secondary"
            th:text="#{add.product}">Add Product</a>
-        <a href="#" th:href="@{/allUsers}" class="list-group-item list-group-item-action list-group-item-success"
+        <a href="#" th:href="@{/allUsers}" class="list-group-item list-group-item-action list-group-item-light"
            th:text="#{see.users}">List of users</a>
-        <a href="#" th:href="@{/orders}" class="list-group-item list-group-item-action list-group-item-warning"
+        <a href="#" th:href="@{/orders}" class="list-group-item list-group-item-action list-group-item-secondary"
            th:text="#{see.orders}">List of orders</a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-info">Reserved..</a>
         <a href="#" class="list-group-item list-group-item-action list-group-item-light">Reserved..</a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-dark">Reserved..</a>
     </div>
 </div>
 <!-- Modal for header when logout-->

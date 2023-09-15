@@ -15,13 +15,26 @@
         .error-style {
             color: red;
         }
+
+        #update_body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        #main-container {
+            background: rgb(0, 0, 0);
+            /* RGBa with 0.6 opacity */
+            background: rgba(0, 0, 0, 0.80);
+        }
     </style>
 </head>
-<body>
+<body data-bs-theme="dark" id="update_body"
+      th:style="'background-image:url(' + @{/images/background-update-product.jpeg} + ');'">
 <div th:replace="~{utils/header :: header-addProduct}"></div>
 
-<h2 th:text="#{add.product}" style="text-align: center"/>
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+<div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse" id="main-container">
+    <h2 th:text="#{add.product}" style="text-align: center"/>
     <form class="row g-3" action="#" th:action="@{/addProduct}" th:object="${request}"
           method="post" enctype="multipart/form-data">
         <div class="mb-3">
@@ -61,15 +74,15 @@
             <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert an image for the product</label>
             <label><input class="form-control" type="file" name="file" id="formFile"></label>
         </div>
-        <input class="btn btn-success" type="submit" th:value="#{add.product}">
+        <input class="btn btn-success mb-3" type="submit" th:value="#{add.product}">
     </form>
-    <br/>
-    <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}"
-            th:text="#{return.admin.panel}" role="button">Return to admin panel</a>
-
-    <a class="btn btn-outline-secondary" href="#" th:href="@{/allProducts}"
-        th:text="#{see.products}" role="button">List of Products</a>
-    <br/>
+</div>
+<div class="container-sm mb-2">
+    <a class="btn btn-secondary" href="#" th:href="@{/adminPanel}"
+       th:text="#{return.admin.panel}" role="button">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-secondary" href="#" th:href="@{/allProducts}"
+       th:text="#{see.products}" role="button">List of Products</a>&nbsp;&nbsp;&nbsp;
+    <a th:href="@{/}" th:text="#{main.page}" class="btn btn-secondary"></a>
 </div>
 <!-- Modal for header when logout-->
 <div th:replace="~{utils/modals :: modal-logout}"></div>

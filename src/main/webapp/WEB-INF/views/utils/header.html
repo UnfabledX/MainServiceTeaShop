@@ -180,10 +180,10 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-updateProduct">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-update-product">
     <div class="container-fluid">
         <a class="navbar-brand" href="#" th:href="@{/}">
-            <img th:src="@{images/logo-notka.jpg}"
+            <img src="/teashop/images/logo-notka.jpg"
                  alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
             NotkaTea
         </a>
@@ -213,9 +213,9 @@
                         Choose language
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{'/edit/' + ${request.id} + '?lang=en'}"
+                        <li><a class="dropdown-item" th:href="@{'/editProduct/' + ${product.id} + '?lang=en'}"
                                th:text="#{lang.en}">English</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/edit/' + ${request.id} + '?lang=ukr'}"
+                        <li><a class="dropdown-item" th:href="@{'/editProduct/' + ${product.id} + '?lang=ukr'}"
                                th:text="#{lang.ukr}">Ukrainian</a></li>
                     </ul>
                 </li>

@@ -74,12 +74,12 @@ public class ProductController {
         return urlPath.equals("allProducts") ? "list-of-products" : "products-for-sale";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id,
+    @GetMapping("/editProduct/{id}")
+    public String showUpdateForm(@PathVariable("id") Long productId,
                                  @RequestParam(name = "page", required = false) Integer page,
                                  Model model) {
-        Product productFromDB = productService.findById(id);
-        model.addAttribute("request", productMapper.toDto(productFromDB));
+        Product productFromDB = productService.findById(productId);
+        model.addAttribute("product", productMapper.toDto(productFromDB));
         model.addAttribute("page", page);
         return "update-product";
     }

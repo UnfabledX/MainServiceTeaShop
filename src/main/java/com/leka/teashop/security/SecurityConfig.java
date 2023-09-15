@@ -42,9 +42,9 @@ public class SecurityConfig {
                                 "/allProducts",
                                 "/product",
                                 "/delete/*",
-                                "/edit/*",
+                                "/editProduct/*",
                                 "/updateProduct/*",
-                                "/adminPanel", //+
+                                "/adminPanel",
                                 "/allUsers",
                                 "/editAddress/*",
                                 "/editAddress",

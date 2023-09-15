@@ -23,19 +23,24 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        #main-container{
+            background: rgb(0, 0, 0);
+            /* RGBa with 0.6 opacity */
+            background: rgba(0, 0, 0, 0.80);
+        }
     </style>
 
 </head>
 <body id="update_body" th:style="'background-image:url(' + @{/images/background-update-product.jpeg} + ');'"
       data-bs-theme="dark">
-<div th:replace="~{utils/header :: header-updateProduct}"></div>
+<div th:replace="~{utils/header :: header-update-product}"></div>
 
-<br/><br/>
-<h1 th:text="#{update.product}" style="text-align: center"/>
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
-    <form action="#" th:action="@{'/updateProduct/' + ${request.id} + '?page=' + ${page}}" th:object="${request}"
+<div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse"
+id="main-container">
+    <h2 th:text="#{update.product}" style="text-align: center;"/>
+    <form action="#" th:action="@{'/updateProduct/' + ${product.id} + '?page=' + ${page}}" th:object="${product}"
           enctype="multipart/form-data" method="post">
-        <div class="form-outline mb-2">
+        <div class="form-outline">
             <input class="form-control" type="hidden" th:field="*{id}">
         </div>
         <div class="form-outline mb-2">
@@ -74,15 +79,15 @@
             <input type="checkbox" class="form-check-input" id="deleteImage" name="deleteImage">
         </div>
         <br/>
-        <div class="form-outline mb-4">
-            <button type="submit" class="btn btn-primary btn-block mb-4"
-                    th:text="#{update.product}"/>
+        <div class="form-outline mb-2">
+            <button type="submit" class="btn btn-primary" th:text="#{update.product}"/>
         </div>
     </form>
 </div>
 <div class="container-sm">
-    <a href="/teashop/allProducts" th:text="#{see.products}"></a>&nbsp;&nbsp;&nbsp;
-    <a href="/teashop/" th:text="#{main.page}"></a>
+    <a th:href="@{/allProducts}" th:text="#{see.products}" role="button" class="btn btn-secondary"></a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-secondary" role="button" th:href="@{/adminPanel}" th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a th:href="@{/}" th:text="#{main.page}" class="btn btn-secondary"></a>
 </div>
 <!-- Modal for header when logout-->
 <div th:replace="~{utils/modals :: modal-logout}"></div>

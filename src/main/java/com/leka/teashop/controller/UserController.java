@@ -144,7 +144,6 @@ public class UserController {
         List<OrderDto> orderDtoList = allOrdersPage.getContent();
         model.addAttribute("orders", orderDtoList);
 
-
         if (!orderDtoList.isEmpty()) {
             List<List<ProductDto>> products = orderDtoList.stream()
                     .map(OrderDto::getProductIdAndCount)

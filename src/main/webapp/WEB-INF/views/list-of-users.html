@@ -20,16 +20,22 @@
         th, td {
             padding: 5px;
         }
+        #login_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
     </style>
 </head>
-<body>
+<body id="login_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
+       data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-list-of-users}"></div>
 <br/><br/>
 <div th:if="${param.success}" class="col-sm-12">
     <p class="alert alert-info alert-dismissible fade show" role="alert"
        th:text="#{changes.saved}">Changes are saved successfully.</p>
 </div>
-<table>
+<table class="table table-dark table-striped">
     <thead>
     <tr>
         <th><a th:text="#{username}"
@@ -103,6 +109,11 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <a class="btn btn-secondary" href="#" th:href="@{/adminPanel}" role="button"
+       th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-secondary" role="button" href="#" th:href="@{/}" th:text="#{main.page}"></a>
+</div>
 <br/>
 <!-- pagination-list-of-product-->
 <div th:if="${totalPages > 1}">
@@ -148,10 +159,7 @@
     </nav>
 </div>
 <!-- pagination-list-of-product-->
-<div>
-    <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}" role="button"
-       th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
-</div>
+
 <!-- Modal for header when logout-->
 <div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
