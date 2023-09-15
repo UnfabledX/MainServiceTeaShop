@@ -16,6 +16,10 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        #main-container{
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.60);
+        }
     </style>
 </head>
 <body id="login_body" th:style="'background-image:url(' + @{/images/background-login.jpeg} + ');'"
@@ -23,7 +27,7 @@
 
 <div th:replace="~{utils/header :: header-login}"></div>
 
-<div class="container mt-5">
+<div class="container mt-5" id="main-container">
 
     <div class="row mt-4">
         <div th:if="${param.reset_success}" class="col-sm-8">

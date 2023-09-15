@@ -24,6 +24,11 @@
             border-collapse: collapse;
             padding: 8px;
         }
+        #main-container{
+            background: rgb(0, 0, 0);
+            /* RGBa with 0.6 opacity */
+            background: rgba(0, 0, 0, 0.80);
+        }
     </style>
 
 </head>
@@ -31,7 +36,7 @@
       data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-user-orders}"></div>
 
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <div th:if="${!orders.isEmpty()}" th:each="order, iterStat: ${orders}">
         <p class="d-inline-flex gap-1">
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" aria-expanded="false"
@@ -44,7 +49,7 @@
             <span th:if="${order.orderStatus == 'FULFILLED'}" th:text="#{order.status.fulfilled}"></span>
             <span th:if="${order.orderStatus == 'DECLINED'}" th:text="#{order.status.declined}"></span>
         </p>
-        <div class="collapse" th:id="'collapseExample' + ${iterStat.count}" style="">
+        <div class="collapse mb-2" th:id="'collapseExample' + ${iterStat.count}" style="">
             <div class="card card-body">
                 <h5 th:text="#{order.details}"></h5>
                 <table>

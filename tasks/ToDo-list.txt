@@ -51,7 +51,8 @@ To-do-list
         6.4.4 implement pop-up modal message about completed order (done)
         6.4.5 redo order email format (done)
     6.5  implement warning message when user has a started order and wants to logout.(done)
-    6.6  do user Orders (in progress)
+    6.6  do user Orders (done)
+    6.7 do admin managing user orders (in progress)
 
 7. Welcome page - do background image (done)
 

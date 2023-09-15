@@ -19,10 +19,24 @@
         .error-style {
             color: red;
         }
+        #update_body{
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        #main-container{
+            background: rgb(0, 0, 0);
+            /* RGBa with 0.6 opacity */
+            background: rgba(0, 0, 0, 0.80);
+        }
     </style>
 </head>
-<body>
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+<body id="update_body" th:style="'background-image:url(' + @{/images/background-edit-user.jpeg} + ');'"
+      data-bs-theme="dark">
+<div th:replace="~{utils/header :: header-admin-edit-user}"></div>
+
+
+<div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <form class="row g-3" action="#" th:action="@{/editUser}" method="post" th:object="${user}">
         <h3 th:text="#{user.settings.page}">User settings</h3>
         <input type="hidden" th:field="*{id}" class="form-control">
@@ -68,7 +82,7 @@
                 Address of delivery:
             </label>
             <div th:if="${user.addressOfDelivery != null}">
-                <a class="btn btn-outline-secondary" href="#"
+                <a class="btn btn-secondary" href="#"
                    th:href="@{'/editAddress/' + ${user.addressOfDelivery.id}}"
                    th:text="#{edit.address}" role="button">Edit address of delivery</a>
             </div>
@@ -106,12 +120,12 @@
             <button type="submit" class="btn btn-primary" th:text="#{save.settings}">Save settings</button>
         </div>
     </form>
-    <div>
-        <a class="btn btn-outline-secondary" href="#" th:href="@{/adminPanel}" role="button"
-           th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-outline-secondary" href="#" th:href="@{/allUsers}" role="button"
-           th:text="#{return.all.users}">Return to the users list</a>
-    </div>
+</div>
+<div class="container-sm">
+    <a class="btn btn-secondary" href="#" th:href="@{/adminPanel}" role="button"
+       th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-secondary" href="#" th:href="@{/allUsers}" role="button"
+       th:text="#{return.all.users}">Return to the users list</a>
 </div>
 </body>
 </html>
