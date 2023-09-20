@@ -144,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
                                                String sortField, String sortDirection) {
         return orderWebClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/orders/{status}")
+                        .path("/api/v1/orders/status/{status}")
                         .queryParam("page", pageNo)
                         .queryParam("size", pageSize)
                         .queryParam("sort", sortField)
@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Integer countOrdersByOrderStatus(String status) {
         return orderWebClient.get()
-                .uri("/api/v1/orders/{status}/count", status)
+                .uri("/api/v1/orders/count/{status}", status)
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .blockOptional()

@@ -34,14 +34,14 @@
       data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-list-of-orders}"></div>
 <br/>
-<h3 th:text="#{all.orders}" style="text-align: center">All orders</h3>
+<h3 th:text="#{all.orders.in-progress}" style="text-align: center">All orders in progress</h3>
 <table class="table table-dark table-striped">
     <thead>
     <tr>
         <th scope="col">#</th>
         <!--        sorting is going to be held by userId which is present in OrderDto not by username-->
         <th scope="col"><a th:text="#{username}"
-                           th:href="@{'/allOrders?page=' + ${currentPage} + '&sort=userId&dir=' + ${reverseSortDir}}">Username</a>
+                           th:href="@{'/ordersInProcess?page=' + ${currentPage} + '&sort=userId&dir=' + ${reverseSortDir}}">Username</a>
         </th>
 
         <th scope="col" th:text="#{delivery.details}">Delivery details</th>
@@ -50,13 +50,13 @@
 
         <th scope="col">
             <a th:text="#{order.status}"
-               th:href="@{'/allOrders?page=' + ${currentPage} + '&sort=orderStatus&dir=' + ${reverseSortDir}}">
+               th:href="@{'/ordersInProcess?page=' + ${currentPage} + '&sort=orderStatus&dir=' + ${reverseSortDir}}">
                 Status
             </a>
         </th>
 
         <th scope="col"><a th:text="#{order.created-at}"
-                           th:href="@{'/allOrders?page=' + ${currentPage} + '&sort=createdAt&dir=' + ${reverseSortDir}}">First
+                           th:href="@{'/ordersInProcess?page=' + ${currentPage} + '&sort=createdAt&dir=' + ${reverseSortDir}}">First
             name</a>
         </th>
     </tr>
@@ -221,26 +221,16 @@
 
         <td>
             <div class="btn-group dropend">
-                <button th:if="${order.orderStatus == 'IN_PROGRESS'}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${order.orderStatus}"></span>
-                </button>
-                <button th:if="${order.orderStatus == 'FULFILLED'}" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${order.orderStatus}"></span>
-                </button>
-                <button th:if="${order.orderStatus == 'DECLINED'}" type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <span th:text="${order.orderStatus}"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#"
-                           th:href="@{'/changeOrderStatus/' + ${order.id}  + '?status=IN_PROGRESS' +
-                           '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
-                           th:text="#{order.in-progress}">IN PROGRESS</a></li>
-                    <li><a class="dropdown-item" href="#"
-                           th:href="@{'/changeOrderStatus/' + ${order.id}  + '?status=FULFILLED' +
+                           th:href="@{'/changeInProgressStatus/' + ${order.id}  + '?status=FULFILLED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
                            th:text="#{order.finished}">FINISHED</a></li>
                     <li><a class="dropdown-item" href="#"
-                           th:href="@{'/changeOrderStatus/' + ${order.id}  + '?status=DECLINED' +
+                           th:href="@{'/changeInProgressStatus/' + ${order.id}  + '?status=DECLINED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
                            th:text="#{order.declined}">DECLINED</a></li>
                 </ul>

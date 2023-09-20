@@ -60,7 +60,8 @@ public class NewOrderForAdminEmail implements EmailContext {
         ThymeleafEvaluationContext evaluationContext = new ThymeleafEvaluationContext(applicationContext, null);
         String appContextUrl = getAppContextUrl();
 
-        String changeOrderStatusToFulfilled = appContextUrl + "/changeOrderStatusToFulfilled/" + orderDto.getId();
+        String changeOrderStatusToFulfilled = appContextUrl + "/changeInProgressStatus/" +
+                                              orderDto.getId() + "?status=FULFILLED";
         String ordersInProcess = appContextUrl + "/ordersInProcess";
 
         Map<String, Object> variables = Map.of(

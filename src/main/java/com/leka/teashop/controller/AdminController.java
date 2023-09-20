@@ -9,6 +9,7 @@ import com.leka.teashop.service.AddressOdDeliveryService;
 import com.leka.teashop.service.OrderService;
 import com.leka.teashop.service.ProductService;
 import com.leka.teashop.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -127,60 +129,82 @@ public class AdminController {
         return "redirect:/allUsers?success";
     }
 
-    @GetMapping("/allOrders")
+    @GetMapping({"/allOrders", "/ordersInProcess"})
     public String getAllOrdersFromAllUsers(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                            @RequestParam(name = "size", defaultValue = "10") Integer pageSize,
                                            @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
                                            @RequestParam(name = "dir", defaultValue = "asc") String sortDirection,
-                                           Model model) {
-        Page<OrderDto> orderDtoPage = orderService.getAllOrders(pageNo, pageSize, sortField, sortDirection);
-        List<OrderDto> orders = orderDtoPage.getContent();
-        List<UserDetailsDtoForAdmin> users = orders.stream()
-                .map(OrderDto::getUserId)
-                .map(userService::findById)
-                .toList();
-        List<AddressOfDeliveryDto> addresses = users.stream()
-                .map(UserDetailsDtoForAdmin::getAddressOfDelivery)
-                .toList();
-        List<List<ProductDto>> products = orders.stream()
-                .map(OrderDto::getProductIdAndCount)
-                .map(m -> m.keySet()
-                        .stream()
-                        .map(productService::findById)
-                        .map(productMapper::toDto)
-                        .toList())
-                .toList();
-        List<Map<Long, Integer>> listOfProductIdAndCount = orders.stream()
-                .map(OrderDto::getProductIdAndCount)
-                .toList();
+                                           Model model, HttpServletRequest request) {
+        Page<OrderDto> orderDtoPage = null;
+        String url = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        if (url.equals(contextPath + "/ordersInProcess")) {
+            orderDtoPage = orderService.getAllOrdersByStatus("IN_PROGRESS", pageNo, pageSize, sortField, sortDirection);
+        } else if (url.equals(contextPath + "/allOrders")) {
+            orderDtoPage = orderService.getAllOrders(pageNo, pageSize, sortField, sortDirection);
+        }
+        List<OrderDto> orders = new ArrayList<>();
+        if (orderDtoPage != null) {
+            orders = orderDtoPage.getContent();
+            List<UserDetailsDtoForAdmin> users = orders.stream()
+                    .map(OrderDto::getUserId)
+                    .map(userService::findById)
+                    .toList();
+            List<AddressOfDeliveryDto> addresses = users.stream()
+                    .map(UserDetailsDtoForAdmin::getAddressOfDelivery)
+                    .toList();
+            List<List<ProductDto>> products = orders.stream()
+                    .map(OrderDto::getProductIdAndCount)
+                    .map(m -> m.keySet()
+                            .stream()
+                            .map(productService::findById)
+                            .map(productMapper::toDto)
+                            .toList())
+                    .toList();
+            List<Map<Long, Integer>> listOfProductIdAndCount = orders.stream()
+                    .map(OrderDto::getProductIdAndCount)
+                    .toList();
 
-        model.addAttribute("productsListForEachOrder", products);
-        model.addAttribute("listOfProductIdAndCount", listOfProductIdAndCount);
+            model.addAttribute("productsListForEachOrder", products);
+            model.addAttribute("listOfProductIdAndCount", listOfProductIdAndCount);
 
+            model.addAttribute("users", users);
+            model.addAttribute("addresses", addresses);
+
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("totalPages", orderDtoPage.getTotalPages());
+            model.addAttribute("totalItems", orderDtoPage.getTotalElements());
+            model.addAttribute("sortField", sortField);
+            model.addAttribute("sortDir", sortDirection);
+            model.addAttribute("reverseSortDir",
+                    Sort.Direction.ASC.name().equalsIgnoreCase(sortDirection) ? "desc" : "asc");
+        }
         model.addAttribute("orders", orders);
-        model.addAttribute("users", users);
-        model.addAttribute("addresses", addresses);
 
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", orderDtoPage.getTotalPages());
-        model.addAttribute("totalItems", orderDtoPage.getTotalElements());
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDirection);
-        model.addAttribute("reverseSortDir",
-                Sort.Direction.ASC.name().equalsIgnoreCase(sortDirection) ? "desc" : "asc");
-        return "list-of-orders-for-admin";
+        return url.equals(contextPath + "/allOrders") ? "list-of-orders-for-admin" : "list-of-orders-in-progress";
     }
 
 
-    @GetMapping("/changeOrderStatus/{id}")
+    @GetMapping({"/changeOrderStatus/{id}", "/changeInProgressStatus/{id}"})
     public String changeOrderStatus(@PathVariable("id") Long orderId,
                                     @RequestParam("status") String orderStatus,
                                     @RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                     @RequestParam(name = "size", defaultValue = "10") Integer pageSize,
                                     @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
-                                    @RequestParam(name = "dir", defaultValue = "asc") String sortDirection) {
+                                    @RequestParam(name = "dir", defaultValue = "asc") String sortDirection,
+                                    HttpServletRequest request) {
         orderService.updateOrderByIdAndWithStatus(orderId, orderStatus);
-        return "redirect:/allOrders?page=" + pageNo + "&size=" + pageSize +
-               "&sort=" + sortField + "&dir=" + sortDirection;
+        String contextPath = request.getContextPath();
+        String url = request.getRequestURI();
+        String redirect = "redirect:/adminPanel";
+        if (url.equals(contextPath + "/changeOrderStatus/" + orderId)) {
+            redirect = "redirect:/allOrders?page=" + pageNo + "&size=" + pageSize +
+                       "&sort=" + sortField + "&dir=" + sortDirection;
+        } else if (url.equals(contextPath + "/changeInProgressStatus/" + orderId)) {
+            redirect = "redirect:/ordersInProcess?page=" + pageNo + "&size=" + pageSize +
+                       "&sort=" + sortField + "&dir=" + sortDirection;
+        }
+        return redirect;
     }
+
 }

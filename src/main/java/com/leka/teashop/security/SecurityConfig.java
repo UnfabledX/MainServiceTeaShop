@@ -52,7 +52,9 @@ public class SecurityConfig {
                                 "/createDeliveryAddress",
                                 "/editUser/*",
                                 "/allOrders",
-                                "/changeOrderStatus/*"
+                                "/changeOrderStatus/*",
+                                "/ordersInProcess",
+                                "/changeInProgressStatus/*"
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/settings",
