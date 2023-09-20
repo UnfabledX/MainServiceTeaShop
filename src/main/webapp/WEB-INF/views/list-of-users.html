@@ -20,14 +20,14 @@
         th, td {
             padding: 5px;
         }
-        #login_body{
+        #main_body{
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
     </style>
 </head>
-<body id="login_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
+<body id="main_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
        data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-list-of-users}"></div>
 <br/><br/>

@@ -94,7 +94,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -178,7 +178,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
 <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -262,7 +262,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img src="/teashop/images/orders-for-admin.jpg" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -346,7 +346,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -440,7 +440,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -520,7 +520,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -600,7 +600,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -684,7 +684,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -776,7 +776,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -860,7 +860,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
@@ -952,7 +952,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -1044,7 +1044,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -1136,7 +1136,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -1220,7 +1220,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img src="/teashop/images/orders-for-admin.jpg" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -1304,7 +1304,7 @@
                     <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
                         <img src="/teashop/images/orders-for-admin.jpg" alt="Logo" width="30" height="auto"/>
                     <!--                    new orders from users that must be processed -->
-                    <span th:text="2"></span>
+                    <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -1314,5 +1314,80 @@
         </div>
     </div>
 </nav>
+
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" th:fragment="header-list-of-orders">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
+                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            NotkaTea
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav12" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav12">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
+                       th:text="#{main.page}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{new}">What's New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{chooseLang}">
+                        Choose language
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{'/allOrders?page=' + ${currentPage} + '&lang=en'}"
+                               th:text="#{lang.en}">English</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/allOrders?page=' + ${currentPage} + '&lang=ukr'}"
+                               th:text="#{lang.ukr}">Ukrainian</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+                <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
+            </form>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                        [[#{user.greeting}]]<span sec:authentication="name"></span></span>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/userOrders}" th:text="#{user.orders}">Orders</a></li>
+                        <li th:if="${#authentication.principal.getCurrentOrderDto() != null}">
+                            <a class="dropdown-item" href="#" th:text="#{logout}"
+                               data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a></li>
+                        <li th:if="${#authentication.principal.getCurrentOrderDto() == null}">
+                            <a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
+                        <img th:src="@{images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
+                        <!--                    new orders from users that must be processed -->
+                        <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 </body>
 </html>

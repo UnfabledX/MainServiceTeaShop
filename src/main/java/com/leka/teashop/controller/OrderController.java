@@ -1,6 +1,7 @@
 package com.leka.teashop.controller;
 
 import com.leka.teashop.event.OrderEmailEvent;
+import com.leka.teashop.event.OrderEmailForAdminEvent;
 import com.leka.teashop.mapper.AddressOfDeliveryMapper;
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.AddressOfDelivery;
@@ -132,14 +133,17 @@ public class OrderController {
         }
         User currentUser = (User) token.getPrincipal();
         //saving to database and making order status IN_PROGRESS
-        orderService.saveOrderFinalVersionWhenCompleted(currentUser.getCurrentOrderDto());
-        //send the previous order to email
+        orderService.saveOrderWithStatus(currentUser.getCurrentOrderDto(), "IN_PROGRESS");
+        //send the completed order to user email
         publisher.publishEvent(new OrderEmailEvent(currentUser));
+        //notify admin for the new user order by email.
+        publisher.publishEvent(new OrderEmailForAdminEvent(currentUser));
         //save changes in user and delivery details to database if made any
         userService.saveUserAndDeliveryDetails(userDetailsDto, deliveryDto, currentUser);
-        //setting current order to null, because previous order is in progress and new one is not started yet.
+        //setting current order to null, because completed order is in progress and new one is not started yet.
         currentUser.setCurrentOrderDto(null);
         //redirecting to home page with successful message about order completion
         return "redirect:/?successOrderCompletion";
     }
+
 }

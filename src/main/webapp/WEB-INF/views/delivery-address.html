@@ -26,13 +26,17 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        #main-container{
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.60);
+        }
     </style>
 </head>
 <body id="user_body" th:style="'background-image:url(' + @{/images/background-delivery-options.jpeg} + ');'"
       data-bs-theme="dark">
 
 <div th:replace="~{utils/header :: header-delivery-address}"></div>
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+<div class="container-sm" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <div class="row mt-2">
         <div th:if="${param.success}">
 

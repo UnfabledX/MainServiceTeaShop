@@ -102,8 +102,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveOrderFinalVersionWhenCompleted(OrderDto currentOrder) {
-        currentOrder.setOrderStatus("IN_PROGRESS");
+    public void saveOrderWithStatus(OrderDto currentOrder, String orderStatus) {
+        currentOrder.setOrderStatus(orderStatus);
         orderWebClient.post()
                 .uri("/api/v1/orders/save")
                 .body(Mono.just(currentOrder), OrderDto.class)
@@ -127,18 +127,79 @@ public class OrderServiceImpl implements OrderService {
                                                String sortField, String sortDirection) {
         return orderWebClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/orders/{userId}")
+                        .path("/api/v1/orders/users/{userId}")
                         .queryParam("page", pageNo)
                         .queryParam("size", pageSize)
                         .queryParam("sort", sortField)
                         .queryParam("dir", sortDirection)
                         .build(userId))
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<OrderDto>>() {
-                })
+                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<OrderDto>>() {})
                 .blockOptional()
                 .orElseThrow(() -> new NotFoundException("Order service is unavailable"));
     }
 
+    @Override
+    public Page<OrderDto> getAllOrdersByStatus(String status, Integer pageNo, Integer pageSize,
+                                               String sortField, String sortDirection) {
+        return orderWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/orders/{status}")
+                        .queryParam("page", pageNo)
+                        .queryParam("size", pageSize)
+                        .queryParam("sort", sortField)
+                        .queryParam("dir", sortDirection)
+                        .build(status))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<OrderDto>>() {})
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Order service is unavailable"));
+    }
 
+    @Override
+    public Integer countOrdersByOrderStatus(String status) {
+        return orderWebClient.get()
+                .uri("/api/v1/orders/{status}/count", status)
+                .retrieve()
+                .bodyToMono(Integer.class)
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Order service is unavailable"));
+    }
+
+    @Override
+    public Page<OrderDto> getAllOrders(Integer pageNo, Integer pageSize, String sortField, String sortDirection) {
+        return orderWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/orders")
+                        .queryParam("page", pageNo)
+                        .queryParam("size", pageSize)
+                        .queryParam("sort", sortField)
+                        .queryParam("dir", sortDirection)
+                        .build())
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<WebClientPageImpl<OrderDto>>() {})
+                .blockOptional()
+                .orElseThrow(() -> new NotFoundException("Order service is unavailable"));
+    }
+
+    @Override
+    public OrderDto getOrderById(Long orderId) {
+        return orderWebClient.get()
+                .uri("/api/v1/orders/{orderId}", orderId)
+                .retrieve()
+                .bodyToMono(OrderDto.class)
+                .block();
+    }
+
+    @Override
+    public OrderDto updateOrderByIdAndWithStatus(Long orderId, String orderStatus) {
+        return orderWebClient.put()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/v1/orders/update/{orderId}")
+                        .queryParam("status", orderStatus)
+                        .build(orderId))
+                .retrieve()
+                .bodyToMono(OrderDto.class)
+                .block();
+    }
 }

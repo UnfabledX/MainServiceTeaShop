@@ -1,6 +1,7 @@
 package com.leka.teashop.email;
 
 import com.leka.teashop.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
@@ -10,6 +11,7 @@ import static com.leka.teashop.email.utils.Subjects.SUBJECT_VERIFICATION_EMAIL_E
 import static com.leka.teashop.email.utils.Subjects.SUBJECT_VERIFICATION_EMAIL_UKR;
 import static com.leka.teashop.email.utils.TimeConverter.convert;
 
+@Component
 public class VerificationEmail implements EmailContext{
 
     @Override

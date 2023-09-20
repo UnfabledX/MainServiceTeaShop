@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+
+    <style>
+        table, th, td {
+            vertical-align: middle;
+            border: solid 1px black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h4 th:text="#{new.order.from.user}">Hello, you have a new order from the user!</h4>
+    <h4 th:text="#{order.details}">Order details:</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th th:text="#{products}">Products</th>
+            <th th:text="#{label.quantity}">Quantity</th>
+            <th th:text="#{total.price}">Total price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, iterCount: ${products}">
+            <th th:text="${iterCount.count}"></th>
+            <td>
+                <span th:text="${product.name}"></span>
+            </td>
+            <td>
+                <span th:text="${productIdAndCount.get(product.id)}"></span>
+            </td>
+            <td>
+                <span th:text="${@priceCalculator.multiply(product.getPriceUA(), productIdAndCount.get(product.id))} +
+                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'ukr'}"/>
+                <span th:text="${@priceCalculator.multiply(product.getPriceEU(), productIdAndCount.get(product.id))} +
+                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'en'}"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" th:text="#{total.all}" style="text-align: right">Total:</td>
+            <td th:text="${@priceCalculator.summarizeAll(productIdAndCount)}  + ' '  + #{currency}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h4 th:text="#{user.info}">User information:</h4>
+    <table>
+        <tr>
+            <td th:text="#{user.nickname}">Username</td>
+            <td th:text="${user.userName}">Username</td>
+        </tr>
+        <tr>
+            <td th:text="#{first.name}">First Name</td>
+            <td th:text="${user.firstName}">First Name</td>
+        </tr>
+        <tr>
+            <td th:text="#{last.name}">Last Name</td>
+            <td th:text="${user.lastName}">Last Name</td>
+        </tr>
+        <tr>
+            <td th:text="#{phone.number}">Phone number</td>
+            <td th:text="${user.phone}">Phone number</td>
+        </tr>
+        <tr>
+            <td th:text="#{birthday}">User birthday</td>
+            <td>
+                <input type="date" th:value="${user.birthday}" disabled>
+            </td>
+        </tr>
+    </table>
+
+    <h4 th:text="#{address.delivery}">Address of delivery</h4>
+    <table>
+        <tr>
+            <td th:text="#{country}">Country</td>
+            <td th:text="${address.country}">User country</td>
+        </tr>
+        <tr>
+            <td th:text="#{city}">City</td>
+            <td th:text="${address.city}">User city</td>
+        </tr>
+        <tr>
+            <td th:text="#{region}">City</td>
+            <td th:text="${address.region}">User region</td>
+        </tr>
+        <tr>
+            <td>Zip</td>
+            <td th:text="${address.zipCode}">User zipCode</td>
+        </tr>
+        <tr>
+            <td th:text="#{post}">Post Operator</td>
+            <td th:text="${address.operatorName}">User Post Operator</td>
+        </tr>
+        <tr>
+            <td th:text="#{post.depart.number}">Number of department</td>
+            <td th:text="${address.numberOfDepartment}">User Number of department</td>
+        </tr>
+        <tr>
+            <td th:text="#{delivery.details}">Delivery details (optional)</td>
+            <td>
+                <textarea rows="3" th:text="${address.deliveryDetails}" disabled> User Delivery details</textarea>
+            </td>
+        </tr>
+    </table>
+    <h4><a th:href="${changeOrderStatusToFulfilled}" href="#" th:text="#{change.order.toFulfilled}"
+           style="font-weight: bold">Change order status to FULFILLED</a></h4>
+    <h4><a th:href="${ordersInProcess}" href="#" th:text="#{see.orders.onSite}" style="font-weight: bold">
+        See all IN PROGRESS orders on site</a></h4>
+    <p>
+        <span th:text="#{best.regards}">Best Regards,</span><br/>
+        <em th:text="#{tea.team}">your NotkaTea Team</em>
+    </p>
+</div>
+</body>
+</html>

@@ -30,9 +30,10 @@
            th:text="#{add.product}">Add Product</a>
         <a href="#" th:href="@{/allUsers}" class="list-group-item list-group-item-action list-group-item-light"
            th:text="#{see.users}">List of users</a>
-        <a href="#" th:href="@{/orders}" class="list-group-item list-group-item-action list-group-item-secondary"
+        <a href="#" th:href="@{/allOrders}" class="list-group-item list-group-item-action list-group-item-secondary"
            th:text="#{see.orders}">List of orders</a>
-        <a href="#" class="list-group-item list-group-item-action list-group-item-light">Reserved..</a>
+        <a th:href="@{/ordersInProcess}" href="#" class="list-group-item list-group-item-action list-group-item-light"
+           th:text="#{see.orders.in-progress}">List of orders in progress</a>
     </div>
 </div>
 <!-- Modal for header when logout-->

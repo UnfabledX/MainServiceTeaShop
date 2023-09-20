@@ -17,10 +17,22 @@ public interface OrderService {
 
     void deleteProductFromCart(Long productId, OrderDto order);
 
-    void saveOrderFinalVersionWhenCompleted(OrderDto currentOrderDto);
+    void saveOrderWithStatus(OrderDto currentOrderDto, String orderStatus);
 
     void updateStartedOrderToActualState(OrderDto currentOrderDto);
 
     Page<OrderDto> getAllOrdersByUserId(Long userId, Integer pageNo, Integer pageSize,
                                         String sortField, String sortDirection);
+
+    Page<OrderDto> getAllOrdersByStatus(String status, Integer pageNo, Integer pageSize,
+                                        String sortField, String sortDirection);
+
+    Integer countOrdersByOrderStatus(String status);
+
+    Page<OrderDto> getAllOrders(Integer pageNo, Integer pageSize, String sortField,
+                                String sortDirection);
+
+    OrderDto getOrderById(Long orderId);
+
+    OrderDto updateOrderByIdAndWithStatus(Long orderId, String orderStatus);
 }

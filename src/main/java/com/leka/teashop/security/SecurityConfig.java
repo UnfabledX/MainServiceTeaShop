@@ -50,7 +50,9 @@ public class SecurityConfig {
                                 "/editAddress",
                                 "/createAddress/*",
                                 "/createDeliveryAddress",
-                                "/editUser/*"
+                                "/editUser/*",
+                                "/allOrders",
+                                "/changeOrderStatus/*"
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/settings",
