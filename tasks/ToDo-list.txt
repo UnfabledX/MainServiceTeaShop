@@ -18,7 +18,6 @@ To-do-list
         if it is Ukrainian -> send letter in Ukrainian) (done)
     5.8 Modify time language in the email letter according to the corresponding language. (done)
 
-    5.8.1 Reset the password (not started)
     ****************************
     5.9 add-product page and edit-panel for all products - must be available for ADMIN only. (done)
     5.10 do admin-panel page. (done)
@@ -40,7 +39,7 @@ To-do-list
            Change birthday date format when loading setting page
     5.17 PROBLEMS with saving regions (solved)
 
-6. Order service (in progress)
+6. Order service (done for now)
     6.1. create order microservice (done)
     6.2  when user doesn't login, bring the message "login before adding item to cart" (done)
     6.3  add counter for items in the cart. When a user adds product in the cart, the counter must increase (done)
@@ -52,16 +51,16 @@ To-do-list
         6.4.5 redo order email format (done)
     6.5  implement warning message when user has a started order and wants to logout.(done)
     6.6  do user Orders (done)
-    6.7 do admin managing user orders (in progress)
+    6.7 do admin managing user orders (done)
 
 7. Welcome page - do background image (done)
 
 7. Make footer for all pages (not started)
 8. Cary out search feature (not started)
+9. Reset the password (not started)
 
 
-
-9. PROBLEMS:
+10. PROBLEMS:
     9.1 when updating product from the second page so after updating list-of-products goes to first page
     instead of staying on the second one. (fixed)
     9.2 avoid redirection on product-for-sale page when adding the product to the cart.
@@ -71,9 +70,11 @@ To-do-list
     receive mistake 404 (spring adds (http://localhost:8080/teashop/...?continue) three dots - why?)
     (solved by adding viewResolver in registry)
     9.4 set ua-locale when starting application (done) (needed to set locale by new Locale("ukr", "UA"))
-    9.5 set opacity for background image. (not started)
+    9.5 set opacity for background image. (not needed)
     9.6 when user starts an order, when removes  all items in the cart, but in orders-settings this order reflects
     in old condition. (solved)
 
 
     9.7 update product -> logo in the header is not shown. why?? (not fixed)
+
+

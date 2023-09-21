@@ -42,7 +42,7 @@
             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" aria-expanded="false"
                     th:data-bs-target="'#collapseExample'  + ${iterStat.count}"
                     th:aria-controls="'#collapseExample'  + ${iterStat.count}">[[${iterStat.count}]]&nbsp;&nbsp;&nbsp;
-                <span th:text="#{order.name} + ' ' + ${@timeConverter.convert(order.createdAt)}"></span>&nbsp;
+                <span th:text="#{order.name} + ' ' + ${#temporals.format(order.createdAt, 'dd-MM-yyyy HH:mm')}"></span>&nbsp;
             </button>
             <span th:if="${order.orderStatus == 'STARTED'}" th:text="#{order.status.started}"></span>
             <span th:if="${order.orderStatus == 'IN_PROGRESS'}" th:text="#{order.status.in-progress}"></span>

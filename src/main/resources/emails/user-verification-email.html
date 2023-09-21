@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{register.email.0}">NotkaTea user registration notification</title>
+</head>
+<body>
+<div style="text-align: -webkit-left">
+    <h3> <span th:text="#{hell0} + ' ' + ${user.userName} + #{register.email.1}">
+        Hello %s, you've just registered your account with the email:</span><br/>
+        <span th:text="${user.email}"> user email</span> <br/>
+        <span th:text="#{registration.time} + ' '">Registration time - at</span>
+        <span th:text="${createdAt}">creation time</span>
+    </h3>
+<!--    #temporals.format(user.createdAt, 'dd-MM-yyyy HH:mm')-->
+    <h4>
+        <span th:text="#{register.email.2} + ' '">One last step, just click here on a</span>
+        <span><a href="#" th:href="${link}" th:text="#{registration.link}">Registration Link</a></span><br/>
+        <span th:text="#{register.email.3}">to verify your account.</span><br/>
+        <span th:text="#{register.email.4} + ' ' + ${timeToLive} + ' ' + #{register.email.5}">
+            Please note, the above link is only valid for %d minutes.</span>
+    </h4>
+
+    <h4><i><span th:text="#{register.email.6}">Best regards,</span><br/>
+        <span th:text="#{register.email.7}">your NotkaTea Team</span></i></h4>
+</div>
+</body>
+</html>

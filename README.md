@@ -7,13 +7,14 @@ What is already done so far - project functionality:
 3. The user can update information about themselves and their delivery information.
 4. The user can see the list of products, add desired items to the cart.
 5. The user can create order by adding products to the cart, change the quantity of items afterward and 
-finally complete the order.
-6. The user receives email letter with short summary regarding their current order.
+finally complete the order by checking the delivery options.
+6. The user receives email letter with a short summary regarding their current order.
 7. The user can see their previous orders made in the past.
 8. The admin user (admin) can view all users and their information
 9. Admin can ban or activate users, change user information and delivery options if necessary.
 10. Admin can manipulate with products and its images - all CRUD operations
 11. Admin can see the list of all orders and process orders in active status.
+12. Admin receives email if someone creates new order.
 
 Image processing occurs in the backend media-service
 (https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database.
@@ -48,6 +49,6 @@ Technology used in the project:
 - Postgres database
 - Docker
 - Flyway
-- Thymeleaf (html, css a bit)
+- Thymeleaf (html, css)
 - Bootstrap 5
 - Maven
