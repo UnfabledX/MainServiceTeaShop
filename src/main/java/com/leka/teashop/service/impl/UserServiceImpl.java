@@ -2,6 +2,7 @@ package com.leka.teashop.service.impl;
 
 
 import com.leka.teashop.event.RegistrationEmailEvent;
+import com.leka.teashop.event.RenewLinkEmailEvent;
 import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.exception.UserAlreadyExistsException;
 import com.leka.teashop.mapper.UserMapperImpl;
@@ -99,13 +100,18 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent() && userOptional.get().getAccountStatus() == AccountStatus.INACTIVE) {
             String verificationToken = UUID.randomUUID().toString();
             user = userOptional.get();
-            user.setVerificationToken(verificationToken);
-            user.setTokenTime(LocalDateTime.now());
-            userRepository.save(user);
-            String appContextUrl = request.getRequestURL()
-                    .toString().replace(request.getServletPath(), "");
-            publisher.publishEvent(new RegistrationEmailEvent(user, appContextUrl));
-            result = "redirect:/renew?success";
+            LocalDateTime expirationTokenTime = user.getTokenTime().plusMinutes(timeToLive);
+            if (expirationTokenTime.isAfter(LocalDateTime.now())) {
+                result = "redirect:/login?stillValidLink";
+            } else {
+                user.setVerificationToken(verificationToken);
+                user.setTokenTime(LocalDateTime.now());
+                userRepository.save(user);
+                String appContextUrl = request.getRequestURL()
+                        .toString().replace(request.getServletPath(), "");
+                publisher.publishEvent(new RenewLinkEmailEvent(user, appContextUrl));
+                result = "redirect:/login?success";
+            }
         } else {
             result = "redirect:/renew?invalid";
         }

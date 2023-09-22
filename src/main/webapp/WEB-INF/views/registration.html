@@ -59,7 +59,7 @@
             <input type="password" id="retypePass" name="retypePass"
                    class="form-control mb-4 col-4" required>
         </div>
-        <p th:if="${passwordError != null}" th:text="${passwordError}" style="color: red"></p>
+        <p th:if="${passwordError != null}" th:text="#{passwordError}" style="color: red">Passwords don't coincide</p>
         <div class="form-group">
             <label for="email" th:text="#{user.email}"></label>
             <input type="email" id="email" name="email"

@@ -10,4 +10,6 @@ public interface EmailService {
     void sendOrderDetailsEmail(User currentUser);
 
     void sendNewOrderForAdminEmail(User user);
+
+    void sendRenewLinkEmail(User user, String confirmationUrl);
 }

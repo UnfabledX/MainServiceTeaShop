@@ -16,17 +16,19 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        #main-container{
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.60);
+        }
     </style>
 </head>
 <body id="renew_body" th:style="'background-image:url(' + @{/images/background-renew.jpeg} + ');'"
       data-bs-theme="dark">
-<div class="container-sm" style="border: solid 1px black; border-collapse: collapse">
+<div th:replace="~{utils/header :: header-renew}"></div>
+
+<div class="container-sm mb-4" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <h2 th:text="#{renew.link.form}">Renew Link Form:</h2>
     <div class="row mt-2">
-        <div th:if="${param.success}" class=" alert alert-info" th:text="#{renew.link.successful} + ' '">
-            The link is successfully sent, please check your email to complete your registration.
-        </div>
-
         <div th:if="${param.invalid}" class="col-sm-8">
             <p class="alert alert-info alert-dismissible" th:text="#{email.verified.failure}">
                 Email is wrong or the user with such email is already activated</p>
@@ -38,7 +40,7 @@
             <input type="text" id="username" name="username" class="form-control mb-4 col-4" th:field="*{email}"
                    required>
         </div>
-        <button type="submit" class="btn btn-primary" th:text="#{email.renew.link}">Renew Link</button>
+        <button type="submit" class="btn btn-primary mb-4" th:text="#{email.renew.link}">Renew Link</button>
     </form>
 </div>
 </body>

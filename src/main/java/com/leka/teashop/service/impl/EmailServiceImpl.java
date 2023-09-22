@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static com.leka.teashop.email.EmailNotificationType.NEW_ORDER_FOR_ADMIN;
 import static com.leka.teashop.email.EmailNotificationType.ORDER_COMPLETION_FOR_USER;
+import static com.leka.teashop.email.EmailNotificationType.RENEW_LINK;
 import static com.leka.teashop.email.EmailNotificationType.VERIFICATION;
 
 @Service
@@ -79,6 +80,18 @@ public class EmailServiceImpl implements EmailService {
         if (prep != null) {
             mailSender.send(prep);
         }
+    }
+
+    @Override
+    public void sendRenewLinkEmail(User user, String confirmationUrl) {
+        Locale locale = LocaleContextHolder.getLocale();
+        EmailContext context = emailContext.get(RENEW_LINK);
+        String emailBody = context.getEmailBody(locale, user, confirmationUrl, timeToLive);
+
+        MimeMessagePreparator prep = getMimeMessagePreparator(user, emailBody,
+                context.getSubject(locale));
+
+        mailSender.send(prep);
     }
 
     private MimeMessagePreparator getMimeMessagePreparator(Object emailHolder, String emailBody,

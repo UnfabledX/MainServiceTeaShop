@@ -11,12 +11,13 @@
             integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
             crossorigin="anonymous"></script>
     <style>
-        #login_body{
+        #login_body {
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
-        #main-container{
+
+        #main-container {
             background: rgb(0, 0, 0);
             background: rgba(0, 0, 0, 0.60);
         }
@@ -30,12 +31,22 @@
 <div class="container mt-5" id="main-container">
 
     <div class="row mt-4">
-        <div th:if="${param.reset_success}" class="col-sm-8">
+
+        <div th:if="${param.success}" class=" alert alert-info" th:text="#{renew.link.successful} + ' '">
+            The link is successfully sent, please check your email to complete your registration.
+        </div>
+
+        <div th:if="${param.stillValidLink}" class=" alert alert-info" th:text="#{still.valid.link} + ' '">
+            You've already received a new link, please, check your email. The link is still valid and
+            is not expired.
+        </div>
+
+        <div th:if="${param.reset_success}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible fade show" role="alert">You have successfully reset your
                 password, please log in here.</p>
         </div>
 
-        <div th:if="${param.expired}" class="col-sm-8">
+        <div th:if="${param.expired}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{email.token.expired} + ' '"
                style="display: inline-block">
                 Verification link has been expired. Please, renew verification link in order to activate your account.
@@ -44,22 +55,22 @@
             <br/>
         </div>
 
-        <div th:if="${param.verified}" class="col-sm-8">
+        <div th:if="${param.verified}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{email.verified.success}">
                 Email verified successfully, please log in here.</p>
         </div>
 
-        <div th:if="${param.userInactive}" class="col-sm-8">
+        <div th:if="${param.userInactive}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{user.disabled}">
-               Verify your email first before proceeding to user login</p>
+                Verify your email first before proceeding to user login</p>
         </div>
 
-        <div th:if="${param.userBanned}" class="col-sm-8">
+        <div th:if="${param.userBanned}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{user.banned}">
                 You are banned. For more information leave a comment in "Contacts" section below</p>
         </div>
 
-        <div th:if="${param.corrupted}" class="col-sm-8">
+        <div th:if="${param.corrupted}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{email.link.corrupted}">
                 Verification link is corrupted. Please, </p>
             <br/>
@@ -67,12 +78,12 @@
             <br/>
         </div>
 
-        <div th:if="${param.badCredentials}" class="col-sm-8">
+        <div th:if="${param.badCredentials}" class="col-sm-8 mb-4">
             <p class="alert alert-info alert-dismissible" th:text="#{bad.credentials}">
                 Bad Credentials. Username or password is invalid.</p>
         </div>
 
-        <div th:if="${param.logout}" class="col-sm-8">
+        <div th:if="${param.logout}" class="col-sm-8 mb-4">
             <p class="alert alert-warning">You have been logged out.</p>
         </div>
     </div>
@@ -92,8 +103,14 @@
         <button type="submit" class="btn btn-primary" th:text="#{user.login}">Login</button>
     </form>
     <br/>
-    <div class="form-group" th:text="#{Not.registered}">Not registered yet?&nbsp;&nbsp;&nbsp;</div>
-    <a class="form-group" th:href="@{/register}" th:text="#{register}">Register</a>
+    <div class="form-group mb-4">
+        <div th:text="#{Not.registered}">Not registered yet?&nbsp;&nbsp;&nbsp;</div>
+        <a th:href="@{/register}" th:text="#{register}">Register</a>
+    </div>
+    <div class="form-group mb-4">
+        <div th:text="#{forgot.password}">Forgot the password?&nbsp;&nbsp;&nbsp;</div>
+        <a th:href="@{/resetPassword}" th:text="#{reset.password}">Reset the password</a>
+    </div>
 </div>
 
 </body>

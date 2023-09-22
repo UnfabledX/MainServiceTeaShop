@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{renew.email.0}">NotkaTea renew link notification</title>
+</head>
+<body>
+<div style="text-align: -webkit-left">
+    <h3> <span th:text="#{hell0} + ' ' + ${user.userName} + #{renew.email.1}">
+        Hello %s, you've just requested a new verification link for email:</span><br/>
+        <span th:text="${user.email}"> user email</span> <br/>
+    </h3>
+    <h4>
+        <span th:text="#{renew.email.2} + ' '">Just click here on a</span>
+        <span><a href="#" th:href="${link}" th:text="#{registration.link}">Registration Link</a></span><br/>
+        <span th:text="#{renew.email.3}">to complete your registration.</span><br/>
+        <span th:text="#{renew.email.4} + ' ' + ${timeToLive} + ' ' + #{renew.email.5}">
+            Please note, the above link is only valid for %d minutes.</span>
+    </h4>
+
+    <h4><i><span th:text="#{register.email.6}">Best regards,</span><br/>
+        <span th:text="#{register.email.7}">your NotkaTea Team</span></i></h4>
+</div>
+</body>
+</html>

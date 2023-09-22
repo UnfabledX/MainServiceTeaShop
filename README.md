@@ -30,9 +30,9 @@ In order to run application follow these steps:
    env variables)
 4. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
 5. In the media server insert env variables for database connection in Run/debug configuration for run-class (
-   MediaserverApplication.java)
+   MediaServerApplication.java)
 6. Run media server.
-7. Clone order server from https://github.com/UnfabledX/OrderService
+7. Clone order server from https://github.com/UnfabledX/OrderServiceTeaShop
 8. In the order server insert env variables for database connection in Run/debug configuration for run-class (
    OrderServiceApplication.java)
 9. Run order server.
