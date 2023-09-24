@@ -23,4 +23,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "u.accountStatus = 'ACTIVE' WHERE u.id=:userId")
     void deleteVerificationTokenAndUpdateStatusById(Long userId);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.verificationToken = null, u.tokenTime = null WHERE u.id=:userId")
+    void deleteVerificationTokenByUserId(Long userId);
+
 }

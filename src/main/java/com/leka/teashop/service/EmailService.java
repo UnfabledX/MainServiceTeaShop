@@ -12,4 +12,6 @@ public interface EmailService {
     void sendNewOrderForAdminEmail(User user);
 
     void sendRenewLinkEmail(User user, String confirmationUrl);
+
+    void sendResetPasswordEmail(User user, String confirmationUrl);
 }

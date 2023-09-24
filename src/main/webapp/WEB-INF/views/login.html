@@ -28,15 +28,29 @@
 
 <div th:replace="~{utils/header :: header-login}"></div>
 
-<div class="container mt-5" id="main-container">
+<div class="container mt-5 mb-4" id="main-container">
 
     <div class="row mt-4">
 
-        <div th:if="${param.success}" class=" alert alert-info" th:text="#{renew.link.successful} + ' '">
+        <div th:if="${param.passwordChangedOk}" class="col-sm-8 mb-4">
+            <p class="alert alert-info alert-dismissible" th:text="#{password.changed.successfully}">
+                Password has been changed successfully. Proceed to login, please</p>
+        </div>
+
+        <div th:if="${param.tokenInvalid}" class="col-sm-8 mb-4">
+            <p class="alert alert-info alert-dismissible">
+                <span th:text="#{link.invalid.1}">The link is expired or corrupted.</span><br/>
+                <span th:text="#{link.invalid.2}">Try to reset the password again.</span>
+            </p>
+        </div>
+
+        <div th:if="${param.success}" class="alert alert-info alert-dismissible"
+             th:text="#{renew.link.successful} + ' '">
             The link is successfully sent, please check your email to complete your registration.
         </div>
 
-        <div th:if="${param.stillValidLink}" class=" alert alert-info" th:text="#{still.valid.link} + ' '">
+        <div th:if="${param.stillValidLink}" class="alert alert-info alert-dismissible"
+             th:text="#{still.valid.link} + ' '">
             You've already received a new link, please, check your email. The link is still valid and
             is not expired.
         </div>

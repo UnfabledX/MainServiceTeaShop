@@ -48,19 +48,19 @@
 
         <div class="col-md-12">
             <label for="inputFirstName" class="form-label" th:text="#{first.name}">First Name</label>
-            <input type="text" class="form-control" id="inputFirstName" th:field="*{firstName}">
+            <input type="text" class="form-control" id="inputFirstName" th:field="*{firstName}" required>
             <p class="error-style" th:if="${#fields.hasErrors('firstName')}"
                th:errors="*{firstName}">Incorrect data</p>
         </div>
         <div class="col-md-12">
             <label for="inputSecondName" class="form-label" th:text="#{last.name}">Second Name</label>
-            <input type="text" class="form-control" id="inputSecondName" th:field="*{lastName}">
+            <input type="text" class="form-control" id="inputSecondName" th:field="*{lastName}" required>
             <p class="error-style" th:if="${#fields.hasErrors('lastName')}"
                th:errors="*{lastName}">Incorrect data</p>
         </div>
         <div class="col-md-12">
             <label for="inputPhoneNumber" class="form-label" th:text="#{phone.number}">Phone Number</label>
-            <input type="text" class="form-control" id="inputPhoneNumber" th:field="*{phone}">
+            <input type="text" class="form-control" id="inputPhoneNumber" th:field="*{phone}" required>
             <p class="error-style" th:if="${#fields.hasErrors('phone')}"
                th:errors="*{phone}">Incorrect data</p>
             <div id="phoneHelp" class="form-text" th:text="#{personal.data}">
@@ -82,18 +82,15 @@
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label" th:text="#{city}">City</label>
-                <input type="text" class="form-control" id="inputCity" th:field="*{city}"/>
+                <input type="text" class="form-control" id="inputCity" th:field="*{city}" required/>
                 <p class="error-style" th:if="${#fields.hasErrors('city')}"
                    th:errors="*{city}">Incorrect data</p>
             </div>
             <div class="col-md-4">
                 <label for="inputRegion" class="form-label" th:text="#{region}">Region</label>
                 <select id="inputRegion" class="form-select" th:field="*{region}">
-                    <option th:if="*{region == null}" selected="" th:text="#{choose.region}"
-                            th:value="'null'">Choose Region
-                    </option>
-                    <option th:if="*{region != null}" selected="" th:text="*{region}"
-                            th:value="*{region}"></option>
+                    <option th:if="*{region == null}" selected="" th:value="#{choose.region}">Choose Region</option>
+                    <option th:if="*{region != null}" selected="" th:text="*{region}" th:value="*{region}"></option>
                     <option th:text="#{another.variant.1}" th:value="#{another.variant.2}">
                         Another variant(describe in delivery-details section)
                     </option>
@@ -130,7 +127,7 @@
             </div>
             <div class="col-md-6">
                 <label for="inputPostOperator" class="form-label" th:text="#{post}">Post Operator</label>
-                <input type="text" class="form-control" id="inputPostOperator" th:field="*{operatorName}"/>
+                <input type="text" class="form-control" id="inputPostOperator" th:field="*{operatorName}" required/>
                 <p class="error-style" th:if="${#fields.hasErrors('operatorName')}"
                    th:errors="*{operatorName}">Incorrect data</p>
             </div>

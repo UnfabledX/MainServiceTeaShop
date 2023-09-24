@@ -116,8 +116,12 @@ public class OrderController {
     @GetMapping("/deliveryOptions")
     public String getDeliveryOptionsPage(Model model, UsernamePasswordAuthenticationToken token) {
         User currentUser = (User) token.getPrincipal();
-        AddressOfDelivery addressOfDelivery = currentUser.getAddressOfDelivery();
-        model.addAttribute("address", deliveryMapper.toDto(addressOfDelivery));
+        if (currentUser.getAddressOfDelivery() != null) {
+            AddressOfDelivery addressOfDelivery = currentUser.getAddressOfDelivery();
+            model.addAttribute("address", deliveryMapper.toDto(addressOfDelivery));
+        } else {
+            model.addAttribute("address", new AddressOfDeliveryDto());
+        }
         model.addAttribute("user", currentUser);
         return "delivery-address";
     }
@@ -134,12 +138,12 @@ public class OrderController {
         User currentUser = (User) token.getPrincipal();
         //saving to database and making order status IN_PROGRESS
         orderService.saveOrderWithStatus(currentUser.getCurrentOrderDto(), "IN_PROGRESS");
+        //save changes in user and delivery details to database if made any
+        userService.saveUserAndDeliveryDetails(userDetailsDto, deliveryDto, currentUser);
         //send the completed order to user email
         publisher.publishEvent(new OrderEmailEvent(currentUser));
         //notify admin for the new user order by email.
         publisher.publishEvent(new OrderEmailForAdminEvent(currentUser));
-        //save changes in user and delivery details to database if made any
-        userService.saveUserAndDeliveryDetails(userDetailsDto, deliveryDto, currentUser);
         //setting current order to null, because completed order is in progress and new one is not started yet.
         currentUser.setCurrentOrderDto(null);
         //redirecting to home page with successful message about order completion

@@ -135,7 +135,7 @@ public class UserController {
                                   Model model, UsernamePasswordAuthenticationToken token) {
         User user = (User) token.getPrincipal();
         OrderDto actualOrder = user.getCurrentOrderDto();
-        if (actualOrder != null){
+        if (actualOrder != null) {
             orderService.updateStartedOrderToActualState(actualOrder);
         }
 
@@ -172,5 +172,46 @@ public class UserController {
         return "user-orders";
     }
 
+    @GetMapping("/resetPassword")
+    public String resetPassword() {
+        return "reset-password-step-1";
+    }
 
+    @PostMapping("/resetPassword")
+    public String processResetPassword(HttpServletRequest request){
+        String email = request.getParameter("email");
+        String appContextUrl = request.getRequestURL()
+                .toString().replace(request.getServletPath(), "");
+        return userService.processResetPassword(email, appContextUrl);
+    }
+
+    @GetMapping("/confirmReset")
+    public String confirmReset(@RequestParam("token") String token, Model model){
+        String result;
+        UserDto userDto = userService.confirmReset(token);
+        if (userDto != null) {
+            model.addAttribute("user", userDto);
+            result = "reset-password-step-2";
+        } else {
+            result = "redirect:/login?tokenInvalid";
+        }
+        return result;
+    }
+
+    @PostMapping("/applyNewPassword")
+    public String applyNewPassword(@Valid @ModelAttribute("user") UserDto userDto,
+                                   BindingResult result, Model model, HttpServletRequest request){
+        if (result.hasErrors()) {
+            model.addAttribute("user", userDto);
+            return "reset-password-step-2";
+        }
+        String passwordConfirm = request.getParameter("retypePass");
+        if (!userDto.getPassword().equals(passwordConfirm)) {
+            model.addAttribute("passwordError", "Passwords don't coincide");
+            model.addAttribute("user", userDto);
+            return "reset-password-step-2";
+        }
+        userService.applyNewPassword(userDto);
+        return "redirect:/login?passwordChangedOk";
+    }
 }

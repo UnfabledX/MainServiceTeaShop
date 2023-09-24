@@ -35,7 +35,10 @@ public class SecurityConfig {
                                 "/verifyEmail",
                                 "/image/*",
                                 "/error",
-                                "/renew"
+                                "/renew",
+                                "/resetPassword",
+                                "/confirmReset",
+                                "/applyNewPassword"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()

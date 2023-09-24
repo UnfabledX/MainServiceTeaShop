@@ -13,4 +13,7 @@ public class Subjects {
 
     public static final String SUBJECT_RENEW_LINK_EMAIL_EN = "Renew link for NotkaTea shop!";
     public static final String SUBJECT_RENEW_LINK_EMAIL_UKR = "Оновлення посилання для магазину NotkaTea!";
+
+    public static final String SUBJECT_RESET_PASSWORD_EMAIL_EN = "Reset password for NotkaTea shop!";
+    public static final String SUBJECT_RESET_PASSWORD_EMAIL_UKR = "Зміна паролю для магазину NotkaTea!";
 }

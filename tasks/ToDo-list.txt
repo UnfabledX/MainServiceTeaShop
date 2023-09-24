@@ -57,7 +57,9 @@ To-do-list
 
 7. Make footer for all pages (not started)
 8. Cary out search feature (not started)
-9. Reset the password (not started)
+9. Reset the password (in progress)
+    9.1 problem when the user triggers email sending about password resetting, a token is generated and when the user
+    ignores the letter - token must be deleted after its expiration (not fixed)
 
 
 10. PROBLEMS:

@@ -1,10 +1,12 @@
 package com.leka.teashop.service.impl;
 
+import com.leka.teashop.config.EmailPropertiesConfig;
 import com.leka.teashop.email.EmailContext;
 import com.leka.teashop.email.EmailNotificationType;
 import com.leka.teashop.model.User;
 import com.leka.teashop.service.EmailService;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,34 +20,24 @@ import java.util.Map;
 import static com.leka.teashop.email.EmailNotificationType.NEW_ORDER_FOR_ADMIN;
 import static com.leka.teashop.email.EmailNotificationType.ORDER_COMPLETION_FOR_USER;
 import static com.leka.teashop.email.EmailNotificationType.RENEW_LINK;
+import static com.leka.teashop.email.EmailNotificationType.RESET_PASSWORD;
 import static com.leka.teashop.email.EmailNotificationType.VERIFICATION;
 
 @Service
+@RequiredArgsConstructor
+@EnableConfigurationProperties(EmailPropertiesConfig.class)
 public class EmailServiceImpl implements EmailService {
 
-    private final String adminEmail;
-    private final String emailFrom;
-    private final Integer timeToLive;
     private final JavaMailSender mailSender;
     private final Map<EmailNotificationType, EmailContext> emailContext;
-
-    public EmailServiceImpl(@Value("${source.mail.address}") String emailFrom,
-                            @Value("${email.user-registered.time-to-live}") Integer timeToLive,
-                            @Value("${admin.email}") String adminEmail,
-                            Map<EmailNotificationType, EmailContext> emailContext,
-                            JavaMailSender mailSender) {
-        this.emailFrom = emailFrom;
-        this.timeToLive = timeToLive;
-        this.adminEmail = adminEmail;
-        this.mailSender = mailSender;
-        this.emailContext = emailContext;
-    }
+    private final EmailPropertiesConfig emailPropertiesConfig;
 
     @Override
     public void sendVerificationEmail(User user, String confirmationUrl) {
         Locale locale = LocaleContextHolder.getLocale();
         EmailContext context = emailContext.get(VERIFICATION);
-        String emailBody = context.getEmailBody(locale, user, confirmationUrl, timeToLive);
+        String emailBody = context.getEmailBody(locale, user,
+                confirmationUrl, emailPropertiesConfig.getTimeToLiveForRegistrationLink());
 
         MimeMessagePreparator prep = getMimeMessagePreparator(user, emailBody,
                 context.getSubject(locale));
@@ -75,8 +67,8 @@ public class EmailServiceImpl implements EmailService {
         String emailBody = context.getEmailBody(locale, currentUser);
         String emailSubject =  context.getSubject(locale);
 
-        MimeMessagePreparator prep = getMimeMessagePreparator(adminEmail, emailBody,
-                emailSubject);
+        MimeMessagePreparator prep = getMimeMessagePreparator(emailPropertiesConfig.getAdminEmail(),
+                emailBody, emailSubject);
         if (prep != null) {
             mailSender.send(prep);
         }
@@ -86,7 +78,21 @@ public class EmailServiceImpl implements EmailService {
     public void sendRenewLinkEmail(User user, String confirmationUrl) {
         Locale locale = LocaleContextHolder.getLocale();
         EmailContext context = emailContext.get(RENEW_LINK);
-        String emailBody = context.getEmailBody(locale, user, confirmationUrl, timeToLive);
+        String emailBody = context.getEmailBody(locale, user,
+                confirmationUrl, emailPropertiesConfig.getTimeToLiveForRegistrationLink());
+
+        MimeMessagePreparator prep = getMimeMessagePreparator(user, emailBody,
+                context.getSubject(locale));
+
+        mailSender.send(prep);
+    }
+
+    @Override
+    public void sendResetPasswordEmail(User user, String resetPasswordUrl) {
+        Locale locale = LocaleContextHolder.getLocale();
+        EmailContext context = emailContext.get(RESET_PASSWORD);
+        String emailBody = context.getEmailBody(locale, user,
+                resetPasswordUrl, emailPropertiesConfig.getTimeToLiveForPasswordResetLink());
 
         MimeMessagePreparator prep = getMimeMessagePreparator(user, emailBody,
                 context.getSubject(locale));
@@ -112,7 +118,7 @@ public class EmailServiceImpl implements EmailService {
         return mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
             helper.setTo(email);
-            helper.setFrom(emailFrom);
+            helper.setFrom(emailPropertiesConfig.getSourceAddress());
             helper.setSubject(subject);
             helper.setText(writer.toString(), true);
         };

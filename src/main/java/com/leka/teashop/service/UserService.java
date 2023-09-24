@@ -24,4 +24,10 @@ public interface UserService {
     UserDetailsDtoForAdmin findById(Long userId);
 
     void updateUserDetails(UserDetailsDtoForAdmin userDto);
+
+    String processResetPassword(String email, String appContextUrl);
+
+    UserDto confirmReset(String token);
+
+    void applyNewPassword(UserDto userDto);
 }

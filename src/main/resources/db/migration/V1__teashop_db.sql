@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
     number_department integer,
     zip_code          integer,
     PRIMARY KEY (id)
-
 );
 
 CREATE TABLE IF NOT EXISTS teashop_db.users
