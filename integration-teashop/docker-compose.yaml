@@ -1,0 +1,78 @@
+version: '3.3'
+services:
+  database:
+    image: postgres
+    restart: on-failure
+    environment:
+      TZ: Europe/Kyiv
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    ports:
+      - "5442:5432"
+
+  eureka:
+    image: unfabled/teashop:eurekaserver0.0.1
+    restart: on-failure
+
+  main-teashop-service:
+    image: unfabled/teashop:main_service_teashop0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+    ports:
+      - '127.0.0.1:8080:8080'
+
+  order-teashop-service:
+    image: unfabled/teashop:orderservice0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+
+#  gateway:
+#    image: unfabled/teashop:gateway0.0.1
+#    restart: on-failure
+#    depends_on:
+#      eureka:
+#        condition: service_started
+#      database:
+#        condition: service_started
+#    ports:
+#      - '8080:8080'
+
+  media-teashop-service:
+    image: unfabled/teashop:mediaservice0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
