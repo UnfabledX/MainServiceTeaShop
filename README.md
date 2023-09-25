@@ -28,15 +28,16 @@ In order to run application follow these steps:
 3. Insert env variables for database connection and email sending in Tomcat configuration (In intellij
    Idea [Run/debug configurations] -> [Edit configurations...] -> Choose Tomcat server -> [Startup/Connections] -> Pass
    env variables)
-4. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
-5. In the media server insert env variables for database connection in Run/debug configuration for run-class (
+4. Clone eureka server from https://github.com/UnfabledX/EurekaServerTeaShop and run it.
+5. Clone media server from https://github.com/UnfabledX/MediaServerTeaShop
+6. In the media server insert env variables for database connection in Run/debug configuration for run-class (
    MediaServerApplication.java)
-6. Run media server.
-7. Clone order server from https://github.com/UnfabledX/OrderServiceTeaShop
-8. In the order server insert env variables for database connection in Run/debug configuration for run-class (
+7. Run media server.
+8. Clone order server from https://github.com/UnfabledX/OrderServiceTeaShop
+9. In the order server insert env variables for database connection in Run/debug configuration for run-class (
    OrderServiceApplication.java)
-9. Run order server.
-10. Run Tomcat in the teashop project.
+10. Run order server.
+11. Run Tomcat in the teashop project.
 
 Technology used in the project:
 

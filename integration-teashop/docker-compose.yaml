@@ -34,7 +34,9 @@ services:
       database:
         condition: service_started
     ports:
-      - '127.0.0.1:8080:8080'
+      - target: 8080
+        host_ip: 127.0.0.1
+        published: 8080
 
   order-teashop-service:
     image: unfabled/teashop:orderservice0.0.1
