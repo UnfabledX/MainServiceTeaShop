@@ -2,9 +2,11 @@ package com.leka.teashop.service.impl;
 
 import com.leka.teashop.exception.NotFoundException;
 import com.leka.teashop.mapper.ProductMapper;
+import com.leka.teashop.model.Image;
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.dto.ImageDto;
 import com.leka.teashop.model.dto.ProductDto;
+import com.leka.teashop.repository.ImageRepository;
 import com.leka.teashop.repository.ProductRepository;
 import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
@@ -19,69 +21,73 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ProductServiceImpl implements ProductService {
 
     public static final String CHECKED = "on";
 
     private final ProductRepository productRepository;
+    private final ImageRepository imageRepository;
     private final ProductMapper productMapper;
     private final MediaService mediaService;
 
     @Override
-    public void addProduct(ProductDto dto, MultipartFile file) {
-        ImageDto image = null;
-        if (file.getSize() != 0) {
-            MultipartBodyBuilder builder = createFrom(file);
-            image = mediaService.uploadImageThrough(builder);
-        }
+    @Transactional
+    public void addProduct(ProductDto dto, List<MultipartFile> files) {
         Product product = productMapper.toEntity(dto);
-        if (image != null) {
-            product.setImageId(image.getId());
+        if (!files.isEmpty() && !files.get(0).isEmpty()) {
+            files.forEach(file -> {
+                MultipartBodyBuilder builder = createFrom(file);
+                ImageDto image = mediaService.uploadImageThrough(builder);
+                product.addImage(new Image(image.getId(), product));
+            });
         }
         productRepository.save(product);
+        //todo implement adding product to Google disk as well
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField,
                                            String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return productRepository.findAll(pageable)
-                        .map(productMapper::toDto);
+                .map(productMapper::toDto);
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
         Product product = findById(id);
-        Long imageId;
-        if ((imageId = product.getImageId()) != null) {
-            mediaService.deleteImageById(imageId);
+        List<Image> images = product.getImages();
+        if (!images.isEmpty()) {
+            images.forEach(image -> mediaService.deleteImageById(image.getImageId()));
         }
         productRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void updateProduct(ProductDto updatedProduct, MultipartFile file, String deleteImageIsNeeded) {
-        ImageDto image = null;
-        if (file.getSize() != 0) {
-            MultipartBodyBuilder builder = createFrom(file);
-            Long imageId = updatedProduct.getImageId();
-            image = mediaService.updateImageById(imageId, builder);
-        }
+    public void updateProduct(ProductDto updatedProduct, List<MultipartFile> files, String deleteAllImages) {
         Product product = productMapper.toEntity(updatedProduct);
         product.setId(updatedProduct.getId());
-        if (image != null) {
-            product.setImageId(image.getId());
+
+        if (!files.isEmpty() && !files.get(0).isEmpty()) {
+            deleteImagesOf(updatedProduct);
+            for (MultipartFile file : files) {
+                MultipartBodyBuilder builder = createFrom(file);
+                ImageDto imageDto = mediaService.uploadImageThrough(builder);
+                product.addImage(new Image(imageDto.getId(), product));
+            }
         }
-        if (CHECKED.equals(deleteImageIsNeeded) && updatedProduct.getImageId() != null) {
-            mediaService.deleteImageById(updatedProduct.getImageId());
-            product.setImageId(null);
+
+        if (CHECKED.equals(deleteAllImages)) {
+            deleteImagesOf(updatedProduct);
         }
         productRepository.save(product);
     }
@@ -110,5 +116,18 @@ public class ProductServiceImpl implements ProductService {
             ex.printStackTrace();
         }
         return builder;
+    }
+
+    private void deleteImagesOf(ProductDto updatedProduct) {
+        productRepository.findById(updatedProduct.getId()).ifPresent(
+                oldProduct -> oldProduct.getImages()
+                        .stream()
+                        .map(Image::getImageId)
+                        .forEach(imageId -> {
+                                    mediaService.deleteImageById(imageId);
+                                    imageRepository.deleteById(imageId);
+                                }
+                        )
+        );
     }
 }

@@ -44,11 +44,11 @@
         <h3 th:text="#{user.settings.page}">User settings</h3>
         <div class="col-md-6">
             <label for="inputUsername" class="form-label" th:text="#{username}">Username</label>
-            <input type="text" th:placeholder="*{userName}" class="form-control" id="inputUsername" disabled>
+            <input type="text" th:field="*{userName}" class="form-control" id="inputUsername" readonly>
         </div>
         <div class="col-md-6">
             <label for="inputEmail" class="form-label" th:text="#{email}">Email</label>
-            <input type="text" th:placeholder="*{email}" class="form-control" id="inputEmail" disabled>
+            <input type="text" th:field="*{email}" class="form-control" id="inputEmail" readonly>
         </div>
         <div class="col-md-6">
             <label for="inputFirstName" class="form-label" th:text="#{first.name}">First Name</label>

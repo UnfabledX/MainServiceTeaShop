@@ -35,7 +35,7 @@
 
 <div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <h2 th:text="#{add.product}" style="text-align: center"/>
-    <form class="row g-3" action="#" th:action="@{/addProduct}" th:object="${request}"
+    <form class="row g-3" action="#" th:action="@{'/addProduct?page=' + ${page}}" th:object="${request}"
           method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label" th:text="#{label.name}">Product Name</label>
@@ -71,8 +71,8 @@
                th:errors="*{priceEU}">Incorrect data</p>
         </div>
         <div class="mb-3">
-            <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert an image for the product</label>
-            <label><input class="form-control" type="file" name="file" id="formFile"></label>
+            <label for="formFile" class="form-label" th:text="#{label.addImage}">Insert images for the product</label>
+            <label><input class="form-control" type="file" name="file" id="formFile" multiple></label>
         </div>
         <input class="btn btn-success mb-3" type="submit" th:value="#{add.product}">
     </form>
@@ -87,5 +87,6 @@
 <!-- Modal for header when logout-->
 <div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
+
 </body>
 </html>

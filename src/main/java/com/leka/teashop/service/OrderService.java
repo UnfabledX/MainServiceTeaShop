@@ -1,5 +1,6 @@
 package com.leka.teashop.service;
 
+import com.leka.teashop.model.OrderStatus;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
@@ -17,22 +18,22 @@ public interface OrderService {
 
     void deleteProductFromCart(Long productId, OrderDto order);
 
-    void saveOrderWithStatus(OrderDto currentOrderDto, String orderStatus);
+    void saveOrderWithStatus(OrderDto currentOrderDto, OrderStatus orderStatus);
 
     void updateStartedOrderToActualState(OrderDto currentOrderDto);
 
     Page<OrderDto> getAllOrdersByUserId(Long userId, Integer pageNo, Integer pageSize,
                                         String sortField, String sortDirection);
 
-    Page<OrderDto> getAllOrdersByStatus(String status, Integer pageNo, Integer pageSize,
+    Page<OrderDto> getAllOrdersByStatus(OrderStatus status, Integer pageNo, Integer pageSize,
                                         String sortField, String sortDirection);
 
-    Integer countOrdersByOrderStatus(String status);
+    Integer countOrdersByOrderStatus(OrderStatus status);
 
     Page<OrderDto> getAllOrders(Integer pageNo, Integer pageSize, String sortField,
                                 String sortDirection);
 
     OrderDto getOrderById(Long orderId);
 
-    OrderDto updateOrderByIdAndWithStatus(Long orderId, String orderStatus);
+    OrderDto updateOrderByIdAndWithStatus(Long orderId, OrderStatus orderStatus);
 }

@@ -1,5 +1,6 @@
 package com.leka.teashop.model.dto;
 
+import com.leka.teashop.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,5 +20,5 @@ public class OrderDto {
     private Long userId;
     private Map<Long, Integer> productIdAndCount;
     private LocalDateTime createdAt;
-    private String orderStatus;
+    private OrderStatus orderStatus;
 }

@@ -15,15 +15,18 @@
         [class*="form-outline"] {
             padding: 10px;
         }
+
         .error-style {
             color: #ff0000;
         }
-        #update_body{
+
+        #update_body {
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
         }
-        #main-container{
+
+        #main-container {
             background: rgb(0, 0, 0);
             /* RGBa with 0.6 opacity */
             background: rgba(0, 0, 0, 0.80);
@@ -36,7 +39,7 @@
 <div th:replace="~{utils/header :: header-update-product}"></div>
 
 <div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse"
-id="main-container">
+     id="main-container">
     <h2 th:text="#{update.product}" style="text-align: center;"/>
     <form action="#" th:action="@{'/updateProduct/' + ${product.id} + '?page=' + ${page}}" th:object="${product}"
           enctype="multipart/form-data" method="post">
@@ -45,7 +48,7 @@ id="main-container">
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" for="name" th:text="#{label.name}"/>
-            <input class="form-control" type="text" id="name" th:field="*{name}"/>
+            <input class="form-control" type="text" id="name" th:field="*{name}">
             <p class="error-style" th:if="${#fields.hasErrors('name')}"
                th:errors="*{name}">Incorrect data</p>
         </div>
@@ -57,22 +60,29 @@ id="main-container">
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" th:text="#{label.priceUA}" for="priceUA"/>
-            <input class="form-control" type="text" id="priceUA" th:field="*{priceUA}"/>
+            <input class="form-control" type="text" id="priceUA" th:field="*{priceUA}">
             <p class="error-style" th:if="${#fields.hasErrors('priceUA')}"
                th:errors="*{priceUA}">Incorrect data</p>
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" th:text="#{label.priceEU}" for="priceEU"/>
-            <input class="form-control" type="text" id="priceEU" th:field="*{priceEU}"/>
+            <input class="form-control" type="text" id="priceEU" th:field="*{priceEU}">
             <p class="error-style" th:if="${#fields.hasErrors('priceEU')}"
                th:errors="*{priceEU}">Incorrect data</p>
         </div>
-
-        <input class="form-control" type="hidden" th:field="*{imageId}">
+        <div class="form-outline mb-2">
+            <label class="form-label" for="oldImages" th:text="#{label.oldImages}"/>
+            <div id="oldImages" th:if="${!product.images.isEmpty()}">
+                <span th:each="image: ${product.images}">
+                    <img th:src="@{'/image/' + ${image.imageId}}" height="100" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
+                </span>
+            </div>
+            <div th:if="${product.images.isEmpty()}" th:text="#{label.noImages}"></div>
+        </div>
 
         <div class="form-outline mb-2">
             <label class="form-label" for="formFile" th:text="#{label.updateImage}"/>
-            <input class="form-control" type="file" id="formFile" name="file"/>
+            <input class="form-control" type="file" id="formFile" name="files" multiple>
         </div>
         <div class="form-check">
             <label class="form-check-label" for="deleteImage" th:text="#{delete.image}"/>
@@ -86,7 +96,8 @@ id="main-container">
 </div>
 <div class="container-sm">
     <a th:href="@{/allProducts}" th:text="#{see.products}" role="button" class="btn btn-secondary"></a>&nbsp;&nbsp;&nbsp;
-    <a class="btn btn-secondary" role="button" th:href="@{/adminPanel}" th:text="#{return.admin.panel}">Return to admin panel</a>&nbsp;&nbsp;&nbsp;
+    <a class="btn btn-secondary" role="button" th:href="@{/adminPanel}" th:text="#{return.admin.panel}">Return to admin
+        panel</a>&nbsp;&nbsp;&nbsp;
     <a th:href="@{/}" th:text="#{main.page}" class="btn btn-secondary"></a>
 </div>
 <!-- Modal for header when logout-->

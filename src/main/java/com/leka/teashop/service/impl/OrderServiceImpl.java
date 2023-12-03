@@ -1,6 +1,7 @@
 package com.leka.teashop.service.impl;
 
 import com.leka.teashop.exception.NotFoundException;
+import com.leka.teashop.model.OrderStatus;
 import com.leka.teashop.model.User;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
@@ -16,12 +17,13 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.leka.teashop.model.OrderStatus.STARTED;
+
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final WebClient orderWebClient;
-    private final String started = "STARTED";
 
     @Override
     public void addToOrder(User currentUser, String quantity, ProductDto productDto) {
@@ -30,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
             currentOrder = OrderDto.builder()
                     .userId(currentUser.getId())
                     .productIdAndCount(new HashMap<>())
-                    .orderStatus(started).build();
+                    .orderStatus(STARTED).build();
         } else {
             currentOrder = currentUser.getCurrentOrderDto();
         }
@@ -58,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/v1/orders/delete")
                         .queryParam("id", currentUser.getId())
-                        .queryParam("status", started)
+                        .queryParam("status", STARTED)
                         .build())
                 .retrieve()
                 .bodyToMono(Void.class)
@@ -102,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void saveOrderWithStatus(OrderDto currentOrder, String orderStatus) {
+    public void saveOrderWithStatus(OrderDto currentOrder, OrderStatus orderStatus) {
         currentOrder.setOrderStatus(orderStatus);
         orderWebClient.post()
                 .uri("/api/v1/orders/save")
@@ -140,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<OrderDto> getAllOrdersByStatus(String status, Integer pageNo, Integer pageSize,
+    public Page<OrderDto> getAllOrdersByStatus(OrderStatus status, Integer pageNo, Integer pageSize,
                                                String sortField, String sortDirection) {
         return orderWebClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -157,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Integer countOrdersByOrderStatus(String status) {
+    public Integer countOrdersByOrderStatus(OrderStatus status) {
         return orderWebClient.get()
                 .uri("/api/v1/orders/count/{status}", status)
                 .retrieve()
@@ -192,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto updateOrderByIdAndWithStatus(Long orderId, String orderStatus) {
+    public OrderDto updateOrderByIdAndWithStatus(Long orderId, OrderStatus orderStatus) {
         return orderWebClient.put()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/v1/orders/update/{orderId}")

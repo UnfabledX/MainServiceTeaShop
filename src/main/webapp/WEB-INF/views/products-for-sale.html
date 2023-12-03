@@ -27,10 +27,47 @@
 <div th:replace="~{utils/header :: header-product-for-sale}"></div>
 
 <div class="row row-cols-1 row-cols-md-3 g-2 gy-4">
-    <div class="col" th:each="product : ${products}">
+    <div class="col" th:each="product, iterIndex : ${products}">
         <div class="card h-100">
             <div class="card-header">Featured</div>
-            <img th:src="@{'/image/' + ${product.imageId}}" class="card-img-top" alt="..." src="#">
+            <!-- IMAGE CAROUSEL-->
+            <div th:with="imagesList=${product.images}">
+                <div th:if="${!imagesList.isEmpty()}">
+                    <div th:id="'carouselExampleIndicators' + ${iterIndex.index}" class="carousel slide">
+                        <div class="carousel-indicators">
+                            <button type="button" th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                            <button type="button" th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div th:each="image, iterCount: ${imagesList}">
+                                <div th:if="${iterCount.index == 0}" class="carousel-item active">
+                                    <img th:src="@{'/image/' + ${image.imageId}}"
+                                         class="card-img-top d-block" alt="..." src="#">
+                                </div>
+                                <div th:if="${iterCount.index != 0}" class="carousel-item">
+                                    <img th:src="@{'/image/' + ${image.imageId}}"
+                                         class="card-img-top d-block" alt="..." src="#">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- IMAGE CAROUSEL-->
             <div class="card-body">
                 <h5 class="card-title" th:text="${product.name}">Card title</h5>
                 <p class="card-text" th:text="${product.description}"></p>

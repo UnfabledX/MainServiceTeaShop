@@ -38,7 +38,8 @@ public class SecurityConfig {
                                 "/renew",
                                 "/resetPassword",
                                 "/confirmReset",
-                                "/applyNewPassword"
+                                "/applyNewPassword",
+                                "/load"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()

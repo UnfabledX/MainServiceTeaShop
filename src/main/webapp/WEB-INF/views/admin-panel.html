@@ -34,10 +34,17 @@
            th:text="#{see.orders}">List of orders</a>
         <a th:href="@{/ordersInProcess}" href="#" class="list-group-item list-group-item-action list-group-item-light"
            th:text="#{see.orders.in-progress}">List of orders in progress</a>
+        <a href="#" class="list-group-item list-group-item-action list-group-item-secondary"
+           data-bs-toggle="modal" data-bs-target="#loadAllProductsModal"
+           th:text="#{load.from.google-drive}">Load products from Google drive</a>
     </div>
 </div>
 <!-- Modal for header when logout-->
 <div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
+
+<!-- Modal when loading all products from google drive-->
+<div th:replace="~{utils/modals :: modal-load-products-from-google-drive}"></div>
+<!-- Modal when loading all products from google drive-->
 </body>
 </html>

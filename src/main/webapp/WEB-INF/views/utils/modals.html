@@ -87,5 +87,32 @@
 </div>
 <!-- Modal when user has no any orders-->
 
+<!-- Modal when loading all products from google drive-->
+<div class="modal fade" id="loadAllProductsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="modal-load-products-from-google-drive">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+                <h1 class="modal-title fs-5" id="loadAllProductsModalLabel" style="font-weight: bold; color: #ef5757"
+                    th:text="#{alert}">Alert</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" th:text="#{load.warning}">
+                You are going to load all products from Google Drive.
+                Before loading all current data in database will be erased
+                and new one will be loaded from Google Drive afterwards.
+                Are you sure you want to continue?
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{cancel}">Cancel</a>
+                <a type="button" class="btn btn-primary" th:href="@{/load}" th:text="#{load.anyway}">Load any
+                    way</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal when loading all products from google drive-->
+
 </body>
 </html>

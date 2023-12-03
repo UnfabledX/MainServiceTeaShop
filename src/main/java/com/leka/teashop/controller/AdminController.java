@@ -1,6 +1,7 @@
 package com.leka.teashop.controller;
 
 import com.leka.teashop.mapper.ProductMapper;
+import com.leka.teashop.model.OrderStatus;
 import com.leka.teashop.model.dto.AddressOfDeliveryDto;
 import com.leka.teashop.model.dto.OrderDto;
 import com.leka.teashop.model.dto.ProductDto;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.leka.teashop.model.OrderStatus.IN_PROGRESS;
 
 @Controller
 @RequiredArgsConstructor
@@ -139,7 +142,7 @@ public class AdminController {
         String url = request.getRequestURI();
         String contextPath = request.getContextPath();
         if (url.equals(contextPath + "/ordersInProcess")) {
-            orderDtoPage = orderService.getAllOrdersByStatus("IN_PROGRESS", pageNo, pageSize, sortField, sortDirection);
+            orderDtoPage = orderService.getAllOrdersByStatus(IN_PROGRESS, pageNo, pageSize, sortField, sortDirection);
         } else if (url.equals(contextPath + "/allOrders")) {
             orderDtoPage = orderService.getAllOrders(pageNo, pageSize, sortField, sortDirection);
         }
@@ -153,14 +156,8 @@ public class AdminController {
             List<AddressOfDeliveryDto> addresses = users.stream()
                     .map(UserDetailsDtoForAdmin::getAddressOfDelivery)
                     .toList();
-            List<List<ProductDto>> products = orders.stream()
-                    .map(OrderDto::getProductIdAndCount)
-                    .map(m -> m.keySet()
-                            .stream()
-                            .map(productService::findById)
-                            .map(productMapper::toDto)
-                            .toList())
-                    .toList();
+            //todo when database is erased, products ids change
+            List<List<ProductDto>> products = getProductsLists(orders);
             List<Map<Long, Integer>> listOfProductIdAndCount = orders.stream()
                     .map(OrderDto::getProductIdAndCount)
                     .toList();
@@ -187,7 +184,7 @@ public class AdminController {
 
     @GetMapping({"/changeOrderStatus/{id}", "/changeInProgressStatus/{id}"})
     public String changeOrderStatus(@PathVariable("id") Long orderId,
-                                    @RequestParam("status") String orderStatus,
+                                    @RequestParam("status") OrderStatus orderStatus,
                                     @RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                     @RequestParam(name = "size", defaultValue = "10") Integer pageSize,
                                     @RequestParam(name = "sort", defaultValue = "createdAt") String sortField,
@@ -207,4 +204,14 @@ public class AdminController {
         return redirect;
     }
 
+    private List<List<ProductDto>> getProductsLists(List<OrderDto> orders) {
+        return orders.stream()
+                .map(OrderDto::getProductIdAndCount)
+                .map(m -> m.keySet()
+                        .stream()
+                        .map(productService::findById)
+                        .map(productMapper::toDto)
+                        .toList())
+                .toList();
+    }
 }

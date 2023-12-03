@@ -16,6 +16,7 @@ import com.leka.teashop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
+import static com.leka.teashop.model.OrderStatus.IN_PROGRESS;
+
+@Log4j2
 @Controller
 @RequiredArgsConstructor
 public class OrderController {
@@ -46,9 +50,9 @@ public class OrderController {
     public String addToOrder(@ModelAttribute("product") ProductDto productDto,
                              @RequestParam(name = "page", required = false) Integer page,
                              Model model, HttpServletRequest request, UsernamePasswordAuthenticationToken token) {
-        System.out.println("token: " + token);
+        log.info("token: " + token);
         User currentUser = (User) token.getPrincipal();
-        System.out.println("current user: " + currentUser);
+        log.info("current user: " + currentUser);
         String quantity = request.getParameter("quantity");
         orderService.addToOrder(currentUser, quantity, productDto);
         return productController.getAllProducts(page, null, null, null, model, request);
@@ -137,7 +141,7 @@ public class OrderController {
         }
         User currentUser = (User) token.getPrincipal();
         //saving to database and making order status IN_PROGRESS
-        orderService.saveOrderWithStatus(currentUser.getCurrentOrderDto(), "IN_PROGRESS");
+        orderService.saveOrderWithStatus(currentUser.getCurrentOrderDto(), IN_PROGRESS);
         //save changes in user and delivery details to database if made any
         userService.saveUserAndDeliveryDetails(userDetailsDto, deliveryDto, currentUser);
         //send the completed order to user email

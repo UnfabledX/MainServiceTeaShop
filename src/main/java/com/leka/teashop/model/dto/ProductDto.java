@@ -1,5 +1,6 @@
 package com.leka.teashop.model.dto;
 
+import com.leka.teashop.model.Image;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -37,6 +40,6 @@ public class ProductDto {
     @Digits(integer = 4, fraction = 2, message = "{notADigit.price}")
     private BigDecimal priceEU;
 
-    private Long imageId;
+    private List<Image> images = new ArrayList<>();
 
 }

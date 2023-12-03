@@ -35,7 +35,10 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping("/product")
-    public String getProduct(@ModelAttribute("request") ProductDto dto) {
+    public String addProduct(@ModelAttribute("request") ProductDto dto,
+                             @RequestParam(name = "page", required = false) Integer page,
+                             Model model) {
+        model.addAttribute("page", page);
         return "add-product";
     }
 
@@ -85,13 +88,14 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public String addProduct(@RequestParam("file") MultipartFile file,
-                             @Valid @ModelAttribute("request") ProductDto request, BindingResult result) {
+    public String addProduct(@RequestParam("file") List<MultipartFile> files,
+                             @Valid @ModelAttribute("request") ProductDto request, BindingResult result,
+                             @RequestParam(name = "page", required = false) Integer page, Model model) {
         if (result.hasErrors()) {
-            return "add-product";
+            return addProduct(request, page, model);
         }
-        productService.addProduct(request, file);
-        return "redirect:/product";
+        productService.addProduct(request, files);
+        return "redirect:/allProducts?page=" + page + "&addSuccess";
     }
 
     @GetMapping("/delete/{id}")
@@ -100,20 +104,21 @@ public class ProductController {
         return "redirect:/allProducts";
     }
 
-    //BindingResult should be immediate to @Valid object.
+
     @PostMapping("/updateProduct/{id}")
     public String updateProduct(@Valid @ModelAttribute("request") ProductDto request,
+                                //BindingResult should be immediate to @Valid object.
                                 BindingResult result, Model model,
                                 @PathVariable(name = "id") Long id,
-                                @RequestParam(name = "file", required = false) MultipartFile file,
+                                @RequestParam(name = "files", required = false) List<MultipartFile> files,
                                 @RequestParam(name = "page", required = false) Integer page,
                                 HttpServletRequest servletRequest) {
         if (result.hasErrors()) {
             return showUpdateForm(id, page, model);
         }
         String deleteImage = servletRequest.getParameter("deleteImage");
-        productService.updateProduct(request, file, deleteImage);
-        return "redirect:/allProducts?page=" + page;
+        productService.updateProduct(request, files, deleteImage);
+        return "redirect:/allProducts?page=" + page + "&updateSuccess";
     }
 
     @ResponseBody

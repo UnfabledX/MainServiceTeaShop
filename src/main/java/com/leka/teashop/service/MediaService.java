@@ -15,4 +15,6 @@ public interface MediaService {
     Page<ImageDto> getAllImages();
 
     ImageDto getImageByIdWithData(Long id);
+
+    void deleteAllImages();
 }

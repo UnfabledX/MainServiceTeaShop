@@ -36,7 +36,7 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col" th:text="#{products}">Products</th>
+        <th colspan="2" scope="col" th:text="#{products}">Products</th>
         <th scope="col" th:text="#{label.quantity}">Quantity</th>
         <th colspan="2" scope="col" th:text="#{total.price}" th:if="${#locale.getLanguage() == 'en'}">Total price,
             EURO
@@ -51,8 +51,10 @@
         <th scope="row" th:text="${iterCount.count}"></th>
         <!--        Product name-->
         <td>
-            <img th:src="@{'/image/' + ${product.imageId}}" height="60" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
-            <span th:text="${product.name}"></span>
+            <img th:if="${!product.images.isEmpty()}" th:src="@{'/image/' + ${product.images.get(0).imageId}}" height="60" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
+        </td>
+        <td>
+            <span th:text="${product.name}" style="text-align: left"></span>
         </td>
         <!--        Product name-->
         <!--        Quantity-->
@@ -83,11 +85,11 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" th:text="#{total.all}" style="text-align: right">Total:</td>
+        <td colspan="4" th:text="#{total.all}" style="text-align: right">Total:</td>
         <td colspan="2" th:text="${@priceCalculator.summarizeAll(productIdAndCount)}  + ' '  + #{currency}"></td>
     </tr>
     <tr>
-        <td colspan="5">
+        <td colspan="6">
             <a class="btn btn-outline-success" role="button" th:text="#{proceed.to.address.delivery}"
                th:href="@{/deliveryOptions}"></a>
         </td>

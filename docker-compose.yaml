@@ -4,7 +4,7 @@ services:
     image: postgres
     container_name: teashop_db
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: teashop
       POSTGRES_USER: leka
       POSTGRES_PASSWORD: password
     restart: on-failure

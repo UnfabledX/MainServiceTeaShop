@@ -1,18 +1,25 @@
 package com.leka.teashop.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+@Builder
 @Setter
 @Getter
 @Entity
@@ -36,6 +43,10 @@ public class Product {
     @Column(name = "price_eu", nullable = false)
     private BigDecimal priceEU;
 
-    @Column(name = "image_id")
-    private Long imageId;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Image> images = new ArrayList<>();
+
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
 }

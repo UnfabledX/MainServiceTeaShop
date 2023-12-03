@@ -92,5 +92,12 @@ public class MediaServiceImpl implements MediaService {
         return dto;
     }
 
-
+    @Override
+    public void deleteAllImages() {
+        mediaWebClient.delete()
+                .uri("/api/v1/images/delete")
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
 }
