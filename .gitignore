@@ -81,5 +81,5 @@ nb-configuration.xml
 ##############################
 .DS_Store
 /integration-teashop/.env
-/credentials.json
 /tokens/StoredCredential
+/src/main/resources/credentials.json
