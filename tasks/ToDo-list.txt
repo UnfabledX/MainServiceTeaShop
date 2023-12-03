@@ -57,6 +57,8 @@ To-do-list
 
 7. Make footer for all pages (not started)
 8. Cary out search feature (not started)
+
+
 9. Reset the password (done)
     9.1 problem when the user triggers email sending about password resetting, a token is generated and when the user
     ignores the letter - token must be deleted after its expiration (done by adding
@@ -76,6 +78,6 @@ To-do-list
     9.5 set opacity for background image. (not needed)
     9.6 when user starts an order, when removes  all items in the cart, but in orders-settings this order reflects
     in old condition. (solved)
+    9.7 update product -> logo in the header is not shown. why?? (fixed)
 
-
-    9.7 update product -> logo in the header is not shown. why?? (partially fixed)
+    9.8 Some mistakes in media microservice. Have to investigate this issue.
