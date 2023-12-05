@@ -30,7 +30,7 @@
         <tr th:each="product, iterCount: ${products}">
             <th th:text="${iterCount.count}"></th>
             <td>
-                <span th:text="${product.name}"></span>
+                <span th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}"></span>
             </td>
             <td>
                 <span th:text="${productIdAndCount.get(product.id)}"></span>

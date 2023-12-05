@@ -156,7 +156,6 @@ public class AdminController {
             List<AddressOfDeliveryDto> addresses = users.stream()
                     .map(UserDetailsDtoForAdmin::getAddressOfDelivery)
                     .toList();
-            //todo when database is erased, products ids change
             List<List<ProductDto>> products = getProductsLists(orders);
             List<Map<Long, Integer>> listOfProductIdAndCount = orders.stream()
                     .map(OrderDto::getProductIdAndCount)

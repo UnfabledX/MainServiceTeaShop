@@ -81,3 +81,7 @@ To-do-list
     9.7 update product -> logo in the header is not shown. why?? (fixed)
 
     9.8 Some mistakes in media microservice. Have to investigate this issue.
+
+
+11. Contacts at the bottom of pages
+12. implement adding product to Google disk as well when admin adds product on the website.

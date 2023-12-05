@@ -20,9 +20,11 @@
         th, td {
             padding: 5px;
         }
+
         td {
             color: #ef5757;
         }
+
         #main_body {
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -142,11 +144,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><span th:text="${address.country}"></span></td>
-                            <td><span th:text="${address.city}"></span></td>
-                            <td><span th:text="${address.region}"></span></td>
-                            <td><span th:text="${address.zipCode}"></span></td>
+                        <tr th:if="${address != null}">
+                                <td><span th:text="${address.country}"></span></td>
+                                <td><span th:text="${address.city}"></span></td>
+                                <td><span th:text="${address.region}"></span></td>
+                                <td><span th:text="${address.zipCode}"></span></td>
                         </tr>
                         </tbody>
                     </table>
@@ -159,7 +161,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:if="${address != null}">
                             <td><span th:text="${address.operatorName}"></span></td>
                             <td><span th:text="${address.numberOfDepartment}"></span></td>
                             <td><span th:text="${address.deliveryDetails}"></span></td>
@@ -196,7 +198,7 @@
                         <tr th:each="product, iterStat: ${productsListForEachOrder[iterCount.index]}">
                             <th th:text="${iterStat.count}"></th>
                             <td>
-                                <span th:text="${product.name}"></span>
+                                <span th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}"></span>
                             </td>
                             <td>
                                 <span th:text="${listOfProductIdAndCount[iterCount.index].get(product.id)}"></span>
@@ -221,14 +223,17 @@
 
         <td>
             <div class="btn-group dropend">
-                <button th:if="${order.orderStatus == 'IN_PROGRESS'}" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${order.orderStatus}"></span>
+                <button th:if="${order.orderStatus.name().equals('IN_PROGRESS')}" type="button"
+                        class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span th:text="#{order.in-progress}"></span>
                 </button>
-                <button th:if="${order.orderStatus == 'FULFILLED'}" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${order.orderStatus}"></span>
+                <button th:if="${order.orderStatus.name().equals('FULFILLED')}" type="button"
+                        class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span th:text="#{order.fulfilled}"></span>
                 </button>
-                <button th:if="${order.orderStatus == 'DECLINED'}" type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span th:text="${order.orderStatus}"></span>
+                <button th:if="${order.orderStatus.name().equals('DECLINED')}" type="button"
+                        class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span th:text="#{order.declined}"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#"
@@ -238,7 +243,7 @@
                     <li><a class="dropdown-item" href="#"
                            th:href="@{'/changeOrderStatus/' + ${order.id}  + '?status=FULFILLED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
-                           th:text="#{order.finished}">FINISHED</a></li>
+                           th:text="#{order.fulfilled}">FULFILLED</a></li>
                     <li><a class="dropdown-item" href="#"
                            th:href="@{'/changeOrderStatus/' + ${order.id}  + '?status=DECLINED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"

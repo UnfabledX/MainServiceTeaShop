@@ -65,7 +65,7 @@
                     <tr th:each="product, iterCount: ${productsListForEachOrder[iterStat.index]}">
                         <th th:text="${iterCount.count}"></th>
                         <td>
-                            <span th:text="${product.name}"></span>
+                            <span th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}"></span>
                         </td>
                         <td>
                             <span th:text="${listOfProductIdAndCount[iterStat.index].get(product.id)}"></span>

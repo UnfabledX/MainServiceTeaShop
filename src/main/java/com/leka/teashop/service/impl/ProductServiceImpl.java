@@ -8,8 +8,10 @@ import com.leka.teashop.model.dto.ImageDto;
 import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ImageRepository;
 import com.leka.teashop.repository.ProductRepository;
+import com.leka.teashop.repository.predicate.ProductPredicatesBuilder;
 import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.leka.teashop.model.ProductStatus.DELETED;
+import static com.leka.teashop.model.ProductStatus.PRESENT;
 
 @Service
 @RequiredArgsConstructor
@@ -52,23 +57,33 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField,
-                                           String sortDirection) {
+                                           String sortDirection, String urlPath) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-        return productRepository.findAll(pageable)
-                .map(productMapper::toDto);
+        Page<ProductDto> productDtos;
+        if (urlPath.equals("allProducts")) {
+            productDtos = productRepository.findAll(pageable)
+                    .map(productMapper::toDto);
+        } else {
+            BooleanExpression expression = new ProductPredicatesBuilder()
+                    .with("status", ":", "PRESENT").build();
+            productDtos = productRepository.findAll(expression, pageable)
+                    .map(productMapper::toDto);
+        }
+        return productDtos;
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
-        Product product = findById(id);
-        List<Image> images = product.getImages();
-        if (!images.isEmpty()) {
-            images.forEach(image -> mediaService.deleteImageById(image.getImageId()));
-        }
-        productRepository.deleteById(id);
+        productRepository.findById(id).ifPresent(product -> product.setStatus(DELETED));
+    }
+
+    @Override
+    @Transactional
+    public void activateById(Long id) {
+        productRepository.findById(id).ifPresent(product -> product.setStatus(PRESENT));
     }
 
     @Override

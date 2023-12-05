@@ -62,7 +62,7 @@ public class ProductController {
         if (pageSize == null) {
             pageSize = defaultPageSize;
         }
-        Page<ProductDto> dtoList = productService.getAllProducts(pageNo, pageSize, sortField, sortDirection);
+        Page<ProductDto> dtoList = productService.getAllProducts(pageNo, pageSize, sortField, sortDirection, urlPath);
         List<ProductDto> productDtoList = dtoList.getContent();
 
         model.addAttribute("products", productDtoList);
@@ -104,6 +104,11 @@ public class ProductController {
         return "redirect:/allProducts";
     }
 
+    @GetMapping("/activate/{id}")
+    public String activateProduct(@PathVariable(name = "id") Long id) {
+        productService.activateById(id);
+        return "redirect:/allProducts";
+    }
 
     @PostMapping("/updateProduct/{id}")
     public String updateProduct(@Valid @ModelAttribute("request") ProductDto request,

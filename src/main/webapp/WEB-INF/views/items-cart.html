@@ -54,7 +54,7 @@
             <img th:if="${!product.images.isEmpty()}" th:src="@{'/image/' + ${product.images.get(0).imageId}}" height="60" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
         </td>
         <td>
-            <span th:text="${product.name}" style="text-align: left"></span>
+            <span th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}" style="text-align: left"></span>
         </td>
         <!--        Product name-->
         <!--        Quantity-->

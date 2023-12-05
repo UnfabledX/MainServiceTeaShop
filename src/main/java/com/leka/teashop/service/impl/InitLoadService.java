@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leka.teashop.model.ProductStatus.PRESENT;
+
 @Service
 @RequiredArgsConstructor
 public class InitLoadService {
@@ -60,6 +62,7 @@ public class InitLoadService {
                 .description(row.get(2).toString())
                 .priceUA(new BigDecimal(String.valueOf(row.get(3))))
                 .priceEU(new BigDecimal(String.valueOf(row.get(4))))
+                .status(PRESENT)
                 .images(new ArrayList<>())
                 .build();
         return product;

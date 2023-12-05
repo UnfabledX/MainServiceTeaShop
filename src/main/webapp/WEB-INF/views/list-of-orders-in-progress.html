@@ -196,7 +196,7 @@
                         <tr th:each="product, iterStat: ${productsListForEachOrder[iterCount.index]}">
                             <th th:text="${iterStat.count}"></th>
                             <td>
-                                <span th:text="${product.name}"></span>
+                                <span th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}"></span>
                             </td>
                             <td>
                                 <span th:text="${listOfProductIdAndCount[iterCount.index].get(product.id)}"></span>
@@ -228,7 +228,7 @@
                     <li><a class="dropdown-item" href="#"
                            th:href="@{'/changeInProgressStatus/' + ${order.id}  + '?status=FULFILLED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
-                           th:text="#{order.finished}">FINISHED</a></li>
+                           th:text="#{order.fulfilled}">FINISHED</a></li>
                     <li><a class="dropdown-item" href="#"
                            th:href="@{'/changeInProgressStatus/' + ${order.id}  + '?status=DECLINED' +
                            '&page=' + ${currentPage} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"

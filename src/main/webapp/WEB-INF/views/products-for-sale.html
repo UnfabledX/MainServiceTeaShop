@@ -69,8 +69,8 @@
             </div>
             <!-- IMAGE CAROUSEL-->
             <div class="card-body">
-                <h5 class="card-title" th:text="${product.name}">Card title</h5>
-                <p class="card-text" th:text="${product.description}"></p>
+                <h5 class="card-title" th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}">Card title</h5>
+                <p class="card-text" th:text="${@productLanguageSwitcher.defineLanguageOf(product.description)}"></p>
             </div>
             <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
                   th:object="${product}" method="post" name="productForm" id="productForm">

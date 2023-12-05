@@ -12,7 +12,8 @@ public interface ProductService {
 
     void addProduct(ProductDto product, List<MultipartFile> files);
 
-    Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField, String sortDirection);
+    Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField,
+                                    String sortDirection, String urlPath);
 
     void updateProduct(ProductDto request, List<MultipartFile> files, String deleteImage);
 
@@ -21,4 +22,6 @@ public interface ProductService {
     Product findById(Long id);
 
     Page<ImageDto> getAllImages();
+
+    void activateById(Long id);
 }
