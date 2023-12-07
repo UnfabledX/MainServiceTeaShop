@@ -9,6 +9,7 @@ import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.repository.ImageRepository;
 import com.leka.teashop.repository.ProductRepository;
 import com.leka.teashop.repository.predicate.ProductPredicatesBuilder;
+import com.leka.teashop.service.GoogleService;
 import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -38,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
     private final ImageRepository imageRepository;
     private final ProductMapper productMapper;
     private final MediaService mediaService;
+    private final GoogleService googleService;
 
     @Override
     @Transactional
@@ -51,7 +53,8 @@ public class ProductServiceImpl implements ProductService {
             });
         }
         productRepository.save(product);
-        //todo implement adding product to Google disk as well
+        googleService.insertProductIntoGoogleSheets(product);
+        googleService.insertImagesOfProductIntoGoogleDrive(product, files);
     }
 
     @Override
@@ -88,7 +91,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void updateProduct(ProductDto updatedProduct, List<MultipartFile> files, String deleteAllImages) {
+    public void updateProduct(ProductDto updatedProduct, List<MultipartFile> files,
+                              String deleteAllImages) {
         Product product = productMapper.toEntity(updatedProduct);
         product.setId(updatedProduct.getId());
 

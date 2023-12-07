@@ -1,6 +1,7 @@
 package com.leka.teashop.config;
 
 import com.google.api.services.drive.Drive;
+import com.google.api.services.sheets.v4.Sheets;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,13 @@ public class GoogleConfig {
     @Bean
     public Drive getGoogleDrive() throws IOException {
         return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials())
+                .setApplicationName("Teashop")
+                .build();
+    }
+
+    @Bean
+    public Sheets getGoogleSheets() throws IOException {
+        return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials())
                 .setApplicationName("Teashop")
                 .build();
     }

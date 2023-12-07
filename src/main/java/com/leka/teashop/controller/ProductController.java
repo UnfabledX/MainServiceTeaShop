@@ -36,7 +36,7 @@ public class ProductController {
 
     @GetMapping("/product")
     public String addProduct(@ModelAttribute("request") ProductDto dto,
-                             @RequestParam(name = "page", required = false) Integer page,
+                             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
                              Model model) {
         model.addAttribute("page", page);
         return "add-product";
@@ -88,7 +88,7 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public String addProduct(@RequestParam("file") List<MultipartFile> files,
+    public String addProduct(@RequestParam("files") List<MultipartFile> files,
                              @Valid @ModelAttribute("request") ProductDto request, BindingResult result,
                              @RequestParam(name = "page", required = false) Integer page, Model model) {
         if (result.hasErrors()) {

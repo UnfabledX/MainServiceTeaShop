@@ -80,8 +80,12 @@ To-do-list
     in old condition. (solved)
     9.7 update product -> logo in the header is not shown. why?? (fixed)
 
-    9.8 Some mistakes in media microservice. Have to investigate this issue.
+    9.8 Some mistakes in media microservice. Have to investigate this issue.(fixed)
 
 
 11. Contacts at the bottom of pages
-12. implement adding product to Google disk as well when admin adds product on the website.
+12. implement adding product to Google disk as well when admin adds product on the website. (done,
+ but need to implement async operation for Google files saving)
+14. implement update product on Google disk
+
+  Чорний чай#&#tea black    Деякий опис#&#Some description

@@ -1,38 +1,39 @@
 package com.leka.teashop.service.impl;
 
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.leka.teashop.config.GoogleConfig.GoogleProperties;
+import com.leka.teashop.model.Product;
 import com.leka.teashop.service.GoogleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static com.leka.teashop.config.GoogleAuthorizeUtil.HTTP_TRANSPORT;
-import static com.leka.teashop.config.GoogleAuthorizeUtil.JSON_FACTORY;
-import static com.leka.teashop.config.GoogleAuthorizeUtil.credentials;
-
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class GoogleServiceImpl implements GoogleService {
 
     private final GoogleProperties googleProperties;
     private final Drive googleDriveService;
+    private final Sheets googleSheetsService;
 
     @Override
     public List<List<Object>> loadTableOfProducts() throws IOException {
-        Sheets service =
-                new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials())
-                        .setApplicationName("Teashop")
-                        .build();
-        ValueRange response = service.spreadsheets().values()
+        ValueRange response = googleSheetsService.spreadsheets().values()
                 .get(googleProperties.spreadsheetId(), googleProperties.rangeOfColumns())
                 .execute();
         return response.getValues();
@@ -66,4 +67,48 @@ public class GoogleServiceImpl implements GoogleService {
                 .executeMediaAndDownloadTo(outputStream);
     }
 
+    @Override
+    public void insertImagesOfProductIntoGoogleDrive(Product product, List<MultipartFile> files) {
+        MultipartFile firstFile = files.get(0);
+        if (!firstFile.isEmpty()) {
+            int i = 0;
+            for (MultipartFile file : files) {
+                try {
+                    String fileName = product.getId() + "." + i + "-" + file.getOriginalFilename();
+                    File fileMetadata = new File();
+                    fileMetadata.setParents(Collections.singletonList(googleProperties.folderId()));
+                    fileMetadata.setName(fileName);
+                    File uploadedFile = googleDriveService.files()
+                            .create(fileMetadata, new InputStreamContent(
+                                    file.getContentType(),
+                                    new ByteArrayInputStream(file.getBytes()))
+                            )
+                            .setFields("id").execute();
+                    i++;
+                    log.info("Id of uploaded file = [{}]", uploadedFile.getId());
+                } catch (Exception e) {
+                    log.error("Error in insertImagesOfProductIntoGoogleDrive(): ", e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void insertProductIntoGoogleSheets(Product product) {
+        List<Object> productRow = List.of(product.getId(), product.getName(),
+                product.getDescription(), product.getPriceUA(), product.getPriceEU());
+        List<List<Object>> values = List.of(productRow);
+        try {
+            ValueRange body = new ValueRange().setValues(values);
+            AppendValuesResponse result = googleSheetsService.spreadsheets()
+                    .values()
+                    .append(googleProperties.spreadsheetId(), "A1", body)
+                    .setValueInputOption("USER_ENTERED")
+                    .setInsertDataOption("INSERT_ROWS")
+                    .execute();
+            log.info("{} cells appended.", result.getUpdates().getUpdatedCells());
+        } catch (IOException e) {
+            log.error("Error in insertProductIntoGoogleSheets(): ", e);
+        }
+    }
 }

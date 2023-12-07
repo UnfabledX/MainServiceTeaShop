@@ -83,3 +83,4 @@ nb-configuration.xml
 /integration-teashop/.env
 /tokens/StoredCredential
 /src/main/resources/credentials.json
+/tokens_folder/StoredCredential

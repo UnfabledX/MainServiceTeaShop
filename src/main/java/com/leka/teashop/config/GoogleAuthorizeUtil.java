@@ -10,16 +10,15 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.sheets.v4.SheetsScopes;
 import lombok.extern.log4j.Log4j2;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.List;
-
-import static com.google.api.services.sheets.v4.SheetsScopes.DRIVE_READONLY;
-import static com.google.api.services.sheets.v4.SheetsScopes.SPREADSHEETS_READONLY;
+import java.util.Set;
 
 @Log4j2
 public class GoogleAuthorizeUtil {
@@ -29,8 +28,8 @@ public class GoogleAuthorizeUtil {
 
     public static final NetHttpTransport HTTP_TRANSPORT = getHttpTransport();
     public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final List<String> SCOPES = List.of(SPREADSHEETS_READONLY, DRIVE_READONLY);
-    private static final String TOKENS_DIRECTORY_PATH ="tokens";
+    private static final Set<String> SCOPES = SheetsScopes.all();
+    private static final String TOKENS_DIRECTORY_PATH ="tokens_folder";
 
     /**
      * Creates an authorized Credential object.
@@ -47,7 +46,7 @@ public class GoogleAuthorizeUtil {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setDataStoreFactory(new FileDataStoreFactory(new File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType("offline")
                 .build();
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
