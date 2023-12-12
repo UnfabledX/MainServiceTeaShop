@@ -87,7 +87,7 @@ public class User implements UserDetails {
      * this can lead to some changes in html pages (headers...)
      */
     @Transient
-    private OrderDto currentOrderDto;
+    private transient OrderDto currentOrderDto;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

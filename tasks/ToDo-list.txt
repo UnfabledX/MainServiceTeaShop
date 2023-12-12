@@ -86,6 +86,7 @@ To-do-list
 11. Contacts at the bottom of pages
 12. implement adding product to Google disk as well when admin adds product on the website. (done,
  but need to implement async operation for Google files saving)
-14. implement update product on Google disk
+14. implement update product on Google disk (potential risks: need to make backup on google drive in folder backup)
 
+15. DOn't forget to remove service endpoints for testing from security list.
   Чорний чай#&#tea black    Деякий опис#&#Some description

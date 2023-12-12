@@ -14,6 +14,7 @@ import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,7 @@ import java.util.List;
 import static com.leka.teashop.model.ProductStatus.DELETED;
 import static com.leka.teashop.model.ProductStatus.PRESENT;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -93,22 +95,29 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void updateProduct(ProductDto updatedProduct, List<MultipartFile> files,
                               String deleteAllImages) {
+        log.info("Updating the product=[{}] with options: files=[{}], deleteAllImages=[{}]",
+                updatedProduct, files, deleteAllImages);
         Product product = productMapper.toEntity(updatedProduct);
         product.setId(updatedProduct.getId());
 
         if (!files.isEmpty() && !files.get(0).isEmpty()) {
             deleteImagesOf(updatedProduct);
+            googleService.deleteImagesOnDriveOf(updatedProduct);
             for (MultipartFile file : files) {
                 MultipartBodyBuilder builder = createFrom(file);
                 ImageDto imageDto = mediaService.uploadImageThrough(builder);
                 product.addImage(new Image(imageDto.getId(), product));
             }
+            googleService.insertImagesOfProductIntoGoogleDrive(product, files);
         }
 
         if (CHECKED.equals(deleteAllImages)) {
             deleteImagesOf(updatedProduct);
+            googleService.deleteImagesOnDriveOf(updatedProduct);
         }
         productRepository.save(product);
+        String result = googleService.updateProductRecordInGoogleSheets(product);
+        log.info(result);
     }
 
     @Override

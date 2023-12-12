@@ -1,12 +1,15 @@
 package com.leka.teashop.controller;
 
 import com.leka.teashop.model.Product;
+import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.service.GoogleService;
 import com.leka.teashop.service.impl.InitLoadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +42,25 @@ public class InitLoadController {
         googleService.insertProductIntoGoogleSheets(product);
         googleService.insertImagesOfProductIntoGoogleDrive(product, files);
     }
+
+    /**
+     * Service endpoint for testing purposes.
+     */
+    @ResponseBody
+    @PostMapping(value = "/updateSpecifiedRow")
+    public String loadToGoogle(@RequestBody Product product) {
+        return googleService.updateProductRecordInGoogleSheets(product);
+    }
+
+    /**
+     * Service endpoint for testing purposes.
+     */
+    @ResponseBody
+    @DeleteMapping(value = "/deleteImages")
+    public void deleteImages(@RequestBody ProductDto product) {
+        googleService.deleteImagesOnDriveOf(product);
+    }
+
 
 
 

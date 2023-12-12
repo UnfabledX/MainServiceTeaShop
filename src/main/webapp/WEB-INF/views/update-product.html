@@ -38,8 +38,11 @@
       data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-update-product}"></div>
 
-<div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse"
-     id="main-container">
+<div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse" id="main-container">
+    <div th:if="${param.oneOptionMustBeChosen}" class="alert alert-info alert-dismissible"
+         th:text="#{product.updated.oneOptionMustBeChosen}"> Choose only one option: delete images or update them - not both.
+    </div>
+
     <h2 th:text="#{update.product}" style="text-align: center;"/>
     <form action="#" th:action="@{'/updateProduct/' + ${product.id} + '?page=' + ${page}}" th:object="${product}"
           enctype="multipart/form-data" method="post">

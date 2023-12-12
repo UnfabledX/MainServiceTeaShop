@@ -2,6 +2,7 @@ package com.leka.teashop.service;
 
 import com.google.api.services.drive.model.File;
 import com.leka.teashop.model.Product;
+import com.leka.teashop.model.dto.ProductDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -19,4 +20,8 @@ public interface GoogleService {
     void insertImagesOfProductIntoGoogleDrive(Product product, List<MultipartFile> files);
 
     void insertProductIntoGoogleSheets(Product product);
+
+    void deleteImagesOnDriveOf(ProductDto updatedProduct);
+
+    String updateProductRecordInGoogleSheets(Product product);
 }

@@ -121,14 +121,17 @@ public class ProductController {
         if (result.hasErrors()) {
             return showUpdateForm(id, page, model);
         }
-        String deleteImage = servletRequest.getParameter("deleteImage");
-        productService.updateProduct(request, files, deleteImage);
+        String deleteImages = servletRequest.getParameter("deleteImage");
+        if (!files.get(0).isEmpty() && "on".equals(deleteImages)) {
+            return "redirect:/editProduct/" + id + "?page=" + page + "&oneOptionMustBeChosen";
+        }
+        productService.updateProduct(request, files, deleteImages);
         return "redirect:/allProducts?page=" + page + "&updateSuccess";
     }
 
     @ResponseBody
     @GetMapping("/image/{id}")
-    public byte[] getImageById(@PathVariable("id") Long id){
+    public byte[] getImageById(@PathVariable("id") Long id) {
         return mediaService.getImageByIdWithData(id).getData();
     }
 }
