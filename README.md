@@ -19,7 +19,7 @@ finally complete the order by checking the delivery options.
 Image processing occurs in the backend media-service
 (https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database.
 In the future all backend applications are going to communicate through eureka server.
-In order to run application follow these steps:
+In order to run application locally follow these steps:
 
 1. Install manually Tomcat (I was using tomcat-10.1.11, oldest versions might not work because of incompatibility with
    new spring boot versions 3.+)
