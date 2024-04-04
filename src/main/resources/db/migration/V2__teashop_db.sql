@@ -1,5 +1,5 @@
-ALTER TABLE teashop_db.users
+ALTER TABLE main_service.users
     ADD COLUMN first_name character varying,
     ADD COLUMN last_name  character varying;
-ALTER TABLE teashop_db.address_deliveries
+ALTER TABLE main_service.address_deliveries
     ADD COLUMN delivery_details character varying;

@@ -1,16 +1,10 @@
-FROM eclipse-temurin:17-jdk-alpine AS builder
-ARG JAR_FILE=target/FileManagerService-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
-
-FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
-COPY --from=builder dependencies/ ./
-COPY --from=builder snapshot-dependencies/ ./
-COPY --from=builder spring-boot-loader/ ./
-COPY --from=builder application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
-
-FROM tomcat:11.0-jdk21-temurin-jammy
-
-COPY TeaShopApplication.war /usr/local/tomcat/webapps/
+FROM tomcat:10.0
+LABEL Author="Oleksii Synelnyk"
+# Set the working directory in the container
+WORKDIR /usr/local/tomcat
+# Copy the WAR file into the Tomcat webapps directory
+COPY target/TeaShop-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/teashop.war
+# Make port 8080 available to the world outside this container
+EXPOSE 8080 8888
+# Run Tomcat server
+CMD ["catalina.sh", "run"]

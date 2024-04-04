@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS teashop_db;
+CREATE SCHEMA IF NOT EXISTS main_service;
 
-CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
+CREATE TABLE IF NOT EXISTS main_service.address_deliveries
 (
     id                bigserial,
     country           character varying NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS teashop_db.address_deliveries
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS teashop_db.users
+CREATE TABLE IF NOT EXISTS main_service.users
 (
     id                  bigserial,
     user_name           character varying NOT NULL,
@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS teashop_db.users
     PRIMARY KEY (id),
     CONSTRAINT fk_address
         FOREIGN KEY (address_id)
-            REFERENCES teashop_db.address_deliveries (id)
+            REFERENCES main_service.address_deliveries (id)
 );
 
-CREATE TABLE IF NOT EXISTS teashop_db.products
+CREATE TABLE IF NOT EXISTS main_service.products
 (
     id                bigserial,
     name              character varying NOT NULL,

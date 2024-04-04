@@ -5,20 +5,21 @@ services:
     restart: on-failure
     environment:
       TZ: Europe/Kyiv
-      POSTGRES_DB: postgres
+      POSTGRES_DB: teashop
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     env_file:
       - .env
     ports:
-      - "5442:5432"
+      - "5432:5432"
 
   eureka:
-    image: unfabled/teashop:eurekaserver0.0.1
+    image: docker.io/library/teashop-eureka:0.0.1
     restart: on-failure
 
   main-teashop-service:
-    image: unfabled/teashop:main_service_teashop0.0.1
+#    image: unfabled/teashop:main_service_teashop0.0.1
+    image: docker.io/library/teashop-main:0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -26,6 +27,9 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       EMAIL_PASSWORD: ${EMAIL_PASSWORD}
       EMAIL_USERNAME: ${EMAIL_USERNAME}
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
+      GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
+      GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
     env_file:
       - .env
     depends_on:
@@ -34,12 +38,12 @@ services:
       database:
         condition: service_started
     ports:
-      - target: 8080
-        host_ip: 127.0.0.1
-        published: 8080
+      - "8080:8080"
+      - "8888:8888"
 
   order-teashop-service:
-    image: unfabled/teashop:orderservice0.0.1
+#    image: unfabled/teashop:orderservice0.0.1
+    image: docker.io/library/teashop-order:0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -65,7 +69,8 @@ services:
 #      - '8080:8080'
 
   media-teashop-service:
-    image: unfabled/teashop:mediaservice0.0.1
+#    image: unfabled/teashop:mediaservice0.0.1
+    image: docker.io/library/teashop-media:0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}

@@ -84,3 +84,5 @@ nb-configuration.xml
 /tokens/StoredCredential
 /src/main/resources/credentials.json
 /tokens_folder/StoredCredential
+/.env
+/src/main/resources/.env

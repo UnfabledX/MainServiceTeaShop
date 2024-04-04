@@ -5,8 +5,8 @@ services:
     container_name: teashop_db
     environment:
       POSTGRES_DB: teashop
-      POSTGRES_USER: leka
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     restart: on-failure
     ports:
       - "5440:5432"

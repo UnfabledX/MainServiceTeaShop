@@ -3,15 +3,15 @@ package com.leka.teashop.config;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
-
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebClientConfig {
@@ -21,6 +21,12 @@ public class WebClientConfig {
     private String ORDER_BASE_URL;
     public final int TIMEOUT = 1000;
 
+    @LoadBalanced
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
+
     @Bean(name = "mediaWebClient")
     public WebClient mediaWebClientWithTimeout() {
         final int memorySize = 20 * 1024 * 1024; //20MB
@@ -28,7 +34,7 @@ public class WebClientConfig {
                 .codecs(clientCodecConfigurer ->
                         clientCodecConfigurer.defaultCodecs().maxInMemorySize(memorySize))
                 .build();
-        return WebClient.builder()
+        return webClientBuilder()
                 .baseUrl(MEDIA_BASE_URL)
                 .clientConnector(new ReactorClientHttpConnector(getHttpClient()))
                 .exchangeStrategies(strategies)
@@ -37,7 +43,7 @@ public class WebClientConfig {
 
     @Bean(name = "orderWebClient")
     public WebClient orderWebClientWithTimeout() {
-        return WebClient.builder()
+        return webClientBuilder()
                 .baseUrl(ORDER_BASE_URL)
                 .clientConnector(new ReactorClientHttpConnector(getHttpClient()))
                 .build();

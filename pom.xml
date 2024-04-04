@@ -20,6 +20,7 @@
         <maven-compiler-plugin-lombok.version>1.18.24</maven-compiler-plugin-lombok.version>
         <maven-compiler-plugin-lombok-mapstruct.version>0.2.0</maven-compiler-plugin-lombok-mapstruct.version>
         <thymeleaf-springsecurity6.version>3.1.2.RELEASE</thymeleaf-springsecurity6.version>
+        <thymeleaf.starter.version>3.1.2</thymeleaf.starter.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <eurika.version>4.0.3</eurika.version>
     </properties>
@@ -75,7 +76,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>3.1.2</version>
+            <version>${thymeleaf.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -182,13 +183,15 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>TeaShopApplication</finalName>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
             </plugin>
             <plugin>
