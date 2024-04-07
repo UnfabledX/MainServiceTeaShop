@@ -18,9 +18,9 @@ finally complete the order by checking the delivery options.
 
 Image processing occurs in the backend media-service
 (https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database.
-In the future all backend applications are going to communicate through eureka server.
-In order to run application locally follow these steps:
+All backend microservices communicate through eureka server.
 
+### In order to run application locally follow these steps:
 1. Install manually Tomcat (I was using tomcat-10.1.11, oldest versions might not work because of incompatibility with
    new spring boot versions 3.+)
 2. If you use Docker, run docker-compose file in the root folder of the project by command in
@@ -39,7 +39,37 @@ In order to run application locally follow these steps:
 10. Run order server.
 11. Run Tomcat in the teashop project.
 
-Technology used in the project:
+### In order to run the application in docker follow these steps:
+1. run docker-compose file `docker-compose.yaml` in the folder `docker-local`
+2. Don't forget to provide env file (locate it in the same folder `docker-local`) with such variables: 
+
+   DATABASE_PASSWORD=*******
+
+   DATABASE_URL=jdbc:postgresql://database:5432/teashop
+
+   DATABASE_USER=*******
+
+   EMAIL_PASSWORD=*******
+
+   EMAIL_USERNAME=*******
+
+   GOOGLE_SHEET_ID=*******
+
+   GOOGLE_FOLDER_ID=*******
+
+   GOOGLE_SHEET_RANGE=A2:E
+
+Email configuration is needed for sending emails (verification, order, password reset emails etc.)
+Google configuration is used to synchronize products info in database with google spreadsheet and vice versa
+and to synchronize product pictures in database with pictures, stored in google folder, and vice versa
+
+### Note: 
+Note that you must create a project in https://console.cloud.google.com/apis/dashboard
+and enable `Google Drive API` and `Google Sheets API`, so the application can access Google Drive and Sheets.
+When first started, look for google authorization link in console logs. Copy it and open in browser in order
+to login in your actual google account. 
+
+### Technology used in the project:
 
 - Java 17
 - Spring Boot
