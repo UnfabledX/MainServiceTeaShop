@@ -1,25 +1,12 @@
 version: '3.3'
 services:
-  database:
-    image: postgres
-    restart: on-failure
-    environment:
-      TZ: Europe/Kyiv
-      POSTGRES_DB: teashop
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-    env_file:
-      - .env
-    ports:
-      - "5432:5432"
 
   eureka:
-    image: docker.io/library/teashop-eureka:0.0.1
+    image: unfabled/teashop:eureka-0.0.1
     restart: on-failure
 
   main-teashop-service:
-#    image: unfabled/teashop:main_service_teashop0.0.1
-    image: docker.io/library/teashop-main:0.0.1
+    image: unfabled/teashop:main_service-0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -30,8 +17,6 @@ services:
       GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
       GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
       GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
-    env_file:
-      - .env
     depends_on:
       eureka:
         condition: service_started
@@ -42,42 +27,25 @@ services:
       - "8888:8888"
 
   order-teashop-service:
-#    image: unfabled/teashop:orderservice0.0.1
-    image: docker.io/library/teashop-order:0.0.1
+    image: unfabled/teashop:order_service-0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-    env_file:
-      - .env
     depends_on:
       eureka:
         condition: service_started
       database:
         condition: service_started
 
-#  gateway:
-#    image: unfabled/teashop:gateway0.0.1
-#    restart: on-failure
-#    depends_on:
-#      eureka:
-#        condition: service_started
-#      database:
-#        condition: service_started
-#    ports:
-#      - '8080:8080'
-
   media-teashop-service:
-#    image: unfabled/teashop:mediaservice0.0.1
-    image: docker.io/library/teashop-media:0.0.1
+    image: unfabled/teashop:media_service-0.0.1
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-    env_file:
-      - .env
     depends_on:
       eureka:
         condition: service_started

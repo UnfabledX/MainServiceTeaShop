@@ -80,9 +80,10 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
-/integration-teashop/.env
+/docker-local/.env
 /tokens/StoredCredential
 /src/main/resources/credentials.json
 /tokens_folder/StoredCredential
 /.env
 /src/main/resources/.env
+/integration-aws/.env
