@@ -17,10 +17,9 @@ services:
       GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
       GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
       GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
+      WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
     depends_on:
       eureka:
-        condition: service_started
-      database:
         condition: service_started
     ports:
       - "8080:8080"
@@ -36,8 +35,6 @@ services:
     depends_on:
       eureka:
         condition: service_started
-      database:
-        condition: service_started
 
   media-teashop-service:
     image: unfabled/teashop:media_service-0.0.1
@@ -48,6 +45,4 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     depends_on:
       eureka:
-        condition: service_started
-      database:
         condition: service_started

@@ -29,6 +29,7 @@ services:
       GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
       GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
       GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
+      WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
     env_file:
       - .env
     depends_on:

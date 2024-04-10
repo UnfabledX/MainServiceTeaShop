@@ -19,7 +19,8 @@ public class WebClientConfig {
     private String MEDIA_BASE_URL;
     @Value("${order.webclient.base-url}")
     private String ORDER_BASE_URL;
-    public final int TIMEOUT = 1000;
+    @Value("${general.webclient.timeout}")
+    public int TIMEOUT;
 
     @LoadBalanced
     @Bean
