@@ -134,4 +134,10 @@ public class ProductController {
     public byte[] getImageById(@PathVariable("id") Long id) {
         return mediaService.getImageByIdWithData(id).getData();
     }
+
+    @PostMapping("/applyFilters")
+    public String applyFilters(HttpServletRequest servletRequest) {
+
+        return null;
+    }
 }

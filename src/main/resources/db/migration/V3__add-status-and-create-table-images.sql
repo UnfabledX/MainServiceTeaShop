@@ -1,6 +1,6 @@
 ALTER TABLE main_service.products
-    DROP COLUMN image_id,
-    ADD COLUMN status varchar(255) check (status in ('PRESENT', 'DELETED'));
+    DROP COLUMN if exists image_id,
+    ADD COLUMN if not exists status varchar(255) check (status in ('PRESENT', 'DELETED'));
 
 create table if not exists main_service.images
 (

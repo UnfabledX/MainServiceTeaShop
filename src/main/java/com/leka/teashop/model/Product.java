@@ -41,6 +41,10 @@ public class Product {
     @Column(name = "status")
     private ProductStatus status = ProductStatus.PRESENT;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private ProductType type;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images = new ArrayList<>();
 

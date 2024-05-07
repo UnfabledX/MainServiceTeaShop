@@ -2,6 +2,7 @@ package com.leka.teashop.model.dto;
 
 import com.leka.teashop.model.Image;
 import com.leka.teashop.model.ProductStatus;
+import com.leka.teashop.model.ProductType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
@@ -44,6 +45,8 @@ public class ProductDto {
     private BigDecimal priceEU;
 
     private ProductStatus status;
+
+    private ProductType type;
 
     private List<Image> images = new ArrayList<>();
 }

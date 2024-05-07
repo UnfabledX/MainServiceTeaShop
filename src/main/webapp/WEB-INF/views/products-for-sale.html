@@ -2,27 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-        crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-          crossorigin="anonymous"></script>
-  <!-- for product quantity-->
-  <script data-require="jquery@3.1.1" data-semver="3.1.1"
-          src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script type="text/javascript" th:src="@{/js/product-quantity.js}"></script>
-  <link rel="stylesheet" th:href="@{/css/product-quantity.css}"/>
-  <!-- for product quantity-->
-  <style>
-    [class*="row"] {
-      padding: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <!-- for product quantity-->
+    <script data-require="jquery@3.1.1" data-semver="3.1.1"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/product-quantity.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/product-quantity.css}"/>
+    <!-- for product quantity-->
+    <style>
+        [class*="row"] {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-product-for-sale}"></div>
@@ -30,196 +30,217 @@
 <!--SIDEBAR-->
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
      id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdroped with scrolling</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" th:text="#{choose.options}">Choose Options</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
 
-    <p>Try scrolling the rest of the page to see this option in action.</p>
-  </div>
+        <form action="#" th:action="@{'/applyFilters'}" th:object="${filter}">
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="tea" th:text="#{choose.only.tea}"/>
+                <input type="checkbox" class="form-check-input" id="tea" name="onlyTea">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="mushroom" th:text="#{choose.only.mushrooms}"/>
+                <input type="checkbox" class="form-check-input" id="mushroom" name="onlyMush">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="jam" th:text="#{choose.only.jam}"/>
+                <input type="checkbox" class="form-check-input" id="jam" name="onlyJam">
+            </div>
+
+            <div class="container-sm">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" th:text="#{cancel}"
+                        aria-label="Close"></button>&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" th:text="#{show}"/>
+            </div>
+        </form>
+    </div>
 </div>
 <!--SIDEBAR-->
 
 <div class="main">
-  <div class="row row-cols-1 row-cols-md-3 g-2 gy-4">
-    <div class="col" th:each="product, iterIndex : ${products}">
-      <div class="card h-100">
-        <div class="card-header">
-<!--          Can be any text here-->
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                  style="float: right; display: inline-block"
-                  data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"
-                  aria-expanded="false" aria-label="Toggle navigation">
-            <span th:text="#{card.options}"></span>
-<!--            <span class="navbar-toggler-icon"></span>-->
-          </button>
-        </div>
-        <!-- IMAGE CAROUSEL-->
-        <div th:with="imagesList=${product.images}">
-          <div th:if="${!imagesList.isEmpty()}">
-            <div th:id="'carouselExampleIndicators' + ${iterIndex.index}" class="carousel slide">
-              <div class="carousel-indicators">
-                <button type="button"
-                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                        data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button"
-                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button type="button"
-                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-              </div>
-              <div class="carousel-inner">
-                <div th:each="image, iterCount: ${imagesList}">
-                  <div th:if="${iterCount.index == 0}" class="carousel-item active">
-                    <img th:src="@{'/image/' + ${image.imageId}}" style="height: 400px; object-fit: cover"
-                         class="card-img-top mx-auto d-block" alt="..." src="#">
-                  </div>
-                  <div th:if="${iterCount.index != 0}" class="carousel-item">
-                    <img th:src="@{'/image/' + ${image.imageId}}" style="height: 400px; object-fit: cover"
-                         class="card-img-top mx-auto d-block" alt="..." src="#">
-                  </div>
+    <div class="row row-cols-1 row-cols-md-3 g-2 gy-4">
+        <div class="col" th:each="product, iterIndex : ${products}">
+            <div class="card h-100">
+                <div class="card-header">
+                    <!--          Can be any text here-->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            style="float: right; display: inline-block"
+                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span th:text="#{card.options}"></span>
+                        <!--            <span class="navbar-toggler-icon"></span>-->
+                    </button>
                 </div>
-              </div>
-              <button class="carousel-control-prev" type="button"
-                      th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                      data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button"
-                      th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                      data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
+                <!-- IMAGE CAROUSEL-->
+                <div th:with="imagesList=${product.images}">
+                    <div th:if="${!imagesList.isEmpty()}">
+                        <div th:id="'carouselExampleIndicators' + ${iterIndex.index}" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="0"
+                                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="1"
+                                        aria-label="Slide 2"></button>
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="2"
+                                        aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div th:each="image, iterCount: ${imagesList}">
+                                    <div th:if="${iterCount.index == 0}" class="carousel-item active">
+                                        <img th:src="@{'/image/' + ${image.imageId}}"
+                                             style="height: 400px; object-fit: cover"
+                                             class="card-img-top mx-auto d-block" alt="..." src="#">
+                                    </div>
+                                    <div th:if="${iterCount.index != 0}" class="carousel-item">
+                                        <img th:src="@{'/image/' + ${image.imageId}}"
+                                             style="height: 400px; object-fit: cover"
+                                             class="card-img-top mx-auto d-block" alt="..." src="#">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                    th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- IMAGE CAROUSEL-->
+                <div class="card-body">
+                    <h5 class="card-title"
+                        th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}">
+                        Card title</h5>
+                    <p class="card-text"
+                       th:text="${@productLanguageSwitcher.defineLanguageOf(product.description)}"></p>
+                </div>
+                <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
+                      th:object="${product}" method="post" name="productForm" id="productForm">
+                    <input type="hidden" th:value="${product.id}" th:name="id">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
+                            <h5 style="text-align: left; display: inline-block"
+                                th:text="#{label.price} + ': '"></h5>
+                            <h5 style="float: right; display: inline-block"
+                                th:text="${product.priceUA + ' uah'}"></h5>
+                        </li>
+                        <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
+                            <h5 style="text-align: left; display: inline-block"
+                                th:text="#{label.price} + ': '"></h5>
+                            <h5 style="float: right; display: inline-block"
+                                th:text="${product.priceEU + ' euro'}"></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 style="text-align: left; display: inline-block">
+                                [[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
+                            <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <input class="btn btn-primary" type="submit" id="liveToastButton"
+                                   style="float: right" th:value="#{add.toCart}">
+                        </li>
+                    </ul>
+                </form>
+                <!--            <div class="card-footer">-->
+                <!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
+                <!--            </div>-->
             </div>
-          </div>
         </div>
-        <!-- IMAGE CAROUSEL-->
-        <div class="card-body">
-          <h5 class="card-title"
-              th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}">
-            Card title</h5>
-          <p class="card-text"
-             th:text="${@productLanguageSwitcher.defineLanguageOf(product.description)}"></p>
-        </div>
-        <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
-              th:object="${product}" method="post" name="productForm" id="productForm">
-          <input type="hidden" th:value="${product.id}" th:name="id">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
-              <h5 style="text-align: left; display: inline-block"
-                  th:text="#{label.price} + ': '"></h5>
-              <h5 style="float: right; display: inline-block"
-                  th:text="${product.priceUA + ' uah'}"></h5>
-            </li>
-            <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
-              <h5 style="text-align: left; display: inline-block"
-                  th:text="#{label.price} + ': '"></h5>
-              <h5 style="float: right; display: inline-block"
-                  th:text="${product.priceEU + ' euro'}"></h5>
-            </li>
-            <li class="list-group-item">
-              <h5 style="text-align: left; display: inline-block">
-                [[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
-              <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
-            </li>
-            <li class="list-group-item">
-              <input class="btn btn-primary" type="submit" id="liveToastButton"
-                     style="float: right" th:value="#{add.toCart}">
-            </li>
-          </ul>
-        </form>
-        <!--            <div class="card-footer">-->
-        <!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
-        <!--            </div>-->
-      </div>
     </div>
-  </div>
 </div>
 <!-- message when product added to cart-->
 <div class="toast-container position-fixed top-0 end-0 p-3">
-  <div th:id="liveToast" class="toast" role="status" aria-live="polite"
-       data-bs-delay="4000" aria-atomic="true" sec:authorize="!isAnonymous()">
-    <div class="toast-header">
-      <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
-           alt="...">
-      <strong class="me-auto">Notka Tea</strong>
-      <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div th:id="liveToast" class="toast" role="status" aria-live="polite"
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="!isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
+                 alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" style="font-size: medium; color: forestgreen">
+            <span th:text="#{product.added.toCart}"></span> <br/>
+            <a th:href="@{/cart}" th:text="#{go.toCart}"></a>
+        </div>
     </div>
-    <div class="toast-body" style="font-size: medium; color: forestgreen">
-      <span th:text="#{product.added.toCart}"></span> <br/>
-      <a th:href="@{/cart}" th:text="#{go.toCart}"></a>
-    </div>
-  </div>
-  <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
-       data-bs-delay="4000" aria-atomic="true" sec:authorize="isAnonymous()">
-    <div class="toast-header">
-      <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
-           alt="...">
-      <strong class="me-auto">Notka Tea</strong>
-      <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body" style="font-size: medium; color: #ef5757">
-      <span th:text="#{login.first.beforeCart}"></span> <br/>
-      <span><a th:href="@{/login}" th:text="#{login}"></a>&nbsp;&nbsp;
+    <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
+                 alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" style="font-size: medium; color: #ef5757">
+            <span th:text="#{login.first.beforeCart}"></span> <br/>
+            <span><a th:href="@{/login}" th:text="#{login}"></a>&nbsp;&nbsp;
                 <span th:text="#{choice}"></span>&nbsp;&nbsp;
             <a th:href="@{/register}" th:text="#{register}"></a></span>
+        </div>
     </div>
-  </div>
 </div>
 <!-- message when product added to cart-->
 
 <!-- pagination-list-of-product-->
 <div th:if="${totalPages > 1}">
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" th:text="#{pagination.total.rows} + ' ' + ${totalItems}"></a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" th:if="${currentPage > 1}" th:text="#{pagination.first}"
-           th:href="@{'/showAllProductsForSale?page=1&sort=' + ${sortField} + '&dir=' + ${sortDir}}">First</a>
-        <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.first}"
-              style="color: black">First</span>
-      </li>
-      <li class="page-item">
-        <a class="page-link" th:if="${currentPage > 1}"
-           th:href="@{'/showAllProductsForSale?page=' + ${currentPage - 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
-           th:text="#{pagination.previous}">Previous</a>
-        <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.previous}"
-              style="color: black">Previous</span>
-      </li>
-      <li class="page-item" th:each="i : ${#numbers.sequence(1, 5)}"
-          th:if="${(currentPage >= 4 - i) && (totalPages >= currentPage + i - 3)}">
-        <a class="page-link" th:if="${i != 3}"
-           th:href="@{'/showAllProductsForSale?page=' + ${currentPage + i - 3} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">
-          [[${currentPage + i - 3}]]</a>
-        <span class="page-link" th:unless="${i != 3}" style="color: black">[[${currentPage + i - 3}]]</span>
-      </li>
-      <li class="page-item">
-        <a class="page-link" th:if="${currentPage < totalPages}"
-           th:href="@{'/showAllProductsForSale?page=' + ${currentPage + 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
-           th:text="#{pagination.next}">Next</a>
-        <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.next}"
-              style="color: black">Next</span>
-      </li>
-      <li class="page-item">
-        <a class="page-link" th:if="${currentPage < totalPages}" th:text="#{pagination.last}"
-           th:href="@{'/showAllProductsForSale?page=' + ${totalPages} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">Last</a>
-        <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.last}"
-              style="color: black">Last</span>
-      </li>
-    </ul>
-  </nav>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" th:text="#{pagination.total.rows} + ' ' + ${totalItems}"></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage > 1}" th:text="#{pagination.first}"
+                   th:href="@{'/showAllProductsForSale?page=1&sort=' + ${sortField} + '&dir=' + ${sortDir}}">First</a>
+                <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.first}"
+                      style="color: black">First</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage > 1}"
+                   th:href="@{'/showAllProductsForSale?page=' + ${currentPage - 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
+                   th:text="#{pagination.previous}">Previous</a>
+                <span class="page-link" th:unless="${currentPage > 1}" th:text="#{pagination.previous}"
+                      style="color: black">Previous</span>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(1, 5)}"
+                th:if="${(currentPage >= 4 - i) && (totalPages >= currentPage + i - 3)}">
+                <a class="page-link" th:if="${i != 3}"
+                   th:href="@{'/showAllProductsForSale?page=' + ${currentPage + i - 3} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">
+                    [[${currentPage + i - 3}]]</a>
+                <span class="page-link" th:unless="${i != 3}" style="color: black">[[${currentPage + i - 3}]]</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage < totalPages}"
+                   th:href="@{'/showAllProductsForSale?page=' + ${currentPage + 1} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}"
+                   th:text="#{pagination.next}">Next</a>
+                <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.next}"
+                      style="color: black">Next</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" th:if="${currentPage < totalPages}" th:text="#{pagination.last}"
+                   th:href="@{'/showAllProductsForSale?page=' + ${totalPages} + '&sort=' + ${sortField} + '&dir=' + ${sortDir}}">Last</a>
+                <span class="page-link" th:unless="${currentPage < totalPages}" th:text="#{pagination.last}"
+                      style="color: black">Last</span>
+            </li>
+        </ul>
+    </nav>
 </div>
 <!-- pagination-list-of-product-->
 
@@ -228,24 +249,24 @@
 <!-- Modal for header when logout-->
 
 <script type="text/javascript">
-  $(document).on('submit', '#productForm', function () {
-    const toastLivePopUpWindow = document.getElementById('liveToast');
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLivePopUpWindow);
-    $.ajax({
-      type: $(this).attr('method'),
-      url: this.action,
-      data: $(this).serialize(),
-      context: this,
-      success: function () {
-        toastBootstrap.show();
-        //update item counter
-        $('#items-counter').load(location.href + ' #items-counter');
-        //update logout processing when modal for logout is needed
-        $('#dropdown-menu-with-logout').load(location.href + ' #dropdown-menu-with-logout');
-      }
+    $(document).on('submit', '#productForm', function () {
+        const toastLivePopUpWindow = document.getElementById('liveToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLivePopUpWindow);
+        $.ajax({
+            type: $(this).attr('method'),
+            url: this.action,
+            data: $(this).serialize(),
+            context: this,
+            success: function () {
+                toastBootstrap.show();
+                //update item counter
+                $('#items-counter').load(location.href + ' #items-counter');
+                //update logout processing when modal for logout is needed
+                $('#dropdown-menu-with-logout').load(location.href + ' #dropdown-menu-with-logout');
+            }
+        });
+        return false;
     });
-    return false;
-  });
 </script>
 </body>
 </html>

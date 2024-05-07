@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en"
 >
 <head>
     <meta charset="UTF-8">
@@ -87,7 +87,7 @@
             <label class="form-label" for="formFile" th:text="#{label.updateImage}"/>
             <input class="form-control" type="file" id="formFile" name="files" multiple>
         </div>
-        <div class="form-check">
+        <div class="form-check mb-2">
             <label class="form-check-label" for="deleteImage" th:text="#{delete.image}"/>
             <input type="checkbox" class="form-check-input" id="deleteImage" name="deleteImage">
         </div>
