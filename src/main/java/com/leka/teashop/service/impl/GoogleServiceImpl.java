@@ -148,7 +148,7 @@ public class GoogleServiceImpl implements GoogleService {
         BatchUpdateValuesResponse response;
         try {
             List<Object> productRow = List.of(product.getId(), product.getName(),
-                    product.getDescription(), product.getPriceUA(), product.getPriceEU(), product.getType());
+                    product.getDescription(), product.getPriceUA(), product.getPriceEU(), product.getType().name());
             List<List<Object>> valueToUpdate = List.of(productRow);
             List<List<Object>> allPresentValues = loadTableOfProducts();
 

@@ -40,39 +40,41 @@
 
 <div class="container-sm mb-2" style="border: solid 1px black; border-collapse: collapse" id="main-container">
     <div th:if="${param.oneOptionMustBeChosen}" class="alert alert-info alert-dismissible"
-         th:text="#{product.updated.oneOptionMustBeChosen}"> Choose only one option: delete images or update them - not both.
+         th:text="#{product.updated.oneOptionMustBeChosen}"> Choose only one option: delete images or update them - not
+        both.
     </div>
 
     <h2 th:text="#{update.product}" style="text-align: center;"/>
     <form action="#" th:action="@{'/updateProduct/' + ${product.id} + '?page=' + ${page}}" th:object="${product}"
-          enctype="multipart/form-data" method="post">
+          enctype="multipart/form-data" method="post" class="row g-3">
         <div class="form-outline">
             <input class="form-control" type="hidden" th:field="*{id}">
         </div>
-        <div class="form-outline mb-2">
+        <div class="form-outline">
             <label class="form-label" for="name" th:text="#{label.name}"/>
             <input class="form-control" type="text" id="name" th:field="*{name}">
             <p class="error-style" th:if="${#fields.hasErrors('name')}"
                th:errors="*{name}">Incorrect data</p>
         </div>
-        <div class="form-outline mb-2">
+        <div class="form-outline">
             <label class="form-label" th:text="#{label.description}" for="description"/>
             <textarea class="form-control" id="description" th:field="*{description}"></textarea>
             <p class="error-style" th:if="${#fields.hasErrors('description')}"
                th:errors="*{description}">Incorrect data</p>
         </div>
-        <div class="form-outline-md-6 mb-2">
+        <div class="col-md-6">
             <label class="form-label" th:text="#{label.priceUA}" for="priceUA"/>
             <input class="form-control" type="text" id="priceUA" th:field="*{priceUA}">
             <p class="error-style" th:if="${#fields.hasErrors('priceUA')}"
                th:errors="*{priceUA}">Incorrect data</p>
-
+        </div>
+        <div class="col-md-6">
             <label class="form-label" th:text="#{label.priceEU}" for="priceEU"/>
             <input class="form-control" type="text" id="priceEU" th:field="*{priceEU}">
             <p class="error-style" th:if="${#fields.hasErrors('priceEU')}"
                th:errors="*{priceEU}">Incorrect data</p>
         </div>
-        <div class="form-outline-md-6 mb-2">
+        <div class="col-md-6">
             <label for="productType" class="form-label" th:text="#{product.type}">
                 Product type:
             </label>
@@ -83,26 +85,37 @@
                 <option th:value="'JAMS'" th:text="#{jams}">JAMS</option>
             </select>
         </div>
-        <div class="form-outline mb-2">
+        <div class="col-md-6">
+            <label for="status" class="form-label" th:text="#{label.status}">
+                Product status:
+            </label>
+            <select class="form-select" aria-label="Default select example" id="status" th:field="*{status}">
+                <option selected th:value="*{status}" th:text="*{status}"></option>
+                <option th:value="'PRESENT'" th:text="#{present}">PRESENT</option>
+                <option th:value="'DELETED'" th:text="#{deleted}">DELETED</option>
+            </select>
+        </div>
+        <div class="col-md-12">
             <label class="form-label" for="oldImages" th:text="#{label.oldImages}"/>
             <div id="oldImages" th:if="${!product.images.isEmpty()}">
                 <span th:each="image: ${product.images}">
-                    <img th:src="@{'/image/' + ${image.imageId}}" height="100" width="auto" class="rounded me-2" alt="...">&nbsp;&nbsp;
+                    <img th:src="@{'/image/' + ${image.imageId}}" height="100" width="auto" class="rounded me-2"
+                         alt="...">&nbsp;&nbsp;
                 </span>
             </div>
             <div th:if="${product.images.isEmpty()}" th:text="#{label.noImages}"></div>
         </div>
 
-        <div class="form-outline mb-2">
+        <div class="form-outline">
             <label class="form-label" for="formFile" th:text="#{label.updateImage}"/>
             <input class="form-control" type="file" id="formFile" name="files" multiple>
         </div>
-        <div class="form-check mb-2">
+        <div class="form-check">
             <label class="form-check-label" for="deleteImage" th:text="#{delete.image}"/>
             <input type="checkbox" class="form-check-input" id="deleteImage" name="deleteImage">
         </div>
         <br/>
-        <div class="form-outline mb-2">
+        <div class="form-outline">
             <button type="submit" class="btn btn-primary" th:text="#{update.product}"/>
         </div>
     </form>

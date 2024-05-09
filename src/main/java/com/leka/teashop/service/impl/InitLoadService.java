@@ -63,7 +63,7 @@ public class InitLoadService {
                 .description(row.get(2).toString())
                 .priceUA(new BigDecimal(String.valueOf(row.get(3))))
                 .priceEU(new BigDecimal(String.valueOf(row.get(4))))
-                .type(ProductType.valueOf(row.get(5).toString()))
+                .type(ProductType.valueOf(row.get(5).toString().toUpperCase()))
                 .images(new ArrayList<>())
                 .status(PRESENT)
                 .build();
