@@ -3,6 +3,7 @@ package com.leka.teashop.service.impl;
 import com.google.api.services.drive.model.File;
 import com.leka.teashop.model.Image;
 import com.leka.teashop.model.Product;
+import com.leka.teashop.model.ProductType;
 import com.leka.teashop.model.dto.ImageDto;
 import com.leka.teashop.repository.ImageRepository;
 import com.leka.teashop.repository.ProductRepository;
@@ -62,8 +63,9 @@ public class InitLoadService {
                 .description(row.get(2).toString())
                 .priceUA(new BigDecimal(String.valueOf(row.get(3))))
                 .priceEU(new BigDecimal(String.valueOf(row.get(4))))
-                .status(PRESENT)
+                .type(ProductType.valueOf(row.get(5).toString()))
                 .images(new ArrayList<>())
+                .status(PRESENT)
                 .build();
         return product;
     }

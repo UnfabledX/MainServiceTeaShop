@@ -71,15 +71,10 @@
                th:errors="*{priceEU}">Incorrect data</p>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="productType" class="form-label" th:text="#{choose.product.type}">
-                Choose product type:
+            <label for="productType" class="form-label" th:text="#{product.type}">
+                Product type:
             </label>
             <select class="form-select" aria-label="Default select example" id="productType" th:field="*{type}">
-
-                <option th:if="*{type == null}" selected="" th:text="#{choose.product.type}" th:value="'null'">
-                    Choose product type:
-                </option>
-                <option th:if="*{type != null}" selected th:text="*{type}" th:value="*{type}"></option>
                 <option th:value="'TEA'" th:text="#{tea}">TEA</option>
                 <option th:value="'MUSHROOMS'" th:text="#{mushrooms}">MUSHROOMS</option>
                 <option th:value="'JAMS'" th:text="#{jams}">JAMS</option>

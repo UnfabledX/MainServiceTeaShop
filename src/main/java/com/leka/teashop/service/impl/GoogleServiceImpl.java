@@ -105,8 +105,8 @@ public class GoogleServiceImpl implements GoogleService {
     @Override
     public void insertProductIntoGoogleSheets(Product product) {
         log.info("Inserting the product [{}] in the end of a Google sheet", product);
-        List<Object> productRow = List.of(product.getId(), product.getName(),
-                product.getDescription(), product.getPriceUA(), product.getPriceEU());
+        List<Object> productRow = List.of(product.getId(), product.getName(), product.getDescription(),
+                product.getPriceUA(), product.getPriceEU(), product.getType().name());
         List<List<Object>> values = List.of(productRow);
         try {
             ValueRange body = new ValueRange().setValues(values);
@@ -148,14 +148,14 @@ public class GoogleServiceImpl implements GoogleService {
         BatchUpdateValuesResponse response;
         try {
             List<Object> productRow = List.of(product.getId(), product.getName(),
-                    product.getDescription(), product.getPriceUA(), product.getPriceEU());
+                    product.getDescription(), product.getPriceUA(), product.getPriceEU(), product.getType());
             List<List<Object>> valueToUpdate = List.of(productRow);
             List<List<Object>> allPresentValues = loadTableOfProducts();
 
             String range = allPresentValues.stream()
                     .filter(row -> row.get(0).toString().equals(product.getId().toString()))
                     .map(allPresentValues::indexOf)
-                    .map(rowNumber -> "Products!A" + (rowNumber + 2) + ":E" + (rowNumber + 2))
+                    .map(rowNumber -> "Products!A" + (rowNumber + 2) + ":F" + (rowNumber + 2))
                     .findFirst()
                     .orElse(null);
             List<ValueRange> data = new ArrayList<>();

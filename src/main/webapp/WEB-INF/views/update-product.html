@@ -61,17 +61,27 @@
             <p class="error-style" th:if="${#fields.hasErrors('description')}"
                th:errors="*{description}">Incorrect data</p>
         </div>
-        <div class="form-outline mb-2">
+        <div class="form-outline-md-6 mb-2">
             <label class="form-label" th:text="#{label.priceUA}" for="priceUA"/>
             <input class="form-control" type="text" id="priceUA" th:field="*{priceUA}">
             <p class="error-style" th:if="${#fields.hasErrors('priceUA')}"
                th:errors="*{priceUA}">Incorrect data</p>
-        </div>
-        <div class="form-outline mb-2">
+
             <label class="form-label" th:text="#{label.priceEU}" for="priceEU"/>
             <input class="form-control" type="text" id="priceEU" th:field="*{priceEU}">
             <p class="error-style" th:if="${#fields.hasErrors('priceEU')}"
                th:errors="*{priceEU}">Incorrect data</p>
+        </div>
+        <div class="form-outline-md-6 mb-2">
+            <label for="productType" class="form-label" th:text="#{product.type}">
+                Product type:
+            </label>
+            <select class="form-select" aria-label="Default select example" id="productType" th:field="*{type}">
+                <option selected th:value="*{type}" th:text="*{type}"></option>
+                <option th:value="'TEA'" th:text="#{tea}">TEA</option>
+                <option th:value="'MUSHROOMS'" th:text="#{mushrooms}">MUSHROOMS</option>
+                <option th:value="'JAMS'" th:text="#{jams}">JAMS</option>
+            </select>
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" for="oldImages" th:text="#{label.oldImages}"/>
