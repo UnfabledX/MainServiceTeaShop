@@ -37,18 +37,18 @@
     </div>
     <div class="offcanvas-body">
 
-        <form action="#" th:action="@{'/applyFilters'}" th:object="${filter}">
+        <form action="#" th:action="@{'/applyFilters'}" th:object="${filter}" method="post">
             <div class="form-check mb-4">
                 <label class="form-check-label" for="tea" th:text="#{choose.only.tea}"/>
-                <input type="checkbox" class="form-check-input" id="tea" name="onlyTea">
+                <input type="checkbox" class="form-check-input" id="tea" name="tea">
             </div>
             <div class="form-check mb-4">
                 <label class="form-check-label" for="mushroom" th:text="#{choose.only.mushrooms}"/>
-                <input type="checkbox" class="form-check-input" id="mushroom" name="onlyMush">
+                <input type="checkbox" class="form-check-input" id="mushroom" name="mushroom">
             </div>
             <div class="form-check mb-4">
                 <label class="form-check-label" for="jam" th:text="#{choose.only.jam}"/>
-                <input type="checkbox" class="form-check-input" id="jam" name="onlyJam">
+                <input type="checkbox" class="form-check-input" id="jam" name="jam">
             </div>
 
             <div class="container-sm">

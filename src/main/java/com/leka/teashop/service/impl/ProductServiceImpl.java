@@ -12,6 +12,7 @@ import com.leka.teashop.repository.predicate.ProductPredicatesBuilder;
 import com.leka.teashop.service.GoogleService;
 import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
+import com.leka.teashop.utils.PageContext;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.leka.teashop.model.ProductStatus.DELETED;
 import static com.leka.teashop.model.ProductStatus.PRESENT;
@@ -61,18 +63,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductDto> getAllProducts(Integer pageNo, Integer pageSize, String sortField,
-                                           String sortDirection, String urlPath) {
-        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+    public Page<ProductDto> getAllProducts(PageContext context, String urlPath, Map<String, Boolean> filters) {
+        Sort sort = context.getSortDirection().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(context.getSortField()).ascending() : Sort.by(context.getSortField()).descending();
+        Pageable pageable = PageRequest.of(context.getPageNo() - 1, context.getPageSize(), sort);
         Page<ProductDto> productDtos;
         if (urlPath.equals("allProducts")) {
             productDtos = productRepository.findAll(pageable)
                     .map(productMapper::toDto);
         } else {
-            BooleanExpression expression = new ProductPredicatesBuilder()
-                    .with("status", ":", "PRESENT").build();
+            BooleanExpression expression = filters.entrySet()
+                    .stream().filter(Map.Entry::getValue)
+                    .map(Map.Entry::getKey)
+                    .map(k -> getProductPredicatesBuilder().with("type", ":", k))
+                    .map(ProductPredicatesBuilder::build)
+                    .reduce(BooleanExpression::or)
+                    .orElse(getProductPredicatesBuilder().build());
             productDtos = productRepository.findAll(expression, pageable)
                     .map(productMapper::toDto);
         }
@@ -157,5 +163,10 @@ public class ProductServiceImpl implements ProductService {
                                 }
                         )
         );
+    }
+
+    private static ProductPredicatesBuilder getProductPredicatesBuilder() {
+        return new ProductPredicatesBuilder()
+                .with("status", ":", PRESENT.name());
     }
 }

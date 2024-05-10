@@ -1,6 +1,7 @@
 package com.leka.teashop.repository.predicate;
 
 import com.leka.teashop.model.ProductStatus;
+import com.leka.teashop.model.ProductType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.NumberPath;
@@ -43,6 +44,13 @@ public class PredicateUtils {
                 return path.eq(ProductStatus.valueOf(valueUpperCase));
             } else if (operation.equalsIgnoreCase("!")) {
                 return path.ne(ProductStatus.valueOf(valueUpperCase));
+            }
+        } else if (criteria.getKey().equalsIgnoreCase("type")) {
+            EnumPath<ProductType> path = entityPath.getEnum("type", ProductType.class);
+            if (operation.equalsIgnoreCase(":")) {
+                return path.eq(ProductType.valueOf(valueUpperCase));
+            } else if (operation.equalsIgnoreCase("!")) {
+                return path.ne(ProductType.valueOf(valueUpperCase));
             }
         }
         return null;

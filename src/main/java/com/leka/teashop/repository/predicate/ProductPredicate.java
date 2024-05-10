@@ -2,9 +2,11 @@ package com.leka.teashop.repository.predicate;
 
 import com.leka.teashop.model.Product;
 import com.leka.teashop.model.ProductStatus;
+import com.leka.teashop.model.ProductType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.EnumUtils;
 
 import static com.leka.teashop.repository.predicate.PredicateUtils.getEnumBooleanExpression;
 import static com.leka.teashop.repository.predicate.PredicateUtils.getNumericBooleanExpression;
@@ -37,16 +39,13 @@ public class ProductPredicate {
         return expression;
     }
 
-    private boolean isEnum(String key, String value) {
-        try {
+    private static boolean isEnum(String key, String value) {
+        boolean isValidEnum = false;
             if (key.equalsIgnoreCase("status")) {
-                ProductStatus.valueOf(value.toUpperCase());
-            } else {
-                return false;
+                isValidEnum = EnumUtils.isValidEnumIgnoreCase(ProductStatus.class, value);
+            } else if (key.equalsIgnoreCase("type")) {
+                isValidEnum = EnumUtils.isValidEnumIgnoreCase(ProductType.class, value);
             }
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
-        return true;
+        return isValidEnum;
     }
 }

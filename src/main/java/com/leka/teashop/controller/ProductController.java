@@ -2,9 +2,11 @@ package com.leka.teashop.controller;
 
 import com.leka.teashop.mapper.ProductMapper;
 import com.leka.teashop.model.Product;
+import com.leka.teashop.model.ProductType;
 import com.leka.teashop.model.dto.ProductDto;
 import com.leka.teashop.service.MediaService;
 import com.leka.teashop.service.ProductService;
+import com.leka.teashop.utils.PageContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,6 +34,7 @@ public class ProductController {
 
     @Value("${web.pageable.default-page-size}")
     private int defaultPageSize;
+    private Map<String, Boolean> filters = new HashMap<>();
     private final ProductService productService;
     private final MediaService mediaService;
     private final ProductMapper productMapper;
@@ -43,37 +48,19 @@ public class ProductController {
     }
 
     @GetMapping({"/allProducts", "/showAllProductsForSale"})
-    public String getAllProducts(@RequestParam(name = "page", required = false) Integer pageNo,
+    public String getAllProducts(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                  @RequestParam(name = "size", required = false) Integer pageSize,
-                                 @RequestParam(name = "sort", required = false) String sortField,
-                                 @RequestParam(name = "dir", required = false) String sortDirection,
+                                 @RequestParam(name = "sort", defaultValue = "name") String sortField,
+                                 @RequestParam(name = "dir", defaultValue = "asc") String sortDirection,
                                  Model model, HttpServletRequest httpServletRequest) {
         String urlPath = httpServletRequest.getRequestURI();
         urlPath = urlPath.substring(urlPath.lastIndexOf('/') + 1);
-        if (sortDirection == null) {
-            sortDirection = "asc";
-        }
-        if (sortField == null) {
-            sortField = "name";
-        }
-        if (pageNo == null) {
-            pageNo = 1;
-        }
         if (pageSize == null) {
             pageSize = defaultPageSize;
         }
-        Page<ProductDto> dtoList = productService.getAllProducts(pageNo, pageSize, sortField, sortDirection, urlPath);
-        List<ProductDto> productDtoList = dtoList.getContent();
-
-        model.addAttribute("products", productDtoList);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", dtoList.getTotalPages());
-        model.addAttribute("totalItems", dtoList.getTotalElements());
-
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDirection);
-        model.addAttribute("reverseSortDir",
-                Sort.Direction.ASC.name().equalsIgnoreCase(sortDirection) ? "desc" : "asc");
+        PageContext pageContext = new PageContext(pageNo, pageSize, sortField, sortDirection);
+        Page<ProductDto> dtoList = productService.getAllProducts(pageContext, urlPath, filters);
+        addAttributesToModel(model, dtoList, pageContext);
         return urlPath.equals("allProducts") ? "list-of-products" : "products-for-sale";
     }
 
@@ -136,8 +123,24 @@ public class ProductController {
     }
 
     @PostMapping("/applyFilters")
-    public String applyFilters(HttpServletRequest servletRequest) {
+    public String applyFilters(@RequestParam(name = "tea", required = false) String teaFilter,
+                               @RequestParam(name = "mushroom", required = false) String mushroomFilter,
+                               @RequestParam(name = "jam", required = false) String jamFilter) {
+        filters.clear();
+        filters.put(ProductType.TEA.name(), "on".equalsIgnoreCase(teaFilter));
+        filters.put(ProductType.MUSHROOMS.name(), "on".equalsIgnoreCase(mushroomFilter));
+        filters.put(ProductType.JAMS.name(), "on".equalsIgnoreCase(jamFilter));
+        return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
+    }
 
-        return null;
+    private void addAttributesToModel(Model model, Page<ProductDto> dtoList, PageContext pageContext) {
+        model.addAttribute("products", dtoList.getContent());
+        model.addAttribute("currentPage", pageContext.getPageNo());
+        model.addAttribute("totalPages", dtoList.getTotalPages());
+        model.addAttribute("totalItems", dtoList.getTotalElements());
+        model.addAttribute("sortField", pageContext.getSortField());
+        model.addAttribute("sortDir", pageContext.getSortDirection());
+        model.addAttribute("reverseSortDir",
+                Sort.Direction.ASC.name().equalsIgnoreCase(pageContext.getSortDirection()) ? "desc" : "asc");
     }
 }
