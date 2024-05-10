@@ -37,7 +37,7 @@
     </div>
     <div class="offcanvas-body">
 
-        <form action="#" th:action="@{'/applyFilters'}" th:object="${filter}" method="post">
+        <form action="#" th:action="@{'/applyFilters'}" method="post">
             <div class="form-check mb-4">
                 <label class="form-check-label" for="tea" th:text="#{choose.only.tea}"/>
                 <input type="checkbox" class="form-check-input" id="tea" name="tea">

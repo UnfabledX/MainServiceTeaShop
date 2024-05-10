@@ -19,6 +19,9 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        .card {
+            --bs-card-bg: #2c323973;
+        }
     </style>
 </head>
 <body id="main_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
@@ -34,6 +37,45 @@
 <!-- Modal for complete order-->
 <div th:replace="~{utils/modals :: modal-order-complete}"></div>
 <!-- Modal for complete order-->
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card">
+            <form action="#" th:action="@{'/applyFilters?jam=on'}" method="post">
+                <button type="submit">
+                    <img th:src="@{'/images/main/jam_group.jpg'}" class="img-fluid" alt="JAMS">
+                </button>
+            </form>
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{jams}">Jams</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <form action="#" th:action="@{'/applyFilters?tea=on'}" method="post">
+                <button type="submit">
+                    <img th:src="@{'/images/main/tea_group.jpg'}" class="img-fluid" alt="TEA">
+                </button>
+            </form>
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{tea}">Tea</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <form action="#" th:action="@{'/applyFilters?mushroom=on'}" method="post">
+                <button type="submit">
+                    <img th:src="@{'/images/main/mushroom_group.jpg'}" class="img-fluid" alt="MUSHROOMS">
+                </button>
+            </form>
+            <div class="card-body">
+                <h5 class="card-title" th:text="#{mushrooms}">Mushrooms</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script th:inline="javascript" th:if="${param.successOrderCompletion}">
     let myModal = new bootstrap.Modal(document.getElementById('modalOrder'), {});
