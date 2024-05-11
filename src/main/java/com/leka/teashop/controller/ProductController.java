@@ -127,9 +127,12 @@ public class ProductController {
                                @RequestParam(name = "mushroom", required = false) String mushroomFilter,
                                @RequestParam(name = "jam", required = false) String jamFilter) {
         filters.clear();
-        filters.put(ProductType.TEA.name(), "on".equalsIgnoreCase(teaFilter));
-        filters.put(ProductType.MUSHROOMS.name(), "on".equalsIgnoreCase(mushroomFilter));
-        filters.put(ProductType.JAMS.name(), "on".equalsIgnoreCase(jamFilter));
+        boolean isTeaOn = "on".equalsIgnoreCase(teaFilter);
+        boolean isMushroomOn = "on".equalsIgnoreCase(mushroomFilter);
+        boolean isJamOn = "on".equalsIgnoreCase(jamFilter);
+        filters.put(ProductType.TEA.name(), isTeaOn);
+        filters.put(ProductType.MUSHROOMS.name(), isMushroomOn);
+        filters.put(ProductType.JAMS.name(), isJamOn);
         return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
     }
 

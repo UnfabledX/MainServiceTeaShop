@@ -14,18 +14,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
     <style>
-        #main_body {
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
         .card {
-            --bs-card-bg: #2c323973;
+            --bs-card-bg: rgba(44, 50, 57, 0.7);
+        }
+
+        .col {
+            max-width: 500px;
+        }
+
+        .row {
+            --bs-gutter-y: 1.5rem;
+            margin-top: calc(1 * var(--bs-gutter-y));
+        }
+
+        .backgroundImage::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
-<body id="main_body" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');'"
-      data-bs-theme="dark">
+<body class="main_body" data-bs-theme="dark">
 <!-- Header -->
 <div th:replace="~{utils/header :: header-home}"></div>
 <!-- Header -->
@@ -37,41 +50,44 @@
 <!-- Modal for complete order-->
 <div th:replace="~{utils/modals :: modal-order-complete}"></div>
 <!-- Modal for complete order-->
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col">
-        <div class="card">
-            <form action="#" th:action="@{'/applyFilters?jam=on'}" method="post">
-                <button type="submit">
-                    <img th:src="@{'/images/main/jam_group.jpg'}" class="img-fluid" alt="JAMS">
-                </button>
-            </form>
-            <div class="card-body">
-                <h5 class="card-title" th:text="#{jams}">Jams</h5>
+<div class="backgroundImage" th:style="'background-image:url(' + @{/images/background-welcome.jpg} + ');' +
+'position: relative; height: 100vh; width: 100%; display: flex; align-items: top; justify-content: center;' +
+'background-size: cover;'">
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+        <div class="col">
+            <div class="card">
+                <form action="#" th:action="@{'/applyFilters?jam=on'}" method="post">
+                    <button type="submit">
+                        <img th:src="@{'/images/main/jam_group.jpg'}" class="img-fluid" alt="JAMS">
+                    </button>
+                </form>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{jams}">Jams</h5>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <form action="#" th:action="@{'/applyFilters?tea=on'}" method="post">
-                <button type="submit">
-                    <img th:src="@{'/images/main/tea_group.jpg'}" class="img-fluid" alt="TEA">
-                </button>
-            </form>
-            <div class="card-body">
-                <h5 class="card-title" th:text="#{tea}">Tea</h5>
+        <div class="col">
+            <div class="card">
+                <form action="#" th:action="@{'/applyFilters?tea=on'}" method="post">
+                    <button type="submit">
+                        <img th:src="@{'/images/main/tea_group.jpg'}" class="img-fluid" alt="TEA">
+                    </button>
+                </form>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{tea}">Tea</h5>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <form action="#" th:action="@{'/applyFilters?mushroom=on'}" method="post">
-                <button type="submit">
-                    <img th:src="@{'/images/main/mushroom_group.jpg'}" class="img-fluid" alt="MUSHROOMS">
-                </button>
-            </form>
-            <div class="card-body">
-                <h5 class="card-title" th:text="#{mushrooms}">Mushrooms</h5>
+        <div class="col">
+            <div class="card">
+                <form action="#" th:action="@{'/applyFilters?mushroom=on'}" method="post">
+                    <button type="submit">
+                        <img th:src="@{'/images/main/mushroom_group.jpg'}" class="img-fluid" alt="MUSHROOMS">
+                    </button>
+                </form>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{mushrooms}">Mushrooms</h5>
+                </div>
             </div>
         </div>
     </div>
