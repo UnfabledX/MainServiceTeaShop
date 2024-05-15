@@ -42,7 +42,8 @@ public class SecurityConfig {
                                 "/load",
                                 "/updateSpecifiedRow",
                                 "/deleteImages",
-                                "/applyFilters"
+                                "/applyFilters",
+                                "/search"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()

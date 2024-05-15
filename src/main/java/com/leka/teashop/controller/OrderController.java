@@ -55,7 +55,7 @@ public class OrderController {
         log.info("current user: " + currentUser);
         String quantity = request.getParameter("quantity");
         orderService.addToOrder(currentUser, quantity, productDto);
-        return productController.getAllProducts(page, null, null, null, model, request);
+        return productController.getAllProducts(page, null, null, null, model);
     }
 
     /**

@@ -16,12 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -47,21 +42,19 @@ public class ProductController {
         return "add-product";
     }
 
-    @GetMapping({"/allProducts", "/showAllProductsForSale"})
+    @GetMapping("/allProducts")
     public String getAllProducts(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
                                  @RequestParam(name = "size", required = false) Integer pageSize,
                                  @RequestParam(name = "sort", defaultValue = "name") String sortField,
                                  @RequestParam(name = "dir", defaultValue = "asc") String sortDirection,
-                                 Model model, HttpServletRequest httpServletRequest) {
-        String urlPath = httpServletRequest.getRequestURI();
-        urlPath = urlPath.substring(urlPath.lastIndexOf('/') + 1);
+                                 Model model) {
         if (pageSize == null) {
             pageSize = defaultPageSize;
         }
         PageContext pageContext = new PageContext(pageNo, pageSize, sortField, sortDirection);
-        Page<ProductDto> dtoList = productService.getAllProducts(pageContext, urlPath, filters);
+        Page<ProductDto> dtoList = productService.getAllProductsForAdmin(pageContext);
         addAttributesToModel(model, dtoList, pageContext);
-        return urlPath.equals("allProducts") ? "list-of-products" : "products-for-sale";
+        return "list-of-products";
     }
 
     @GetMapping("/editProduct/{id}")
@@ -136,13 +129,45 @@ public class ProductController {
         return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
     }
 
+    @GetMapping("/showAllProductsForSale")
+    public String getAllProductsForSale(@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
+                                        @RequestParam(name = "size", required = false) Integer pageSize,
+                                        @RequestParam(name = "sort", defaultValue = "name") String sortField,
+                                        @RequestParam(name = "dir", defaultValue = "asc") String sortDirection,
+                                        @RequestParam(value = "search", required = false) String search,
+                                        Model model) {
+        if (pageSize == null) {
+            pageSize = defaultPageSize;
+        }
+        Page<ProductDto> dtoList;
+        PageContext pageContext;
+        if (search != null) {
+            pageContext = new PageContext(pageNo, pageSize);
+            dtoList = productService.getAllProductsBySearch(search, pageContext);
+        } else {
+            pageContext = new PageContext(pageNo, pageSize, sortField, sortDirection);
+            dtoList = productService.getAllProductsForSale(pageContext, filters);
+        }
+        addAttributesToModel(model, dtoList, pageContext);
+        model.addAttribute("search", search);
+        return "products-for-sale";
+    }
+
+    @RequestMapping("/search")
+    public String search(@RequestParam(value = "search", required = false) String search) {
+        if (search == null || search.isEmpty()) {
+            return "redirect:/showAllProductsForSale";
+        }
+        return "redirect:/showAllProductsForSale?search=" + search;
+    }
+
     private void addAttributesToModel(Model model, Page<ProductDto> dtoList, PageContext pageContext) {
         model.addAttribute("products", dtoList.getContent());
         model.addAttribute("currentPage", pageContext.getPageNo());
         model.addAttribute("totalPages", dtoList.getTotalPages());
         model.addAttribute("totalItems", dtoList.getTotalElements());
-        model.addAttribute("sortField", pageContext.getSortField());
-        model.addAttribute("sortDir", pageContext.getSortDirection());
+        model.addAttribute("sortField", pageContext.getSortField() == null ? "name" : pageContext.getSortField());
+        model.addAttribute("sortDir", pageContext.getSortDirection() == null ? "asc" : pageContext.getSortDirection());
         model.addAttribute("reverseSortDir",
                 Sort.Direction.ASC.name().equalsIgnoreCase(pageContext.getSortDirection()) ? "desc" : "asc");
     }

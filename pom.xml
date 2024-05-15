@@ -23,6 +23,8 @@
         <thymeleaf.starter.version>3.1.2</thymeleaf.starter.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <eurika.version>4.0.3</eurika.version>
+        <hypersistence-utils-hibernate.version>3.5.2</hypersistence-utils-hibernate.version>
+        <thymeleaf-java8time.version>3.0.4.RELEASE</thymeleaf-java8time.version>
     </properties>
     <dependencies>
         <!--        QUERY DSL       -->
@@ -106,7 +108,6 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -140,7 +141,7 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
-            <version>3.0.4.RELEASE</version>
+            <version>${thymeleaf-java8time.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -152,11 +153,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>3.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-dependencies</artifactId>
             <version>${spring-cloud.version}</version>
@@ -166,6 +162,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>${eurika.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-62</artifactId>
+            <version>${hypersistence-utils-hibernate.version}</version>
         </dependency>
     </dependencies>
 

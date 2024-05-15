@@ -1,16 +1,20 @@
 package com.leka.teashop.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PageContext {
 
-    private final Integer pageNo;
-    private final Integer pageSize;
-    private final String sortField;
-    private final String sortDirection;
+    private Integer pageNo;
+    private Integer pageSize;
+    private String sortField;
+    private String sortDirection;
 
+    public PageContext(Integer pageNo, Integer pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
 }

@@ -53,8 +53,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -145,8 +146,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -229,8 +231,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -313,8 +316,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -391,16 +395,17 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item"
-                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=en'}"
+                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=en&search=' + ${search}}"
                                th:text="#{lang.en}">English</a></li>
                         <li><a class="dropdown-item"
-                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=ukr'}"
+                               th:href="@{'/showAllProductsForSale?page=' + ${currentPage} + '&lang=ukr&search=' + ${search}}"
                                th:text="#{lang.ukr}">Ukrainian</a></li>
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -491,8 +496,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -571,8 +577,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -631,8 +638,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -715,8 +723,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -807,8 +816,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -891,8 +901,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -983,8 +994,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1075,8 +1087,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1167,8 +1180,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1251,8 +1265,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1335,8 +1350,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1409,8 +1425,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1469,8 +1486,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -1529,8 +1547,9 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" th:placeholder="#{search}" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
                 <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">

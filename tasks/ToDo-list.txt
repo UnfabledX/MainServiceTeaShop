@@ -82,6 +82,11 @@ To-do-list
 
     9.8 Some mistakes in media microservice. Have to investigate this issue.(fixed)
 
+***************** not to forget
+        String urlPath = httpServletRequest.getRequestURI();
+        urlPath = urlPath.substring(urlPath.lastIndexOf('/') + 1);
+        return urlPath.equals("allProducts") ? "list-of-products" : "products-for-sale";
+***************** not to forget
 
 11. Contacts at the bottom of pages
 12. implement adding product to Google disk as well when admin adds product on the website. (done,

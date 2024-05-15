@@ -17,10 +17,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void addProduct(ProductDto dto, List<MultipartFile> files) {
+        log.info("Add product [{}]", dto);
         Product product = productMapper.toEntity(dto);
         if (!files.isEmpty() && !files.get(0).isEmpty()) {
             files.forEach(file -> {
@@ -63,26 +61,25 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductDto> getAllProducts(PageContext context, String urlPath, Map<String, Boolean> filters) {
-        Sort sort = context.getSortDirection().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
-                Sort.by(context.getSortField()).ascending() : Sort.by(context.getSortField()).descending();
-        Pageable pageable = PageRequest.of(context.getPageNo() - 1, context.getPageSize(), sort);
-        Page<ProductDto> productDtos;
-        if (urlPath.equals("allProducts")) {
-            productDtos = productRepository.findAll(pageable)
-                    .map(productMapper::toDto);
-        } else {
-            BooleanExpression expression = filters.entrySet()
-                    .stream().filter(Map.Entry::getValue)
-                    .map(Map.Entry::getKey)
-                    .map(k -> getProductPredicatesBuilder().with("type", ":", k))
-                    .map(ProductPredicatesBuilder::build)
-                    .reduce(BooleanExpression::or)
-                    .orElse(getProductPredicatesBuilder().build());
-            productDtos = productRepository.findAll(expression, pageable)
-                    .map(productMapper::toDto);
-        }
-        return productDtos;
+    public Page<ProductDto> getAllProductsForAdmin(PageContext context) {
+        log.info("Getting All Products For admin");
+        Pageable pageable = getPageable(context);
+        return productRepository.findAll(pageable).map(productMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductDto> getAllProductsForSale(PageContext context, Map<String, Boolean> filters) {
+        log.info("Getting all the products for sale by filters=[{}]", filters);
+        Pageable pageable = getPageable(context);
+        BooleanExpression expression = filters.entrySet()
+                .stream().filter(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .map(k -> getProductPredicatesBuilder().with("type", ":", k))
+                .map(ProductPredicatesBuilder::build)
+                .reduce(BooleanExpression::or)
+                .orElse(getProductPredicatesBuilder().build());
+        return productRepository.findAll(expression, pageable).map(productMapper::toDto);
     }
 
     @Override
@@ -95,6 +92,15 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void activateById(Long id) {
         productRepository.findById(id).ifPresent(product -> product.setStatus(PRESENT));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductDto> getAllProductsBySearch(String search, PageContext context) {
+        log.info("Getting all the products by search=[{}]", search);
+        Pageable pageable = PageRequest.of(context.getPageNo() - 1, context.getPageSize());
+        return productRepository.findAllProductsBySearch(search, pageable)
+                .map(productMapper::toDto);
     }
 
     @Override
@@ -168,5 +174,11 @@ public class ProductServiceImpl implements ProductService {
     private static ProductPredicatesBuilder getProductPredicatesBuilder() {
         return new ProductPredicatesBuilder()
                 .with("status", ":", PRESENT.name());
+    }
+
+    private static Pageable getPageable(PageContext context) {
+        Sort sort = context.getSortDirection().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(context.getSortField()).ascending() : Sort.by(context.getSortField()).descending();
+        return PageRequest.of(context.getPageNo() - 1, context.getPageSize(), sort);
     }
 }

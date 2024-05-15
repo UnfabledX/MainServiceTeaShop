@@ -14,7 +14,7 @@ public interface ProductService {
 
     void addProduct(ProductDto product, List<MultipartFile> files);
 
-    Page<ProductDto> getAllProducts(PageContext pageContext, String urlPath, Map<String, Boolean> filters);
+    Page<ProductDto> getAllProductsForAdmin(PageContext pageContext);
 
     void updateProduct(ProductDto request, List<MultipartFile> files, String deleteImage);
 
@@ -25,4 +25,8 @@ public interface ProductService {
     Page<ImageDto> getAllImages();
 
     void activateById(Long id);
+
+    Page<ProductDto> getAllProductsBySearch(String search, PageContext pageContext);
+
+    Page<ProductDto> getAllProductsForSale(PageContext pageContext, Map<String, Boolean> filters);
 }
