@@ -19,6 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,14 +120,21 @@ public class ProductController {
     @PostMapping("/applyFilters")
     public String applyFilters(@RequestParam(name = "tea", required = false) String teaFilter,
                                @RequestParam(name = "mushroom", required = false) String mushroomFilter,
-                               @RequestParam(name = "jam", required = false) String jamFilter) {
+                               @RequestParam(name = "jam", required = false) String jamFilter,
+                               @RequestParam(name = "herbs", required = false) String herbFilter,
+                               @RequestParam(name = "others", required = false) String othersFilter
+                               ) {
         filters.clear();
         boolean isTeaOn = "on".equalsIgnoreCase(teaFilter);
         boolean isMushroomOn = "on".equalsIgnoreCase(mushroomFilter);
         boolean isJamOn = "on".equalsIgnoreCase(jamFilter);
+        boolean isHerbsOn = "on".equalsIgnoreCase(herbFilter);
+        boolean isOthersOn = "on".equalsIgnoreCase(othersFilter);
         filters.put(ProductType.TEA.name(), isTeaOn);
         filters.put(ProductType.MUSHROOMS.name(), isMushroomOn);
         filters.put(ProductType.JAMS.name(), isJamOn);
+        filters.put(ProductType.HERBS.name(), isHerbsOn);
+        filters.put(ProductType.OTHERS.name(), isOthersOn);
         return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
     }
 
@@ -141,12 +150,12 @@ public class ProductController {
         }
         Page<ProductDto> dtoList;
         PageContext pageContext;
-        if (search != null) {
-            pageContext = new PageContext(pageNo, pageSize);
-            dtoList = productService.getAllProductsBySearch(search, pageContext);
-        } else {
+        if (search == null || "null".equals(search)) {
             pageContext = new PageContext(pageNo, pageSize, sortField, sortDirection);
             dtoList = productService.getAllProductsForSale(pageContext, filters);
+        } else {
+            pageContext = new PageContext(pageNo, pageSize);
+            dtoList = productService.getAllProductsBySearch(search, pageContext);
         }
         addAttributesToModel(model, dtoList, pageContext);
         model.addAttribute("search", search);
@@ -158,7 +167,7 @@ public class ProductController {
         if (search == null || search.isEmpty()) {
             return "redirect:/showAllProductsForSale";
         }
-        return "redirect:/showAllProductsForSale?search=" + search;
+        return "redirect:/showAllProductsForSale?search=" + URLEncoder.encode(search, StandardCharsets.UTF_8);
     }
 
     private void addAttributesToModel(Model model, Page<ProductDto> dtoList, PageContext pageContext) {

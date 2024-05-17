@@ -25,9 +25,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
         bindings.excluding(root.images);
     }
 
-    @Query(value = "select * from main_service.products where products.search_vector @@ to_tsquery('english', ?1) " +
-            "order by ts_rank(products.search_vector, to_tsquery('english', ?1)) desc",
-            countQuery = "select count(*) from main_service.products where products.search_vector @@ to_tsquery('english', ?1)",
+    @Query(value = "select * from main_service.products where products.search_vector @@ to_tsquery('russian', ?1) " +
+            "order by ts_rank(products.search_vector, to_tsquery('russian', ?1)) desc",
+            countQuery = "select count(*) from main_service.products where products.search_vector @@ to_tsquery('russian', ?1)",
             nativeQuery = true)
     Page<Product> findAllProductsBySearch(String search, Pageable pageable);
 }

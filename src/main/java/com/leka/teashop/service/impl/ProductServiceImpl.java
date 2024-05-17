@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.save(product);
         String result = googleService.updateProductRecordInGoogleSheets(product);
-        log.info(result);
+        log.info("GoogleService: {}", result);
     }
 
     @Override

@@ -4,5 +4,7 @@ public enum ProductType {
 
     TEA,
     MUSHROOMS,
-    JAMS
+    JAMS,
+    HERBS,
+    OTHERS
 }
