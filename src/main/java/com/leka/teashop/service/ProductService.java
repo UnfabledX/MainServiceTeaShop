@@ -29,4 +29,6 @@ public interface ProductService {
     Page<ProductDto> getAllProductsBySearch(String search, PageContext pageContext);
 
     Page<ProductDto> getAllProductsForSale(PageContext pageContext, Map<String, Boolean> filters);
+
+    Page<ProductDto> getAllProductsForSale(PageContext pageContext);
 }

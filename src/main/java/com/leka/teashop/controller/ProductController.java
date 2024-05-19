@@ -122,19 +122,17 @@ public class ProductController {
                                @RequestParam(name = "mushroom", required = false) String mushroomFilter,
                                @RequestParam(name = "jam", required = false) String jamFilter,
                                @RequestParam(name = "herbs", required = false) String herbFilter,
-                               @RequestParam(name = "others", required = false) String othersFilter
-                               ) {
+                               @RequestParam(name = "others", required = false) String othersFilter,
+                               @RequestParam(name = "showAll", required = false) String showAll) {
         filters.clear();
-        boolean isTeaOn = "on".equalsIgnoreCase(teaFilter);
-        boolean isMushroomOn = "on".equalsIgnoreCase(mushroomFilter);
-        boolean isJamOn = "on".equalsIgnoreCase(jamFilter);
-        boolean isHerbsOn = "on".equalsIgnoreCase(herbFilter);
-        boolean isOthersOn = "on".equalsIgnoreCase(othersFilter);
-        filters.put(ProductType.TEA.name(), isTeaOn);
-        filters.put(ProductType.MUSHROOMS.name(), isMushroomOn);
-        filters.put(ProductType.JAMS.name(), isJamOn);
-        filters.put(ProductType.HERBS.name(), isHerbsOn);
-        filters.put(ProductType.OTHERS.name(), isOthersOn);
+        if ("on".equals(showAll)) {
+            return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
+        }
+        filters.put(ProductType.TEA.name(), "on".equalsIgnoreCase(teaFilter));
+        filters.put(ProductType.MUSHROOMS.name(), "on".equalsIgnoreCase(mushroomFilter));
+        filters.put(ProductType.JAMS.name(), "on".equalsIgnoreCase(jamFilter));
+        filters.put(ProductType.HERBS.name(), "on".equalsIgnoreCase(herbFilter));
+        filters.put(ProductType.OTHERS.name(), "on".equalsIgnoreCase(othersFilter));
         return "redirect:/showAllProductsForSale?page=1&size=" + defaultPageSize;
     }
 
@@ -152,7 +150,11 @@ public class ProductController {
         PageContext pageContext;
         if (search == null || "null".equals(search)) {
             pageContext = new PageContext(pageNo, pageSize, sortField, sortDirection);
-            dtoList = productService.getAllProductsForSale(pageContext, filters);
+            if (filters.isEmpty()) {
+                dtoList = productService.getAllProductsForSale(pageContext);
+            } else {
+                dtoList = productService.getAllProductsForSale(pageContext, filters);
+            }
         } else {
             pageContext = new PageContext(pageNo, pageSize);
             dtoList = productService.getAllProductsBySearch(search, pageContext);

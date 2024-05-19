@@ -10,6 +10,7 @@ import com.leka.teashop.repository.ProductRepository;
 import com.leka.teashop.service.GoogleService;
 import com.leka.teashop.service.MediaService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.scheduling.annotation.Async;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import static com.leka.teashop.model.ProductStatus.PRESENT;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class InitLoadService {
@@ -51,13 +53,13 @@ public class InitLoadService {
                 ImageDto image = mediaService.uploadImageThrough(builder);
                 product.addImage(new Image(image.getId(), product));
             }
-            productRepository.save(product);
+            Product saved = productRepository.save(product);
+            log.info("Saved product {}", saved);
         }
     }
 
     private Product getProduct(List<Object> row) {
-        Product product;
-        product = Product.builder()
+        return Product.builder()
                 .id(Long.parseLong(row.get(0).toString()))
                 .name(row.get(1).toString())
                 .description(row.get(2).toString())
@@ -67,7 +69,6 @@ public class InitLoadService {
                 .images(new ArrayList<>())
                 .status(PRESENT)
                 .build();
-        return product;
     }
 
     private List<File> getFilesByProductNumber(String productNumber, List<File> files) {

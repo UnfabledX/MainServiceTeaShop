@@ -94,7 +94,5 @@ To-do-list
 14. implement update product on Google disk (potential risks: need to make backup on google drive in folder backup)
 
 15. DOn't forget to remove service endpoints for testing from security list.
-  Чорний чай#&#tea black    Деякий опис#&#Some description
-
 16. Time must be in correct time zone (see picture - issue_1.jpg)
 

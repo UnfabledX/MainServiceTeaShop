@@ -83,6 +83,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<ProductDto> getAllProductsForSale(PageContext context) {
+        log.info("Getting all the products for sale. No filters");
+        Pageable pageable = getPageable(context);
+        return productRepository.findAll(pageable).map(productMapper::toDto);
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id) {
         productRepository.findById(id).ifPresent(product -> product.setStatus(DELETED));

@@ -12,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteStartedOrdersWhenLogout(User currentUser) {
+    public void deleteStartedOrdersWhenLogout(User currentUser) throws WebClientResponseException {
         orderWebClient.delete()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/v1/orders/delete")
@@ -159,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Integer countOrdersByOrderStatus(OrderStatus status) {
+    public Integer countOrdersByOrderStatus(OrderStatus status) throws WebClientResponseException {
         return orderWebClient.get()
                 .uri("/api/v1/orders/count/{status}", status)
                 .retrieve()

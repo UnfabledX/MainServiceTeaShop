@@ -47,7 +47,7 @@ public class Product {
     private List<Image> images = new ArrayList<>();
 
     @Type(PostgreSQLTSVectorType.class)
-    @Column(name = "search_vector", columnDefinition = "tsvector")
+    @Column(name = "search_vector", columnDefinition = "tsvector", insertable = false)
     private String searchVector;
 
     public void addImage(Image image) {
