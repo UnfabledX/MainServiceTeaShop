@@ -8,13 +8,16 @@ What is already done so far - project functionality:
 4. The user can see the list of products, add desired items to the cart.
 5. The user can create order by adding products to the cart, change the quantity of items afterward and 
 finally complete the order by checking the delivery options.
-6. The user receives email letter with a short summary regarding their current order.
+6. The user receives an email letter with a short summary regarding their current order.
 7. The user can see their previous orders made in the past.
 8. The admin user (admin) can view all users and their information
 9. Admin can ban or activate users, change user information and delivery options if necessary.
 10. Admin can manipulate with products and its images - all CRUD operations
 11. Admin can see the list of all orders and process orders in active status.
 12. Admin receives email if someone creates new order.
+13. The user can filter products by the types, i.e. JAMS, TEA, MUSHROOMS, HERBS etc.
+14. The user can use a search field in the page headers. Search will find any occurrences in the products name or description. Search can be fulfilled in English and in Ukrainian as well.
+15. The user can go directly to the specified type of product from the welcome page.
 
 Image processing occurs in the backend media-service
 (https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database.
@@ -78,6 +81,7 @@ to login in your actual google account.
 - Spring Security
 - Hibernate
 - Postgres database
+- Postgres full text search
 - Docker
 - Flyway
 - Thymeleaf (html, css)
