@@ -88,3 +88,4 @@ nb-configuration.xml
 /src/main/resources/.env
 /integration-aws/.env
 /tasks/queries.sql
+/database/

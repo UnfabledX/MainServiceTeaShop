@@ -1,4 +1,3 @@
-version: '3.3'
 services:
   postgres:
     image: postgres
@@ -10,3 +9,5 @@ services:
     restart: on-failure
     ports:
       - "5440:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.leka.teashop.model.ProductStatus.PRESENT;
@@ -41,7 +42,7 @@ public class InitLoadService {
         List<List<Object>> values = googleService.loadTableOfProducts();
         List<File> files = googleService.getAllImagesOfProducts();
         mediaService.deleteAllImages();
-        imageRepository.deleteAll();
+//        imageRepository.deleteAll();
         Product product;    ByteArrayOutputStream os;
         for (List<Object> row : values) {
             List<File> filesForProduct = getFilesByProductNumber(row.get(0).toString(), files);
@@ -74,6 +75,7 @@ public class InitLoadService {
     private List<File> getFilesByProductNumber(String productNumber, List<File> files) {
         return files.stream()
                 .filter(file -> hasNumber(productNumber, file.getName()))
+                .sorted(Comparator.comparing(File::getName))
                 .toList();
     }
 

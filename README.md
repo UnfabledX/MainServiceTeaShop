@@ -57,7 +57,7 @@ All backend microservices communicate through eureka server.
 
    GOOGLE_FOLDER_ID=*******
 
-   GOOGLE_SHEET_RANGE=A2:E
+   GOOGLE_SHEET_RANGE=A2:F
 
 Email configuration is needed for sending emails (verification, order, password reset emails etc.)
 Google configuration is used to synchronize products info in database with google spreadsheet and vice versa

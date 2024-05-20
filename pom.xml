@@ -23,7 +23,6 @@
         <thymeleaf.starter.version>3.1.2</thymeleaf.starter.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <eurika.version>4.0.3</eurika.version>
-        <hypersistence-utils-hibernate.version>3.5.2</hypersistence-utils-hibernate.version>
         <thymeleaf-java8time.version>3.0.4.RELEASE</thymeleaf-java8time.version>
     </properties>
     <dependencies>
@@ -162,11 +161,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>${eurika.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-62</artifactId>
-            <version>${hypersistence-utils-hibernate.version}</version>
         </dependency>
     </dependencies>
 
