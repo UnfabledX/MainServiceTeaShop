@@ -3,6 +3,7 @@ services:
     image: postgres
     container_name: teashop_db
     environment:
+      TZ: Europe/Kyiv
       POSTGRES_DB: teashop
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}

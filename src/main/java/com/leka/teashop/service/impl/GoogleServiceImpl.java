@@ -118,7 +118,7 @@ public class GoogleServiceImpl implements GoogleService {
                     .execute();
             log.info("The insertion operation is successfully finished. Affected rows = {}. {} cells appended.",
                     result.getUpdates().getUpdatedRows(), result.getUpdates().getUpdatedCells());
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Error in insertProductIntoGoogleSheets(): ", e);
         }
     }

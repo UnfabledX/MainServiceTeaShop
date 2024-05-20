@@ -16,6 +16,10 @@
             background-attachment: fixed;
             background-size: cover;
         }
+        #main-container {
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.60);
+        }
     </style>
 </head>
 <body id="register_body" th:style="'background-image:url(' + @{/images/background-register.jpeg} + ');'"
@@ -23,7 +27,7 @@
 
 <div th:replace="~{utils/header :: header-registration}"></div>
 
-<div class="container mt-5">
+<div class="container mb-4" id="main-container">
     <div class="row mt-2">
         <div th:if="${param.success}" class=" alert alert-info" th:text="#{registration.successful} + ' '">
             Registration successful,

@@ -4,7 +4,7 @@ LABEL Author="Oleksii Synelnyk"
 WORKDIR /usr/local/tomcat
 # Copy the WAR file into the Tomcat webapps directory
 COPY target/TeaShop-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/teashop.war
-# Make port 8080 available to the world outside this container
+# Make port 8080 available to the world outside this container (8888 port for google authorization)
 EXPOSE 8080 8888
 # Run Tomcat server
 CMD ["catalina.sh", "run"]
