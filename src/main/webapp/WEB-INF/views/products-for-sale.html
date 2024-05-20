@@ -37,192 +37,193 @@
 <body data-bs-theme="dark">
 <div th:replace="~{utils/header :: header-product-for-sale}"></div>
 
-    <!--SIDEBAR-->
-    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
-         id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" th:text="#{choose.options}">Choose
-                Options</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-
-            <form action="#" th:action="@{'/applyFilters'}" method="post">
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="tea" th:text="#{choose.only.tea}"/>
-                    <input type="checkbox" class="form-check-input" id="tea" name="tea">
-                </div>
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="mushroom" th:text="#{choose.only.mushrooms}"/>
-                    <input type="checkbox" class="form-check-input" id="mushroom" name="mushroom">
-                </div>
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="jam" th:text="#{choose.only.jam}"/>
-                    <input type="checkbox" class="form-check-input" id="jam" name="jam">
-                </div>
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="herbs" th:text="#{choose.only.herbs}"/>
-                    <input type="checkbox" class="form-check-input" id="herbs" name="herbs">
-                </div>
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="others" th:text="#{choose.only.others}"/>
-                    <input type="checkbox" class="form-check-input" id="others" name="others">
-                </div>
-
-                <div class="form-check mb-4">
-                    <label class="form-check-label" for="showAll" th:text="#{show.all}"/>
-                    <input type="checkbox" class="form-check-input" id="showAll" name="showAll">
-                </div>
-
-                <div class="container-sm">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" th:text="#{cancel}"
-                            aria-label="Close"></button>&nbsp;&nbsp;&nbsp;
-                    <button type="submit" class="btn btn-primary" th:text="#{show}"/>
-                </div>
-            </form>
-        </div>
+<!--SIDEBAR-->
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
+     id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" th:text="#{choose.options}">Choose
+            Options</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
     </div>
-    <!--SIDEBAR-->
+    <div class="offcanvas-body">
 
-    <div class="main">
-        <div class="row row-cols-1 row-cols-md-3 g-2 gy-4">
-            <div class="col" th:each="product, iterIndex : ${products}">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <!--          Can be any text here-->
-                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                                style="float: right; display: inline-block"
-                                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span th:text="#{card.options}"></span>
-                            <!--            <span class="navbar-toggler-icon"></span>-->
-                        </button>
-                    </div>
-                    <!-- IMAGE CAROUSEL-->
-                    <div th:with="imagesList=${product.images}">
-                        <div th:if="${!imagesList.isEmpty()}">
-                            <div th:id="'carouselExampleIndicators' + ${iterIndex.index}" class="carousel slide">
-                                <div class="carousel-indicators">
-                                    <button type="button"
-                                            th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                                            data-bs-slide-to="0"
-                                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button"
-                                            th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                                            data-bs-slide-to="1"
-                                            aria-label="Slide 2"></button>
-                                    <button type="button"
-                                            th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                                            data-bs-slide-to="2"
-                                            aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div th:each="image, iterCount: ${imagesList}">
-                                        <div th:if="${iterCount.index == 0}" class="carousel-item active">
-                                            <img th:src="@{'/image/' + ${image.imageId}}"
-                                                 style="height: 400px; object-fit: cover"
-                                                 class="card-img-top mx-auto d-block" alt="..." src="#">
-                                        </div>
-                                        <div th:if="${iterCount.index != 0}" class="carousel-item">
-                                            <img th:src="@{'/image/' + ${image.imageId}}"
-                                                 style="height: 400px; object-fit: cover"
-                                                 class="card-img-top mx-auto d-block" alt="..." src="#">
-                                        </div>
+        <form action="#" th:action="@{'/applyFilters'}" method="post">
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="tea" th:text="#{choose.only.tea}"/>
+                <input type="checkbox" class="form-check-input" id="tea" name="tea">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="mushroom" th:text="#{choose.only.mushrooms}"/>
+                <input type="checkbox" class="form-check-input" id="mushroom" name="mushroom">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="jam" th:text="#{choose.only.jam}"/>
+                <input type="checkbox" class="form-check-input" id="jam" name="jam">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="herbs" th:text="#{choose.only.herbs}"/>
+                <input type="checkbox" class="form-check-input" id="herbs" name="herbs">
+            </div>
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="others" th:text="#{choose.only.others}"/>
+                <input type="checkbox" class="form-check-input" id="others" name="others">
+            </div>
+
+            <div class="form-check mb-4">
+                <label class="form-check-label" for="showAll" th:text="#{show.all}"/>
+                <input type="checkbox" class="form-check-input" id="showAll" name="showAll">
+            </div>
+
+            <div class="container-sm">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" th:text="#{cancel}"
+                        aria-label="Close"></button>&nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-primary" th:text="#{show}"/>
+            </div>
+        </form>
+    </div>
+</div>
+<!--SIDEBAR-->
+
+<div class="main">
+    <div class="row row-cols-1 row-cols-md-3 g-2 gy-4">
+        <div class="col" th:each="product, iterIndex : ${products}">
+            <div class="card h-100">
+                <div class="card-header">
+                    <!--          Can be any text here-->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            style="float: right; display: inline-block"
+                            data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span th:text="#{card.options}"></span>
+                        <!--            <span class="navbar-toggler-icon"></span>-->
+                    </button>
+                </div>
+                <!-- IMAGE CAROUSEL-->
+                <div th:with="imagesList=${product.images}">
+                    <div th:if="${!imagesList.isEmpty()}">
+                        <div th:id="'carouselExampleIndicators' + ${iterIndex.index}" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="0"
+                                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="1"
+                                        aria-label="Slide 2"></button>
+                                <button type="button"
+                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                        data-bs-slide-to="2"
+                                        aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div th:each="image, iterCount: ${imagesList}">
+                                    <div th:if="${iterCount.index == 0}" class="carousel-item active">
+                                        <img th:src="@{'/image/' + ${image.imageId}}"
+                                             style="height: 400px; object-fit: cover"
+                                             class="card-img-top mx-auto d-block" alt="..." src="#">
+                                    </div>
+                                    <div th:if="${iterCount.index != 0}" class="carousel-item">
+                                        <img th:src="@{'/image/' + ${image.imageId}}"
+                                             style="height: 400px; object-fit: cover"
+                                             class="card-img-top mx-auto d-block" alt="..." src="#">
                                     </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button"
-                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                                        data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                        th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
-                                        data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
                             </div>
+                            <button class="carousel-control-prev" type="button"
+                                    th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    th:data-bs-target="'#carouselExampleIndicators' + ${iterIndex.index}"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
-                    <!-- IMAGE CAROUSEL-->
-                    <div class="card-body">
-                        <h5 class="card-title"
-                            th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}">
-                            Card title</h5>
-                        <p class="card-text"
-                           th:text="${@productLanguageSwitcher.defineLanguageOf(product.description)}"></p>
-                    </div>
-                    <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
-                          th:object="${product}" method="post" name="productForm" id="productForm">
-                        <input type="hidden" th:value="${product.id}" th:name="id">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
-                                <h5 style="text-align: left; display: inline-block"
-                                    th:text="#{label.price} + ': '"></h5>
-                                <h5 style="float: right; display: inline-block"
-                                    th:text="${product.priceUA + ' uah'}"></h5>
-                            </li>
-                            <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
-                                <h5 style="text-align: left; display: inline-block"
-                                    th:text="#{label.price} + ': '"></h5>
-                                <h5 style="float: right; display: inline-block"
-                                    th:text="${product.priceEU + ' euro'}"></h5>
-                            </li>
-                            <li class="list-group-item">
-                                <h5 style="text-align: left; display: inline-block">
-                                    [[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
-                                <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
-                            </li>
-                            <li class="list-group-item">
-                                <input class="btn btn-primary" type="submit" id="liveToastButton"
-                                       style="float: right" th:value="#{add.toCart}">
-                            </li>
-                        </ul>
-                    </form>
-                    <!--            <div class="card-footer">-->
-                    <!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
-                    <!--            </div>-->
                 </div>
+                <!-- IMAGE CAROUSEL-->
+                <div class="card-body">
+                    <h5 class="card-title"
+                        th:text="${@productLanguageSwitcher.defineLanguageOf(product.name)}">
+                        Card title</h5>
+                    <p class="card-text"
+                       th:text="${@productLanguageSwitcher.defineLanguageOf(product.description)}"></p>
+                </div>
+                <form th:action="@{'/addToOrder?page=' + ${currentPage}}"
+                      th:object="${product}" method="post" name="productForm" id="productForm">
+                    <input type="hidden" th:value="${product.id}" th:name="id">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:if="${#locale.getLanguage() == 'ukr'}">
+                            <h5 style="text-align: left; display: inline-block"
+                                th:text="#{label.price} + ': '"></h5>
+                            <h5 style="float: right; display: inline-block"
+                                th:text="${product.priceUA + ' uah'}"></h5>
+                        </li>
+                        <li class="list-group-item" th:if="${#locale.getLanguage() == 'en'}">
+                            <h5 style="text-align: left; display: inline-block"
+                                th:text="#{label.price} + ': '"></h5>
+                            <h5 style="float: right; display: inline-block"
+                                th:text="${product.priceEU + ' euro'}"></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 style="text-align: left; display: inline-block">
+                                [[#{label.quantity}]]:&nbsp;&nbsp;&nbsp;</h5>
+                            <h5 th:replace="~{utils/product-quantity :: product-quantity}"></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <input class="btn btn-primary" type="submit" id="liveToastButton"
+                                   style="float: right" th:value="#{add.toCart}">
+                        </li>
+                    </ul>
+                </form>
+                <!--            <div class="card-footer">-->
+                <!--                <small class="text-body-secondary">Last updated 3 mins ago</small>-->
+                <!--            </div>-->
             </div>
         </div>
     </div>
+</div>
 
-    <!-- message when product added to cart-->
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div th:id="liveToast" class="toast" role="status" aria-live="polite"
-             data-bs-delay="4000" aria-atomic="true" sec:authorize="!isAnonymous()">
-            <div class="toast-header">
-                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
-                     alt="...">
-                <strong class="me-auto">Notka Tea</strong>
-                <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body" style="font-size: medium; color: forestgreen">
-                <span th:text="#{product.added.toCart}"></span> <br/>
-                <a th:href="@{/cart}" th:text="#{go.toCart}"></a>
-            </div>
+<!-- message when product added to cart-->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div th:id="liveToast" class="toast" role="status" aria-live="polite"
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="!isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
+                 alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{cart}" style="font-weight: bold; color: cornflowerblue">Cart</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
-             data-bs-delay="4000" aria-atomic="true" sec:authorize="isAnonymous()">
-            <div class="toast-header">
-                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
-                     alt="...">
-                <strong class="me-auto">Notka Tea</strong>
-                <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body" style="font-size: medium; color: #ef5757">
-                <span th:text="#{login.first.beforeCart}"></span> <br/>
-                <span><a th:href="@{/login}" th:text="#{login}"></a>&nbsp;&nbsp;
+        <div class="toast-body" style="font-size: medium; color: forestgreen">
+            <span th:text="#{product.added.toCart}"></span> <br/>
+            <a th:href="@{/cart}" th:text="#{go.toCart}"></a>
+        </div>
+    </div>
+    <div th:id="liveToast" class="toast" role="alert" aria-live="assertive"
+         data-bs-delay="4000" aria-atomic="true" sec:authorize="isAnonymous()">
+        <div class="toast-header">
+            <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2"
+                 alt="...">
+            <strong class="me-auto">Notka Tea</strong>
+            <small th:text="#{alert}" style="font-weight: bold; color: cornflowerblue">Alert</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" style="font-size: medium; color: #ef5757">
+            <span th:text="#{login.first.beforeCart}"></span> <br/>
+            <span><a th:href="@{/login}" th:text="#{login}"></a>&nbsp;&nbsp;
                 <span th:text="#{choice}"></span>&nbsp;&nbsp;
             <a th:href="@{/register}" th:text="#{register}"></a></span>
-            </div>
         </div>
     </div>
-    <!-- message when product added to cart-->
+</div>
+<!-- message when product added to cart-->
+
 <!-- pagination-list-of-product-->
 <div th:if="${totalPages > 1}">
     <nav aria-label="Page navigation">
@@ -277,6 +278,10 @@
 <div th:replace="~{utils/modals :: modal-logout}"></div>
 <!-- Modal for header when logout-->
 
+<!-- Modal when no search results-->
+<div th:replace="~{utils/modals :: modal-no-search-results}"></div>
+<!-- Modal when no search results-->
+
 <script type="text/javascript">
     $(document).on('submit', '#productForm', function () {
         const toastLivePopUpWindow = document.getElementById('liveToast');
@@ -296,6 +301,11 @@
         });
         return false;
     });
+</script>
+
+<script th:inline="javascript" th:if="${param.noSearchResults}">
+    let myModal = new bootstrap.Modal(document.getElementById('noSearchResults'), {});
+    myModal.show();
 </script>
 </body>
 </html>

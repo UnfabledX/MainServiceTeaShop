@@ -114,5 +114,31 @@
 </div>
 <!-- Modal when loading all products from google drive-->
 
+<!-- Modal when no search results-->
+<div class="modal fade" id="noSearchResults" tabindex="-1" aria-labelledby="noSearchResultsLabel"
+     aria-hidden="true" th:fragment="modal-no-search-results">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+                <h1 class="modal-title fs-5" id="noSearchResultsLabel" style="font-weight: bold; color: #ef5757"
+                    th:text="#{info}">Info</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" th:text="#{modal.no-search-results}">
+                No Results... Try again.
+            </div>
+            <div class="modal-footer">
+               <span>
+                   <a type="button" class="btn btn-primary" th:href="@{/}" th:text="#{go.home}">Go To The Home Page</a>&nbsp;
+                   <a type="button" class="btn btn-success" data-bs-dismiss="modal"
+                      th:text="#{go.toProducts}">Look at some products</a>
+               </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal when no search results-->
+
 </body>
 </html>
