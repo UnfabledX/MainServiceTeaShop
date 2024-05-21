@@ -2,10 +2,12 @@ version: '3.8'
 services:
 
   eureka:
+    container_name: eureka_service
     image: unfabled/teashop:eureka-0.0.1
     restart: on-failure
 
   main-teashop-service:
+    container_name: main_service
     image: unfabled/teashop:main_service-0.0.1
     restart: on-failure
     environment:
@@ -27,6 +29,7 @@ services:
       - "8888:8888"
 
   order-teashop-service:
+    container_name: order_service
     image: unfabled/teashop:order_service-0.0.1
     restart: on-failure
     environment:
@@ -38,6 +41,7 @@ services:
         condition: service_started
 
   media-teashop-service:
+    container_name: media_service
     image: unfabled/teashop:media_service-0.0.1
     restart: on-failure
     environment:

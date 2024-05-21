@@ -25,17 +25,25 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
         bindings.excluding(root.images);
     }
 
-    @Query(
-//            value = "select * from main_service.products where products.search_vector @@ to_tsquery('russian', ?1) " +
-//            "order by ts_rank(products.search_vector, to_tsquery('russian', ?1)) desc",
-            value = "select * from main_service.products where " +
-                    "(?1 operator (main_service.<%) name and main_service.word_similarity(?1, name) > 0.55) or " +
-                    "(?1 operator (main_service.<%) description and main_service.word_similarity(?1, description) > 0.55) " +
-                    "order by main_service.word_similarity(?1, name) desc;",
-//            countQuery = "select count(*) from main_service.products where products.search_vector @@ to_tsquery('russian', ?1)",
+    @Query(value = "select * from main_service.products where " +
+            "(?1 operator (main_service.<%) name and main_service.word_similarity(?1, name) > 0.55) or " +
+            "(?1 operator (main_service.<%) description and main_service.word_similarity(?1, description) > 0.55) " +
+            "order by main_service.word_similarity(?1, name) desc;",
             countQuery = "select count(*) from main_service.products where " +
                     "(?1 operator (main_service.<%) name and main_service.word_similarity(?1, name) > 0.55) or " +
                     "(?1 operator (main_service.<%) description and main_service.word_similarity(?1, description) > 0.55) ",
             nativeQuery = true)
     Page<Product> findAllProductsBySearch(String search, Pageable pageable);
+
+    @Query(value = "select * from main_service.products order by " +
+            "case type " +
+            "when 'TEA' then 1 " +
+            "when 'JAMS' then 2 " +
+            "when 'MUSHROOMS' then 3 " +
+            "when 'HERBS' then 4 " +
+            "when 'OTHERS' then 5 " +
+            "else 6 " +
+            "end",
+            countQuery = "select count(*) from main_service.products", nativeQuery = true)
+    Page<Product> findAllProductsOrderedByType(Pageable pageable);
 }

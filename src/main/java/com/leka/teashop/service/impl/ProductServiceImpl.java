@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDto> getAllProductsForAdmin(PageContext context) {
         log.info("Getting All Products For admin");
-        Pageable pageable = getPageable(context);
+        Pageable pageable = getPageableWithSort(context);
         return productRepository.findAll(pageable).map(productMapper::toDto);
     }
 
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDto> getAllProductsForSale(PageContext context, Map<String, Boolean> filters) {
         log.info("Getting all the products for sale by filters=[{}]", filters);
-        Pageable pageable = getPageable(context);
+        Pageable pageable = getPageableWithSort(context);
         BooleanExpression expression = filters.entrySet()
                 .stream().filter(Map.Entry::getValue)
                 .map(Map.Entry::getKey)
@@ -86,8 +86,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDto> getAllProductsForSale(PageContext context) {
         log.info("Getting all the products for sale. No filters");
-        Pageable pageable = getPageable(context);
-        return productRepository.findAll(pageable).map(productMapper::toDto);
+        Pageable pageable = getPageableWithOutSorting(context);
+        return productRepository.findAllProductsOrderedByType(pageable).map(productMapper::toDto);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDto> getAllProductsBySearch(String search, PageContext context) {
         log.info("Getting all the products by search=[{}]", search);
-        Pageable pageable = PageRequest.of(context.getPageNo() - 1, context.getPageSize());
+        Pageable pageable = getPageableWithOutSorting(context);
         return productRepository.findAllProductsBySearch(search, pageable)
                 .map(productMapper::toDto);
     }
@@ -184,9 +184,13 @@ public class ProductServiceImpl implements ProductService {
                 .with("status", ":", PRESENT.name());
     }
 
-    private static Pageable getPageable(PageContext context) {
+    private static Pageable getPageableWithSort(PageContext context) {
         Sort sort = context.getSortDirection().equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(context.getSortField()).ascending() : Sort.by(context.getSortField()).descending();
         return PageRequest.of(context.getPageNo() - 1, context.getPageSize(), sort);
+    }
+
+    private static PageRequest getPageableWithOutSorting(PageContext context) {
+        return PageRequest.of(context.getPageNo() - 1, context.getPageSize());
     }
 }

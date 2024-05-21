@@ -1,6 +1,7 @@
-version: '3.8'
+name: teashop-project
 services:
   database:
+    container_name: general_database
     image: postgres
     restart: on-failure
     environment:
@@ -16,10 +17,12 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   eureka:
+    container_name: eureka_service
     image: docker.io/library/teashop-eureka:0.0.1
     restart: on-failure
 
   main-teashop-service:
+    container_name: main_service
     image: docker.io/library/teashop-main:0.0.1
     restart: on-failure
     environment:
@@ -45,6 +48,7 @@ services:
       - "8888:8888"
 
   order-teashop-service:
+    container_name: order_service
     image: docker.io/library/teashop-order:0.0.1
     restart: on-failure
     environment:
@@ -60,6 +64,7 @@ services:
         condition: service_started
 
   media-teashop-service:
+    container_name: media_service
     image: docker.io/library/teashop-media:0.0.1
     restart: on-failure
     environment:

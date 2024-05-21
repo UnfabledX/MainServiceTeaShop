@@ -158,10 +158,10 @@ public class ProductController {
         } else {
             pageContext = new PageContext(pageNo, pageSize);
             dtoList = productService.getAllProductsBySearch(search, pageContext);
-        }
-        if (dtoList.isEmpty()) {
-            filters.clear();
-            return "redirect:/showAllProductsForSale?noSearchResults";
+            if (dtoList.isEmpty()) {
+                filters.clear();
+                return "redirect:/showAllProductsForSale?noSearchResults";
+            }
         }
         addAttributesToModel(model, dtoList, pageContext);
         model.addAttribute("search", search);
