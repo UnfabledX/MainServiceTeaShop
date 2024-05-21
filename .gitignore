@@ -86,6 +86,7 @@ nb-configuration.xml
 /tokens_folder/StoredCredential
 /.env
 /src/main/resources/.env
-/integration-aws/.env
+/integration/aws/.env
 /tasks/queries.sql
 /database/
+/integration/google/.env

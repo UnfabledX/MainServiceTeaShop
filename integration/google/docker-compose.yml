@@ -1,0 +1,80 @@
+name: teashop-project
+services:
+  database:
+    container_name: general_database
+    image: postgres
+    restart: on-failure
+    environment:
+      TZ: Europe/Kyiv
+      POSTGRES_DB: teashop
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    ports:
+      - "5500:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  eureka:
+    container_name: eureka_service
+    image: unfabled/teashop:eureka-0.0.1
+    restart: on-failure
+
+  main-teashop-service:
+    container_name: main_service
+    image: unfabled/teashop:main_service-0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_ADMIN: ${EMAIL_ADMIN}
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}
+      GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
+      GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
+      WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+
+  order-teashop-service:
+    container_name: order_service
+    image: unfabled/teashop:order_service-0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+
+  media-teashop-service:
+    container_name: media_service
+    image: unfabled/teashop:media_service-0.0.1
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
