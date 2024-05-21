@@ -35,43 +35,58 @@ public class GoogleServiceImpl implements GoogleService {
     private final Sheets googleSheetsService;
 
     @Override
-    public List<List<Object>> loadTableOfProducts() throws IOException {
+    public List<List<Object>> loadTableOfProducts() {
         log.info("Loading of the table content is started.");
-        ValueRange response = googleSheetsService.spreadsheets().values()
-                .get(googleProperties.spreadsheetId(), googleProperties.rangeOfColumns())
-                .execute();
+        ValueRange response = null;
+        try {
+            response = googleSheetsService.spreadsheets().values()
+                    .get(googleProperties.spreadsheetId(), googleProperties.rangeOfColumns())
+                    .execute();
+        } catch (Exception e) {
+            log.error("Error in loadTableOfProducts(), ", e);
+        }
         log.info("Loading of the table content is successfully finished.");
-        return response.getValues();
+        return response != null ? response.getValues() : Collections.emptyList();
     }
 
     @Override
-    public List<File> getAllImagesOfProducts() throws IOException {
+    public List<File> getAllImagesOfProducts() {
         log.info("Obtaining the list of all images of products");
         List<File> files = new ArrayList<>();
         String query = "'" + googleProperties.folderId() + "' in parents";
         String pageToken = null;
         do {
-            FileList result = googleDriveService.files().list()
-                    .setQ(query)
-                    .setSpaces("drive")
-                    .setPageSize(10)
-                    .setFields("nextPageToken, files(id, name)")
-                    .setPageToken(pageToken)
-                    .execute();
-            files.addAll(result.getFiles());
-
-            pageToken = result.getNextPageToken();
+            FileList result = null;
+            try {
+                result = googleDriveService.files().list()
+                        .setQ(query)
+                        .setSpaces("drive")
+                        .setPageSize(10)
+                        .setFields("nextPageToken, files(id, name)")
+                        .setPageToken(pageToken)
+                        .execute();
+            } catch (Exception e) {
+                log.error("Error in getAllImagesOfProducts(). Can't get FileList result, ", e);
+            }
+            if (result != null) {
+                files.addAll(result.getFiles());
+                pageToken = result.getNextPageToken();
+            }
         } while (pageToken != null);
         log.info("The list [size={}] of all images of products is formed.", files.size());
         return files;
     }
 
     @Override
-    public void downloadImageByFileId(String fileId, ByteArrayOutputStream outputStream) throws IOException {
+    public void downloadImageByFileId(String fileId, ByteArrayOutputStream outputStream) {
         log.info("Image [id={}] downloading to the outputStream is started.", fileId);
-        googleDriveService.files()
-                .get(fileId)
-                .executeMediaAndDownloadTo(outputStream);
+        try {
+            googleDriveService.files()
+                    .get(fileId)
+                    .executeMediaAndDownloadTo(outputStream);
+        } catch (Exception e) {
+            log.error("Error in downloadImageByFileId(), ", e);
+        }
         log.info("Image [id={}] downloading to the outputStream is successfully finished.", fileId);
     }
 
@@ -137,7 +152,7 @@ public class GoogleServiceImpl implements GoogleService {
                 log.info("File [id={}] is deleted", id);
             }
             log.info("All delete operations on Google Drive are successfully finished!");
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Error in deleteImagesOnDriveOf(updatedProduct): ", e);
         }
     }
@@ -145,7 +160,7 @@ public class GoogleServiceImpl implements GoogleService {
     @Override
     public String updateProductRecordInGoogleSheets(Product product) {
         log.info("Updating product [{}] in Google Sheets", product);
-        BatchUpdateValuesResponse response;
+        BatchUpdateValuesResponse response = null;
         try {
             List<Object> productRow = List.of(product.getId(), product.getName(),
                     product.getDescription(), product.getPriceUA(), product.getPriceEU(), product.getType().name());
@@ -168,11 +183,14 @@ public class GoogleServiceImpl implements GoogleService {
                     .batchUpdate(googleProperties.spreadsheetId(), request)
                     .execute();
             log.info("Product update is successful. {} cells updated.", response.getTotalUpdatedCells());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.error("Error in updateProductRecordInGoogleSheets(product): ", ex);
-            throw new RuntimeException(ex);
         }
-        return String.format("Total updated rows - [%d], total updated cells - [%d]",
-                response.getTotalUpdatedRows(), response.getTotalUpdatedCells());
+        String result = "Some error appeared";
+        if (response != null) {
+            result = String.format("Total updated rows - [%d], total updated cells - [%d]",
+                    response.getTotalUpdatedRows(), response.getTotalUpdatedCells());
+        }
+        return result;
     }
 }

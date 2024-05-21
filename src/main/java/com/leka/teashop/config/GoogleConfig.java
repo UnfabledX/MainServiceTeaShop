@@ -30,14 +30,14 @@ public class GoogleConfig {
     }
 
     @Bean
-    public Drive getGoogleDrive() throws IOException {
+    public Drive getGoogleDrive() {
         return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials())
                 .setApplicationName(properties.appName())
                 .build();
     }
 
     @Bean
-    public Sheets getGoogleSheets() throws IOException {
+    public Sheets getGoogleSheets() {
         return new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials())
                 .setApplicationName(properties.appName())
                 .build();

@@ -42,7 +42,7 @@ public class InitLoadService {
         List<List<Object>> values = googleService.loadTableOfProducts();
         List<File> files = googleService.getAllImagesOfProducts();
         mediaService.deleteAllImages();
-//        imageRepository.deleteAll();
+        imageRepository.deleteAll();
         Product product;    ByteArrayOutputStream os;
         for (List<Object> row : values) {
             List<File> filesForProduct = getFilesByProductNumber(row.get(0).toString(), files);

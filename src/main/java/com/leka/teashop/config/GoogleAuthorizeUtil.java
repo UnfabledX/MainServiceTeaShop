@@ -37,31 +37,36 @@ public class GoogleAuthorizeUtil {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    public static Credential credentials() throws IOException {
+    public static Credential credentials() {
         // Load client secrets.
-        InputStream in = GoogleAuthorizeUtil.class.getResourceAsStream("/credentials.json");
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        File tokenFile = new File(TOKENS_DIRECTORY_PATH);
-        log.info("Token path: {}", tokenFile.getAbsolutePath());
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(tokenFile))
-                .setAccessType("offline")
-                .build();
+        try {
+            InputStream in = GoogleAuthorizeUtil.class.getResourceAsStream("/credentials.json");
+            GoogleClientSecrets clientSecrets =
+                    GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+            File tokenFile = new File(TOKENS_DIRECTORY_PATH);
+            log.info("Token path: {}", tokenFile.getAbsolutePath());
+            // Build flow and trigger user authorization request.
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                    .setDataStoreFactory(new FileDataStoreFactory(tokenFile))
+                    .setAccessType("offline")
+                    .build();
 
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+            LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+            return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        } catch (Exception e) {
+            log.error("Error in credentials()", e);
+        }
+        return null;
     }
 
     public static NetHttpTransport getHttpTransport() {
         try {
             return GoogleNetHttpTransport.newTrustedTransport();
         } catch (GeneralSecurityException | IOException e) {
-            log.warn("Some network or security issues occurred.");
-            throw new RuntimeException();
+            log.error("Some network or security issues occurred. ", e);
         }
+        return null;
     }
 
 }
