@@ -29,7 +29,7 @@ public class GoogleAuthorizeUtil {
     public static final NetHttpTransport HTTP_TRANSPORT = getHttpTransport();
     public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final Set<String> SCOPES = SheetsScopes.all();
-    private static final String TOKENS_DIRECTORY_PATH ="tokens_folder";
+    private static final String TOKENS_DIRECTORY_PATH ="tokens_folder"; //saved in tomcat '/bin' folder
 
     /**
      * Creates an authorized Credential object.

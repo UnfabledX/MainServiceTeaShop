@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -50,12 +51,12 @@ public class OrderController {
     public String addToOrder(@ModelAttribute("product") ProductDto productDto,
                              @RequestParam(name = "page", required = false) Integer page,
                              Model model, HttpServletRequest request, UsernamePasswordAuthenticationToken token) {
-        log.info("token: " + token);
+        log.info("token: {}", token);
         User currentUser = (User) token.getPrincipal();
-        log.info("current user: " + currentUser);
+        log.info("current user: {}", currentUser);
         String quantity = request.getParameter("quantity");
         orderService.addToOrder(currentUser, quantity, productDto);
-        return productController.getAllProducts(page, null, null, null, model);
+        return productController.getAllProductsForSale(page, null, "name", "asc", null, model);
     }
 
     /**
