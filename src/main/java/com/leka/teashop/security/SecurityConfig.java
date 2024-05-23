@@ -43,7 +43,8 @@ public class SecurityConfig {
                                 "/updateSpecifiedRow",
                                 "/deleteImages",
                                 "/applyFilters",
-                                "/search"
+                                "/search",
+                                "/payment-and-delivery"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()
@@ -63,7 +64,8 @@ public class SecurityConfig {
                                 "/allOrders",
                                 "/changeOrderStatus/*",
                                 "/ordersInProcess",
-                                "/changeInProgressStatus/*"
+                                "/changeInProgressStatus/*",
+                                "/changePaymentAndDeliveryContent"
                         ).hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(
                                 "/settings",

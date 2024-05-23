@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <style>
+        #login_body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        #main-container {
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.60);
+        }
+    </style>
+</head>
+<body id="login_body" th:style="'background-image:url(' + @{/images/background-payment-and-delivery.jpg} + ');'"
+      data-bs-theme="dark">
+
+<!-- Header-->
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" th:href="@{/}">
+            <img th:src="@{images/logo-notka.jpg}"
+                 alt="Logo" width="30" height="24" class="d-inline-block align-text-top"/>
+            NotkaTea
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/}"
+                       th:text="#{main.page}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{new}">What's New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{blog}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/showAllProductsForSale}" th:text="#{products}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/payment-and-delivery}" th:text="#{payment-and-delivery}">
+                        Payment and Delivery</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{chooseLang}">
+                        Choose language
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{'/payment-and-delivery?lang=en'}" href="#"
+                               th:text="#{lang.en}">English</a></li>
+                        <li><a class="dropdown-item" th:href="@{'/payment-and-delivery?lang=ukr'}" href="#"
+                               th:text="#{lang.ukr}">Ukrainian</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search" th:action="@{'/search'}" aria-label="Search">
+                <input class="form-control me-2" type="text" th:placeholder="#{search.description}"
+                       th:name="search" aria-label="Search">
+                <button class="btn btn-outline-success me-4" type="submit" th:text="#{search}">Search</button>
+            </form>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item dropdown" sec:authorize="isAnonymous()">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" th:text="#{login.register}">
+                        Login/Register
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}" th:text="#{login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}" th:text="#{register}">Register</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="!isAnonymous()">
+                    <span class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                        [[#{user.greeting}]]<span sec:authentication="name"></span></span>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/settings}" th:text="#{user.settings}">Settings</a></li>
+                        <li><a class="dropdown-item" th:href="@{/userOrders}" th:text="#{user.orders}">Orders</a></li>
+                        <li th:if="${#authentication.principal.getCurrentOrderDto() != null}">
+                            <a class="dropdown-item" href="#" th:text="#{logout}"
+                               data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a></li>
+                        <li th:if="${#authentication.principal.getCurrentOrderDto() == null}">
+                            <a class="dropdown-item" th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_USER')">
+                    <a class="nav-link" href="#" th:href="@{/cart}">
+                        <img th:src="@{images/cart.jpg}" alt="Logo" width="34" height="auto"/>
+                        <span th:id="items-counter"
+                              th:text="${#authentication.principal.getCurrentOrderDto() == null ? '0' :
+                                #authentication.getPrincipal().getCurrentOrderDto().getProductIdAndCount().size()}"></span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{/ordersInProcess}">
+                        <img th:src="@{/images/orders-for-admin.jpg}" alt="Logo" width="30" height="auto"/>
+                        <!--                    new orders from users that must be processed -->
+                        <span th:text="${@orderUtil.countAllOrdersInProcess()}"></span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <a class="nav-link" href="#" th:href="@{/adminPanel}" th:text="#{admin.panel}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+
+<div class="container-sm mb-2" id="main-container">
+    <div class="row g-3">
+        <div class="mb-3">
+            <h2 th:text="#{payment-and-delivery}">Payment and Delivery</h2>
+            <h5 th:if="${#locale.getLanguage() == 'ukr'}" th:utext="${info.getContentUA()}">Content in Ukrainian</h5>
+            <h5 th:if="${#locale.getLanguage() == 'en'}" th:utext="${info.getContentEU()}">Content in English</h5>
+        </div>
+    </div>
+    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPaymentAndDeliveryInfoModal"
+       sec:authorize="hasAuthority('ROLE_ADMIN')" th:text="#{edit}">Edit Payment and Delivery</a> &nbsp;&nbsp;&nbsp;
+    <a href="#" class="btn btn-success" th:href="@{/}" th:text="#{main.page}" role="button">Return to main page</a>
+</div>
+
+<!-- Modal when editing Payment And Delivery Info-->
+<div class="modal fade" id="editPaymentAndDeliveryInfoModal" tabindex="-1"
+     aria-labelledby="editPaymentAndDeliveryInfoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img th:src="@{images/logo-notka.jpg}" height="30" width="auto" class="rounded me-2" alt="...">
+                <h1 class="modal-title fs-5" id="editPaymentAndDeliveryInfoLabel"
+                    style="font-weight: bold; color: #ef5757"
+                    th:text="#{edit}">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" th:action="@{/changePaymentAndDeliveryContent}" method="post" th:object="${info}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="contentUA" class="form-label" th:text="#{contentUA}">Content in Ukrainian</label>
+                        <textarea id="contentUA" name="contentUA" class="form-control mb-4 col-4"
+                                  rows="10" cols="70" th:field="*{contentUA}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contentEU" class="form-label" th:text="#{contentEU}">Content in English</label>
+                        <textarea id="contentEU" name="contentEU" class="form-control mb-4 col-4"
+                                  rows="10" cols="70" th:field="*{contentEU}"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{cancel}">Cancel</a>
+                    <button type="submit" class="btn btn-primary" th:text="#{update.payment-delivery}">Update Payment
+                        and Delivery
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal when editing Payment And Delivery Info-->
+
+
+</body>
+</html>
