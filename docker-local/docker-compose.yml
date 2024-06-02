@@ -26,6 +26,7 @@ services:
     image: docker.io/library/teashop-main:0.0.2
     restart: on-failure
     environment:
+      BLOG_URL: ${BLOG_URL}
       DATABASE_URL: ${DATABASE_URL}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
@@ -36,6 +37,7 @@ services:
       GOOGLE_FOLDER_ID: ${GOOGLE_FOLDER_ID}
       GOOGLE_SHEET_RANGE: ${GOOGLE_SHEET_RANGE}
       WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
+      SECRET_KEY: ${SECRET_KEY}
     env_file:
       - .env
     depends_on:

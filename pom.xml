@@ -24,6 +24,7 @@
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <eurika.version>4.0.3</eurika.version>
         <thymeleaf-java8time.version>3.0.4.RELEASE</thymeleaf-java8time.version>
+        <jjwt.version>0.11.5</jjwt.version>
     </properties>
     <dependencies>
         <!--        QUERY DSL       -->
@@ -162,6 +163,23 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>${eurika.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

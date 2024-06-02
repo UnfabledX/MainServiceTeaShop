@@ -44,7 +44,8 @@ public class SecurityConfig {
                                 "/deleteImages",
                                 "/applyFilters",
                                 "/search",
-                                "/payment-and-delivery"
+                                "/payment-and-delivery",
+                                "/blog"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()
@@ -77,7 +78,6 @@ public class SecurityConfig {
                                 "/deleteFromCart/*",
                                 "/deliveryOptions",
                                 "/userOrders"
-                                //some more
                         ).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest()
                         .authenticated())

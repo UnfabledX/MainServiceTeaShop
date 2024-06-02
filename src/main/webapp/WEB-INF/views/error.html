@@ -23,7 +23,7 @@
   <div class="text-center" th:if="${exception == null}">
     <h1 class="display-1 fw-bold" >404</h1>
     <p class="fs-3"> <span class="text-danger">[[#{oops}]]&nbsp;</span>[[#{page.not.found}]]</p>
-    <p class="lead" th:text="#{page.not.exists}">The page you’re looking for doesn’t exist.</p>
+    <p class="lead" th:text="#{page.not.exists}">The page you’re looking for doesn't exist.</p>
     <a href="#" th:href="@{/}" class="btn btn-primary" th:text="#{go.home}">Go To The Home Page</a>
   </div>
 
