@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class ProductController {
 
     @Value("${web.pageable.default-page-size}")
     private int defaultPageSize;
-    private Map<String, Boolean> filters = new HashMap<>();
+    private final Map<String, Boolean> filters;
     private final ProductService productService;
     private final MediaService mediaService;
     private final ProductMapper productMapper;

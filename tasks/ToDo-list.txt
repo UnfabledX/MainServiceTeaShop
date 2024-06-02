@@ -95,4 +95,6 @@ To-do-list
 
 15. DOn't forget to remove service endpoints for testing from security list.
 16. Time must be in correct time zone (see picture - issue_1.jpg)
+17. add blog link to another headers
+18. redo product filtering
 

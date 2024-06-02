@@ -1,15 +1,23 @@
 package com.leka.teashop.config;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
 @Configuration
 public class TeaShopConfiguration implements WebMvcConfigurer {
@@ -63,6 +71,12 @@ public class TeaShopConfiguration implements WebMvcConfigurer {
         messageSource.setBasenames("classpath:/language/messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
+    }
+
+    @Bean(name = "filters")
+    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = INTERFACES)
+    public Map<String, Boolean> getNewFilters() {
+        return new HashMap<>();
     }
 
 }
