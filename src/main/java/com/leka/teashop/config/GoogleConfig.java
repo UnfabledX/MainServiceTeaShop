@@ -8,8 +8,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-
 import static com.leka.teashop.config.GoogleAuthorizeUtil.HTTP_TRANSPORT;
 import static com.leka.teashop.config.GoogleAuthorizeUtil.JSON_FACTORY;
 import static com.leka.teashop.config.GoogleAuthorizeUtil.credentials;
