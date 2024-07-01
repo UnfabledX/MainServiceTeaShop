@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'main_service'
+    scrape_interval: 5s
+    static_configs:
+#     we call external apis from inside docker container
+      - targets: [ 'host.docker.internal:8080' ]
+        labels:
+          groups: 'development'
+    metrics_path: "/teashop/actuator/prometheus"
+
+  - job_name: 'media_service'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ 'host.docker.internal:8090' ]
+        labels:
+          groups: 'development'
+    metrics_path: "/actuator/prometheus"
+
+  - job_name: 'blog_service'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ 'host.docker.internal:8081' ]
+        labels:
+          groups: 'development'
+    metrics_path: "/blog/actuator/prometheus"
+
+  - job_name: 'order_service'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [ 'host.docker.internal:8070' ]
+        labels:
+          groups: 'development'
+    metrics_path: "/actuator/prometheus"
