@@ -6,7 +6,6 @@ import com.leka.teashop.model.ProductType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.EnumUtils;
 
 import static com.leka.teashop.repository.predicate.PredicateUtils.getEnumBooleanExpression;
 import static com.leka.teashop.repository.predicate.PredicateUtils.getNumericBooleanExpression;
@@ -42,10 +41,22 @@ public class ProductPredicate {
     private static boolean isEnum(String key, String value) {
         boolean isValidEnum = false;
             if (key.equalsIgnoreCase("status")) {
-                isValidEnum = EnumUtils.isValidEnumIgnoreCase(ProductStatus.class, value);
+                isValidEnum = isValidEnumIgnoreCase(ProductStatus.class, value);
             } else if (key.equalsIgnoreCase("type")) {
-                isValidEnum = EnumUtils.isValidEnumIgnoreCase(ProductType.class, value);
+                isValidEnum = isValidEnumIgnoreCase(ProductType.class, value);
             }
         return isValidEnum;
+    }
+
+    private static <E extends Enum<E>> boolean isValidEnumIgnoreCase(Class<E> enumClass, String enumName) {
+        if (enumName == null) {
+            return false;
+        }
+        try {
+            Enum.valueOf(enumClass, enumName.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
     }
 }

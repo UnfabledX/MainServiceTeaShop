@@ -90,3 +90,4 @@ nb-configuration.xml
 /tasks/queries.sql
 /database/
 /integration/google/.env
+/integration/uahosting/.env

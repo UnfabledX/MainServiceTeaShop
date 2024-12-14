@@ -1,8 +1,8 @@
 package com.leka.teashop.service.jwt;
 
 import com.leka.teashop.service.jwt.config.JwtConfiguration;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultJwtBuilder;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -39,17 +39,16 @@ public class JwtService {
         final Date now = new Date(System.currentTimeMillis());
         final Date expirationDate = new Date(
                 System.currentTimeMillis() + expiration * 1000);
-
-        return Jwts.builder()
+        return new DefaultJwtBuilder()
                 .setClaims(extraClaims)
-                .setIssuedAt(now)
-                .setExpiration(expirationDate)
+                .issuedAt(now)
+                .expiration(expirationDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.secretkey());
+        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.secretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
