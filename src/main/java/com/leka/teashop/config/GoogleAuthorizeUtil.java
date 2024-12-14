@@ -41,6 +41,10 @@ public class GoogleAuthorizeUtil {
         // Load client secrets.
         try {
             InputStream in = GoogleAuthorizeUtil.class.getResourceAsStream("/credentials.json");
+            //check for null InputStream in
+            if (in == null) {
+                throw new Exception("File 'credentials.json' not found in resource folder.");
+            }
             GoogleClientSecrets clientSecrets =
                     GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
             File tokenFile = new File(TOKENS_DIRECTORY_PATH);

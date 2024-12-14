@@ -45,7 +45,8 @@ public class SecurityConfig {
                                 "/applyFilters",
                                 "/search",
                                 "/payment-and-delivery",
-                                "/blog"
+                                "/blog",
+                                "/actuator/**"
                         ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources()
                                 .atCommonLocations()).permitAll()
