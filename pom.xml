@@ -16,7 +16,6 @@
     <packaging>war</packaging>
     <properties>
         <java.version>17</java.version>
-        <flyway-core.version>11.1.0</flyway-core.version>
         <spring-webmvc.version>6.2.1</spring-webmvc.version>
         <xstream.version>1.4.21</xstream.version>
         <apache-httpclient.version>4.5.13</apache-httpclient.version>
@@ -128,8 +127,7 @@
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway-core.version}</version>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
