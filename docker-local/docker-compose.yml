@@ -18,7 +18,7 @@ services:
 
   eureka:
     container_name: eureka_service
-    image: docker.io/library/teashop-eureka:0.0.1
+    image: docker.io/library/teashop-eureka:0.0.2
     restart: on-failure
 
   main-teashop-service:
@@ -51,7 +51,7 @@ services:
 
   order-teashop-service:
     container_name: order_service
-    image: docker.io/library/teashop-order:0.0.1
+    image: docker.io/library/teashop-order:0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -67,7 +67,7 @@ services:
 
   media-teashop-service:
     container_name: media_service
-    image: docker.io/library/teashop-media:0.0.1
+    image: docker.io/library/teashop-media:0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -83,7 +83,7 @@ services:
 
   blog-teashop-service:
     container_name: blog_service
-    image: coming_soon
+    image: docker.io/library/blog-service:0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -92,6 +92,10 @@ services:
       WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
       SECRET_KEY: ${SECRET_KEY}
       TEASHOP_URL: ${TEASHOP_URL}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_ADMIN: ${EMAIL_ADMIN}
+      CONTACT_TRIES_THRESHOLD: ${CONTACT_TRIES_THRESHOLD}
     env_file:
       - .env
     depends_on:
