@@ -2,7 +2,7 @@ name: teashop-project
 services:
   database:
     container_name: general_database
-    image: postgres
+    image: postgres:17.2
     restart: on-failure
     environment:
       TZ: Europe/Kyiv
@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     ports:
-      - "5500:5432"
+      - "5501:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
@@ -83,7 +83,7 @@ services:
 
   blog-teashop-service:
     container_name: blog_service
-    image: docker.io/library/blog-service:0.0.2
+    image: docker.io/library/teashop-blog:0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}

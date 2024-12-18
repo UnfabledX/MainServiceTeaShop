@@ -2,7 +2,7 @@ name: teashop-project
 services:
   database:
     container_name: general_database
-    image: postgres
+    image: postgres:17.2
     restart: on-failure
     environment:
       TZ: Europe/Kyiv
@@ -18,7 +18,7 @@ services:
 
   eureka:
     container_name: eureka_service
-    image: unfabled/teashop:eureka-0.0.1
+    image: unfabled/teashop:eureka-0.0.2
     restart: on-failure
 
   main-teashop-service:
@@ -51,7 +51,7 @@ services:
 
   order-teashop-service:
     container_name: order_service
-    image: unfabled/teashop:order_service-0.0.1
+    image: unfabled/teashop:order_service-0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -67,7 +67,7 @@ services:
 
   media-teashop-service:
     container_name: media_service
-    image: unfabled/teashop:media_service-0.0.1
+    image: unfabled/teashop:media_service-0.0.2
     restart: on-failure
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -80,3 +80,28 @@ services:
         condition: service_started
       database:
         condition: service_started
+
+  blog-teashop-service:
+    container_name: blog_service
+    image: unfabled/teashop:blog_service-0.0.2
+    restart: on-failure
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      WEBCLIENT_TIMEOUT: ${WEBCLIENT_TIMEOUT}
+      SECRET_KEY: ${SECRET_KEY}
+      TEASHOP_URL: ${TEASHOP_URL}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      EMAIL_USERNAME: ${EMAIL_USERNAME}
+      EMAIL_ADMIN: ${EMAIL_ADMIN}
+      CONTACT_TRIES_THRESHOLD: ${CONTACT_TRIES_THRESHOLD}
+    env_file:
+      - .env
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+    ports:
+      - "8081:8081"
