@@ -15,11 +15,16 @@ services:
       - "5501:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - teashop_network
 
   eureka:
     container_name: eureka_service
     image: unfabled/teashop:eureka_service-0.0.2
     restart: on-failure
+    networks:
+      - teashop_network
 
   main-teashop-service:
     container_name: main_service
@@ -48,6 +53,8 @@ services:
     ports:
       - "8080:8080"
       - "8888:8888"
+    networks:
+      - teashop_network
 
   order-teashop-service:
     container_name: order_service
@@ -64,6 +71,8 @@ services:
         condition: service_started
       database:
         condition: service_started
+    networks:
+      - teashop_network
 
   media-teashop-service:
     container_name: media_service
@@ -80,6 +89,8 @@ services:
         condition: service_started
       database:
         condition: service_started
+    networks:
+      - teashop_network
 
   blog-teashop-service:
     container_name: blog_service
@@ -105,3 +116,36 @@ services:
         condition: service_started
     ports:
       - "8081:8081"
+    networks:
+      - teashop_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt/live/notka-teas.store/fullchain.pem:/etc/letsencrypt/live/notka-teas.store/fullchain.pem
+      - /etc/letsencrypt/live/notka-teas.store/privkey.pem:/etc/letsencrypt/live/notka-teas.store/privkey.pem
+      - /var/log/nginx:/var/log/nginx
+    depends_on:
+      eureka:
+        condition: service_started
+      database:
+        condition: service_started
+      blog-teashop-service:
+        condition: service_started
+      main-teashop-service:
+        condition: service_started
+    networks:
+      - teashop_network
+
+volumes:
+  postgres-data:
+    name: postgres-data
+
+networks:
+  teashop_network:
+    driver: bridge

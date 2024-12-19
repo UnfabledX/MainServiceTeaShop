@@ -61,7 +61,6 @@ public class InitLoadService {
 
     private Product getProduct(List<Object> row) {
         return Product.builder()
-                .id(Long.parseLong(row.get(0).toString()))
                 .name(row.get(1).toString())
                 .description(row.get(2).toString())
                 .priceUA(new BigDecimal(String.valueOf(row.get(3))))
