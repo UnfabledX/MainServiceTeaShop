@@ -1,58 +1,73 @@
 # TeaShop
+**TeaShop** is an online platform that serves as a digital tea shop. It allows users to explore, purchase, and manage tea products, with a variety of features for both end-users and administrators. Additionally, this project is structured as part of a microservices architecture.
+## **Key Features**
+### **User Features**
+1. User registration and login.
+2. Renewal of email confirmation links for activating accounts.
+3. Management of personal and delivery information.
+4. Exploration of a product catalog, with the ability to:
+    - Add items to a cart.
+    - Adjust quantities of items in the cart.
+    - Create and finalize orders.
 
-The given project represents an online tea shop.
-What is already done so far - project functionality:
-1. The user can register and login
-2. The user can renew link of email confirmation if the user was not quick enough to activate their account
-3. The user can update information about themselves and their delivery information.
-4. The user can see the list of products, add desired items to the cart.
-5. The user can create order by adding products to the cart, change the quantity of items afterward and 
-finally complete the order by checking the delivery options.
-6. The user receives an email letter with a short summary regarding their current order.
-7. The user can see their previous orders made in the past.
-8. The admin user (admin) can view all users and their information
-9. Admin can ban or activate users, change user information and delivery options if necessary.
-10. Admin can manipulate with products and its images - all CRUD operations
-11. All SAVE, UPDATE operations with a product are duplicated on **Google Drive**, where there is a sheet with all products as well.
-12. Admin can see the list of all orders and process orders in active status.
-13. Admin receives email if someone creates new order.
-14. The user can filter products by the types, i.e. JAMS, TEA, MUSHROOMS, HERBS etc.
-15. The user can use a **search** field in the page headers. Search will find any occurrences in the products name or description. 
-Search can be fulfilled in English and in Ukrainian as well.
-16. The user can go directly to the specified type of product from the welcome page.
-17. The user can visit the blog which cover topics regarding herbs, fermented teas, jams. 
-The blog has sections about the owner of the blog and contact section where the user can ask the blogger any kind of questions.
-18. The use can see payment and delivery section.
+5. Automatic email notifications with summaries of their orders.
+6. Access to their past orders.
+7. Product filtering by categories (e.g., **Jams**, **Tea**, **Mushrooms**, **Herbs**, etc.).
+8. Full-text product search (supports both **English** and **Ukrainian**).
+9. Simplified navigation via a welcome page that links to product categories.
+10. Access to a blog with content related to tea, herbs, jams, etc. (includes information about the blog owner and a contact form for inquiries).
+11. View delivery and payment information.
 
-Image processing occurs in the backend media-service
-(https://github.com/UnfabledX/MediaServerTeaShop) which stores files in postgres database.
-All backend microservices communicate through eureka server.
+### **Admin Features**
+1. View and manage user accounts (e.g., ban/activate users, update user and delivery information).
+2. Full **CRUD operations** for products and product images.
+3. Synchronized **SAVE** and **UPDATE** operations:
+    - Product data is updated in a **Google Sheet** via the **Google Drive API**.
 
+4. Monitoring and processing of all orders (admin can handle "active" status orders).
+5. Automatic notifications to the admin via email when new orders are created.
 
-This application is the one part of the whole infrastructure:
-Microservices:
-- main-teashop (this one)
-- order-teashop
-- media-teashop
-- blog-teashop
-- eureka-teashop
-Separately:
-- database 
-- nginx server for SSL certificate and routing requests
+## **Microservices Infrastructure**
+This project is part of a **microservices-based architecture**, consisting of the following components:
+1. **Main-teashop** (this project).
+2. **Order-teashop** (handles order-related services).
+3. **Media-teashop** (manages image processing and storage via a dedicated backend service).
+    - Stores files in a **Postgres database**.
 
-### Technology used in the project:
+4. **Blog-teashop** (a dedicated blog service).
+5. **Eureka-teashop** (acts as a service registry for inter-service communication).
 
-- Java 17
-- Spring Boot 3.4.0
-- Spring MVC
-- Spring Data
-- Spring Security
-- Hibernate
-- Postgres database
-- Postgres full text search
-- Docker
-- Flyway
-- Thymeleaf (html, css)
-- Bootstrap 5
-- Maven
-- Google Drive, Sheet API
+### **Additional Components**
+- **Postgres Database**: Stores data for all the microservices.
+- **Nginx Server**: Manages SSL certificates and routes incoming requests within the infrastructure.
+
+## **Technology Stack**
+The following technologies power the TeaShop platform:
+### **Backend**
+- **Java 17**
+- **Spring Boot** (v3.4.0)
+- **Spring MVC**
+- **Spring Data JPA**
+- **Spring Security**
+- **Hibernate**
+- **Postgres Database** with **Full-Text Search**
+- **Docker** for containerization
+- **Flyway** for database migrations
+- Communication through **Eureka Server**
+
+### **Frontend**
+- **Thymeleaf** (HTML, CSS)
+- **Bootstrap 5**
+
+### **Integration & External Tools**
+- **Google Drive API** for product data synchronization.
+- **Google Sheet API** for managing product sheets.
+
+## **Main Features and Flow**
+1. The application uses **Thymeleaf templates** for its UI, styled with **Bootstrap** to ensure responsiveness and user-friendly design.
+2. Image processing and media management are handled by the **media-teashop** microservice.
+3. Services communicate with each other via **Eureka Server** for seamless operation within the microservices architecture.
+
+## **Repository Overview**
+This repository (`main-teashop`) covers the primary business logic for the TeaShop platform, including user management, product catalog handling, orders, and the administrative dashboard.
+For the **media-teashop** service used for image processing, check [MediaServerTeaShop on GitHub]().
