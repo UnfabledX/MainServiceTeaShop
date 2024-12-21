@@ -1,5 +1,7 @@
 # TeaShop
-**TeaShop** is an online platform that serves as a digital tea shop. It allows users to explore, purchase, and manage tea products, with a variety of features for both end-users and administrators. Additionally, this project is structured as part of a microservices architecture.
+**TeaShop** https://notka-teas.store/teashop/ is an online platform that serves as a digital tea shop. 
+It allows users to explore, purchase, and manage tea products, with a variety of features for both end-users and administrators. 
+Additionally, this project is structured as part of a microservices architecture.
 ## **Key Features**
 ### **User Features**
 1. User registration and login.
