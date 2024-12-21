@@ -61,7 +61,4 @@ public class InitLoadController {
         googleService.deleteImagesOnDriveOf(product);
     }
 
-
-
-
 }
