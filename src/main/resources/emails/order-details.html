@@ -37,9 +37,9 @@
             </td>
             <td>
                 <span th:text="${@priceCalculator.multiply(product.getPriceUA(), productIdAndCount.get(product.id))} +
-                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'ukr'}"/>
+                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'ukr'}"></span>
                 <span th:text="${@priceCalculator.multiply(product.getPriceEU(), productIdAndCount.get(product.id))} +
-                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'en'}"/>
+                ' ' + #{currency}" th:if="${#locale.getLanguage() == 'en'}"></span>
             </td>
         </tr>
         <tr>
